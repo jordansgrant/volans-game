@@ -1,0 +1,7 @@
+/Temp/
+/Library/
+/Obj/
+
+*.user
+*.userprefs
+*.DS_Store
