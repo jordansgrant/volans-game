@@ -6,8 +6,12 @@ public class player_ship : MonoBehaviour
     public int acceleration;
     public int maxVelocity;
 
+    public int bulletSpeed;
+
     public float rotation;
     public Rigidbody2D player;
+
+    public GameObject bullet;
 
     // Use this for initialization
     void Start()
@@ -22,6 +26,7 @@ public class player_ship : MonoBehaviour
         acceleration = 1000;
         maxVelocity = 600;
         rotation = 200;
+        bulletSpeed = 1500;
     }
 
     // Update is called once per frame
@@ -36,6 +41,11 @@ public class player_ship : MonoBehaviour
         {
             float accelCoefficient = 1.0f - (player.velocity.magnitude / maxVelocity);
             player.AddForce(transform.up * Time.deltaTime * acceleration * accelCoefficient);
+        }
+
+        if (Input.GetKeyDown("space"))
+        {
+            Instantiate(bullet, transform.position, Quaternion.identity);
         }
     }
 
