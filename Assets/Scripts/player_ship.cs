@@ -18,9 +18,15 @@ public class player_ship : MonoBehaviour
     void Awake()
     {
         player = GetComponent<Rigidbody2D>();
-     
-        acceleration = 1000;
-        maxVelocity = 600;
+
+        if (acceleration == 0)
+        {
+            acceleration = 1000;
+        }
+        if (maxVelocity == 0)
+        {
+            maxVelocity = 600;
+        }
         rotation = 200;
     }
 
