@@ -22,16 +22,11 @@ public class player_ship : MonoBehaviour
     void Awake()
     {
         player = GetComponent<Rigidbody2D>();
-
-        if (acceleration == 0)
-        {
-            acceleration = 1000;
-        }
-        if (maxVelocity == 0)
-        {
-            maxVelocity = 600;
-        }
+     
+        acceleration = 1000;
+        maxVelocity = 600;
         rotation = 200;
+        bulletSpeed = 1500;
     }
 
     // Update is called once per frame
@@ -50,7 +45,11 @@ public class player_ship : MonoBehaviour
 
         if (Input.GetKeyDown("space"))
         {
-            Instantiate(bullet, transform.position, Quaternion.identity);
+
+            //Instantiate(bullet, transform.position, Quaternion.identity);
+            GameObject go = Instantiate(bullet, transform.position, Quaternion.identity) as GameObject;
+            Quaternion q = Quaternion.FromToRotation(Vector3.up, transform.up);
+            go.transform.rotation = q * go.transform.rotation;
         }
     }
 
