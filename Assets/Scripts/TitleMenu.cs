@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +10,7 @@ public class TitleMenu : MonoBehaviour {
                   continueGame,
                   exitGame;
 
-	// Use this for initialization
+    // Use this for initialization
     void Start ()
     {
         Button btn = newGame.GetComponent<Button>();
@@ -21,16 +22,17 @@ public class TitleMenu : MonoBehaviour {
         btn = exitGame.GetComponent<Button>();
         btn.onClick.AddListener(DoExitGame);
     }
-	
-	// Update is called once per frame
+    
+    // Update is called once per frame
     void Update ()
     {
-	   	
+        
     }
 
     void DoNewGame()
     {
         Debug.Log("New Game!");
+        LoadScene(1);
     }
 
     void DoContinueGame()
@@ -41,5 +43,10 @@ public class TitleMenu : MonoBehaviour {
     void DoExitGame()
     {
         Application.Quit();
+    }
+
+    public void LoadScene(int SceneNumber)
+    {
+        SceneManager.LoadScene(SceneNumber);
     }
 }
