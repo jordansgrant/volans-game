@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -55,10 +56,16 @@ public class SelectShipMenu : MonoBehaviour
     void DoSelectMainMenu()
     {
         Debug.Log("Main menu!");
+        LoadScene(0);
     }
 
     void DoSelectStartGame()
     {
         Debug.Log("Start Game!");
+    }
+
+    public void LoadScene(int SceneNumber)
+    {
+        SceneManager.LoadScene(SceneNumber);
     }
 }
