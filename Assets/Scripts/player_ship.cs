@@ -12,6 +12,7 @@ public class player_ship : MonoBehaviour
     public Rigidbody2D player;
 
     public GameObject projectile;
+    public GameObject turret;
 
     // Use this for initialization
     void Start()
@@ -22,7 +23,7 @@ public class player_ship : MonoBehaviour
     void Awake()
     {
         player = GetComponent<Rigidbody2D>();
-     
+        turret = GameObject.Find("turret");
         acceleration = 1000;
         maxVelocity = 600;
         rotation = 200;
@@ -45,8 +46,8 @@ public class player_ship : MonoBehaviour
 
         if (Input.GetKeyDown("space"))
         {
-            Quaternion rotation = Quaternion.FromToRotation(projectile.transform.up, transform.up);
-            GameObject proj = Instantiate(projectile, transform.position, rotation);
+            Quaternion rotation = Quaternion.FromToRotation(projectile.transform.up, turret.transform.up);
+            GameObject proj = Instantiate(projectile, turret.transform.position, rotation);
             
             proj.GetComponent<Rigidbody2D>().AddRelativeForce(Vector2.up * projectileSpeed, ForceMode2D.Force);
             
