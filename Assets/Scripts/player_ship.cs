@@ -6,12 +6,12 @@ public class player_ship : MonoBehaviour
     public int acceleration;
     public int maxVelocity;
 
-    public int bulletSpeed;
+    public int projectileSpeed;
 
     public float rotation;
     public Rigidbody2D player;
 
-    public GameObject bullet;
+    public GameObject projectile;
 
     // Use this for initialization
     void Start()
@@ -26,7 +26,7 @@ public class player_ship : MonoBehaviour
         acceleration = 1000;
         maxVelocity = 600;
         rotation = 200;
-        bulletSpeed = 1500;
+        projectileSpeed = 3000;
     }
 
     // Update is called once per frame
@@ -45,11 +45,11 @@ public class player_ship : MonoBehaviour
 
         if (Input.GetKeyDown("space"))
         {
-
-            //Instantiate(bullet, transform.position, Quaternion.identity);
-            GameObject go = Instantiate(bullet, transform.position, Quaternion.identity) as GameObject;
-            Quaternion q = Quaternion.FromToRotation(Vector3.up, transform.up);
-            go.transform.rotation = q * go.transform.rotation;
+            Quaternion rotation = Quaternion.FromToRotation(projectile.transform.up, transform.up);
+            GameObject proj = Instantiate(projectile, transform.position, rotation);
+            
+            proj.GetComponent<Rigidbody2D>().AddRelativeForce(Vector2.up * projectileSpeed, ForceMode2D.Force);
+            
         }
     }
 
