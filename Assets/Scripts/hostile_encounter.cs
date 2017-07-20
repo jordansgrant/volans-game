@@ -65,7 +65,7 @@ public class hostile_encounter : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-		
+        
     }
 
     private bool randomAsteroidSpawn()
