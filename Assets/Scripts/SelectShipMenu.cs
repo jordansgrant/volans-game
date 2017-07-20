@@ -13,6 +13,12 @@ public class SelectShipMenu : MonoBehaviour
                   selectCruiser,
                   selectBattleship;
 
+    public GameObject notificationPanel;
+    public Text notification;
+
+    private bool isSelectionMade = false;
+
+
     // Use this for initialization
     void Start()
     {
@@ -30,6 +36,15 @@ public class SelectShipMenu : MonoBehaviour
 
         btn = selectBattleship.GetComponent<Button>();
         btn.onClick.AddListener(DoSelectBattleship);
+
+
+    }
+
+    void DisplayNotification(string text)
+    {
+        notification.text = text;
+        Debug.Log(text);
+        notificationPanel.SetActive(true);
     }
 
     // Update is called once per frame
@@ -40,17 +55,29 @@ public class SelectShipMenu : MonoBehaviour
 
     void DoSelectFrigate()
     {
-        Debug.Log("Selected Frigate!");
+        string ship_type = "fighter";
+        SaveShipType(ship_type);
+        isSelectionMade = true;
+
+        DisplayNotification("Fighter Selected!");
     }
 
     void DoSelectCruiser()
     {
-        Debug.Log("Selected Cruiser!");
+        string ship_type = "cruiser";
+        SaveShipType(ship_type);
+        isSelectionMade = true;
+
+        DisplayNotification("Cruiser Selected!");
     }
 
     void DoSelectBattleship()
     {
-        Debug.Log("Selected Battleship!");
+        string ship_type = "battleship";
+        SaveShipType(ship_type);
+        isSelectionMade = true;
+
+        DisplayNotification("Battleship Selected!");
     }
 
     void DoSelectMainMenu()
@@ -62,10 +89,22 @@ public class SelectShipMenu : MonoBehaviour
     void DoSelectStartGame()
     {
         Debug.Log("Start Game!");
+        if (isSelectionMade == true)
+            LoadScene(2);
+        else
+        {
+            DisplayNotification("Please select a ship before continuing!");
+        }
     }
 
     public void LoadScene(int SceneNumber)
     {
         SceneManager.LoadScene(SceneNumber);
+    }
+
+    // Set ship type in playerprefs.
+    void SaveShipType(string ship)
+    {
+        PlayerPrefs.SetString("ship_type", ship);
     }
 }

@@ -18,13 +18,26 @@ public class hostile_encounter : MonoBehaviour {
 
     private List<PolygonCollider2D> colliders;
 
+    // Get ship type from playerprefs.
+    string GetShipType()
+    {
+        string ship_type;
+
+        ship_type = PlayerPrefs.GetString("ship_type");
+        
+        return ship_type;
+    }
+
     void Awake()
     {
         // Instantiate Data Storage
         asteroids = new Dictionary<string, List<GameObject>>();
         colliders = new List<PolygonCollider2D>();
 
-        ship_type = "cruiser";
+
+        ship_type = GetShipType();
+        Debug.Log(ship_type);
+
         player = (GameObject)Resources.Load(@"Ships/" + ship_type);
 
         // Setup Collidable prefabs
@@ -65,7 +78,7 @@ public class hostile_encounter : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-		
+        
     }
 
     private bool randomAsteroidSpawn()
