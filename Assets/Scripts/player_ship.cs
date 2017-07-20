@@ -3,16 +3,16 @@
 public class player_ship : MonoBehaviour
 {
     public int armor;
-    public int acceleration;
-    public int maxVelocity;
+    
 
-    public int projectileSpeed;
-
-    public float rotation;
-    public Rigidbody2D player;
+    private float rotationSpeed;
+    private int projectileSpeed;
+    private int acceleration;
+    private int maxVelocity;
 
     public GameObject projectile;
-    public GameObject turret;
+    private GameObject turret;
+    private Rigidbody2D player;
 
     // Use this for initialization
     void Start()
@@ -23,10 +23,12 @@ public class player_ship : MonoBehaviour
     void Awake()
     {
         player = GetComponent<Rigidbody2D>();
+        armor = 300;
+
         turret = GameObject.Find("turret");
         acceleration = 1000;
         maxVelocity = 600;
-        rotation = 200;
+        rotationSpeed = 200;
         projectileSpeed = 3000;
     }
 
@@ -36,7 +38,7 @@ public class player_ship : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal");
         bool isVerticalPressed = Input.GetButton("Vertical");
 
-        transform.Rotate(new Vector3(0, 0, horizontal * Time.deltaTime * rotation));
+        transform.Rotate(new Vector3(0, 0, horizontal * Time.deltaTime * rotationSpeed));
 
         if (isVerticalPressed)
         {
@@ -51,6 +53,45 @@ public class player_ship : MonoBehaviour
             
             proj.GetComponent<Rigidbody2D>().AddRelativeForce(Vector2.up * projectileSpeed, ForceMode2D.Force);
             
+        }
+    }
+
+    void OnCollisionEnte2D(Collision2D collision)
+    {
+        Debug.Log("Player Collided with " + collision.gameObject.name);
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        var type = collision.gameObject.GetComponent("collide_type") as collide_type;
+        
+        switch (type.type)
+        {
+            case "asteroid_large":
+                armor -= type.damage;
+                break;
+            case "asteroid_med":
+                armor -= type.damage;
+                break;
+            case "asteroid_small":
+                armor -= type.damage;
+                break;
+            case "projectile":
+                armor -= type.damage;
+                break;
+            case "ship":
+                armor -= type.damage;
+                break;
+        }
+
+        checkForDead();
+    }
+
+    private void checkForDead()
+    {
+        if (armor < 0)
+        {
+            Destroy(gameObject);
         }
     }
 
