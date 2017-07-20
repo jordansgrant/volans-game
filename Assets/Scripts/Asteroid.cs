@@ -21,7 +21,7 @@ public class Asteroid : MonoBehaviour {
 
         asteroid = GetComponent<Rigidbody2D>();
 
-        maxVelocity = 2000;
+        maxVelocity = 150;
     }
 
     // Update is called once per frame
