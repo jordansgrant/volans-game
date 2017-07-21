@@ -36,20 +36,25 @@ public class Asteroid : MonoBehaviour {
 
         switch (type.type)
         {
-            case "asteroid_large":
-                reflect(collision);
-                break;
-            case "asteroid_med":
-                reflect(collision);
-                break;
-            case "asteroid_small":
-                reflect(collision);
-                break;
             case "projectile":
                 breakup(collision);
                 break;
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        var type = collision.gameObject.GetComponent("collide_type") as collide_type;
+
+        switch (type.type)
+        {
+            case "asteroid_large":
+                break;
+            case "asteroid_med":
+                break;
+            case "asteroid_small":
+                break;
             case "ship":
-                reflect(collision);
                 break;
         }
     }

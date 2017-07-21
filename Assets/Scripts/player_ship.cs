@@ -56,15 +56,9 @@ public class player_ship : MonoBehaviour
         }
     }
 
-    void OnCollisionEnte2D(Collision2D collision)
-    {
-        Debug.Log("Player Collided with " + collision.gameObject.name);
-    }
-
-    void OnTriggerEnter2D(Collider2D collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
         var type = collision.gameObject.GetComponent("collide_type") as collide_type;
-        
         switch (type.type)
         {
             case "asteroid_large":
@@ -76,10 +70,21 @@ public class player_ship : MonoBehaviour
             case "asteroid_small":
                 armor -= type.damage;
                 break;
-            case "projectile":
+            case "ship":
                 armor -= type.damage;
                 break;
-            case "ship":
+        }
+
+        checkForDead();
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        var type = collision.gameObject.GetComponent("collide_type") as collide_type;
+        
+        switch (type.type)
+        {
+            case "projectile":
                 armor -= type.damage;
                 break;
         }
