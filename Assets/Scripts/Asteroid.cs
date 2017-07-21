@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,17 +10,15 @@ public class Asteroid : MonoBehaviour {
 
     private Dictionary<string, List<GameObject>> asteroids;
     private string asteroid_type;
-
-    private int maxVelocity;
+    
 	// Use this for initialization
 	void Start () {
+        Random.InitState(System.DateTime.Now.Millisecond);
         hostile_encounter h = (hostile_encounter)GameObject.Find("Main Camera").GetComponent("hostile_encounter");
         asteroids = h.asteroids;
         asteroid_type = h.asteroid_type;
 
         asteroid = GetComponent<Rigidbody2D>();
-
-        maxVelocity = 150;
     }
 
     // Update is called once per frame
@@ -29,7 +26,7 @@ public class Asteroid : MonoBehaviour {
 		
 	}
 
-
+    // breakup asteroid on collision with projectile
     void OnTriggerEnter2D(Collider2D collision)
     {
         var type = collision.gameObject.GetComponent("collide_type") as collide_type;
@@ -42,6 +39,7 @@ public class Asteroid : MonoBehaviour {
         }
     }
 
+    // currently no additional logic for these specific collisions
     void OnCollisionEnter2D(Collision2D collision)
     {
         var type = collision.gameObject.GetComponent("collide_type") as collide_type;
@@ -58,27 +56,24 @@ public class Asteroid : MonoBehaviour {
                 break;
         }
     }
-
-    private void reflect(Collider2D col)
-    {
-        Debug.Log("Asteroid collistion reflect");
-        Rigidbody2D collider = col.GetComponent<Rigidbody2D>();
-        float accelCoefficient = 1.0f - (asteroid.velocity.magnitude / maxVelocity);
-        asteroid.AddForce(collider.transform.up * 200 * accelCoefficient);
-
-    }
+    
 
     private void breakup(Collider2D col)
     {
         if (size < 2)
         {
-            GameObject a;
+            GameObject a,b;
             size++;
+            
+            Rigidbody2D colliderBody = col.GetComponent<Rigidbody2D>();
+
             a = Instantiate(asteroids[asteroid_type][size], transform.position, Quaternion.identity);
-            a.GetComponent<Rigidbody2D>().AddForce(col.GetComponent<Rigidbody2D>().transform.up * 200);
+            a.GetComponent<Rigidbody2D>().velocity = col.transform.up * 10;
             ((Asteroid)a.GetComponent("Asteroid")).size = size;
-            a = Instantiate(asteroids[asteroid_type][size], transform.position, Quaternion.identity);
-            a.GetComponent<Rigidbody2D>().AddForce(col.GetComponent<Rigidbody2D>().transform.right * 200);
+
+            // need to instantiate a little bit away so that they do not collide and mess up the breakup
+            a = Instantiate(asteroids[asteroid_type][size], new Vector2(transform.position.x - 0.5f, transform.position.y - 0.5f), Quaternion.identity);
+            a.GetComponent<Rigidbody2D>().velocity = col.transform.right * 10;
             ((Asteroid)a.GetComponent("Asteroid")).size = size;
 
         }
