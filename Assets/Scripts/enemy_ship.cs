@@ -43,12 +43,15 @@ public class enemy_ship : MonoBehaviour
         }
 
         RaycastHit2D hit = Physics2D.Raycast(turret.transform.position, turret.transform.up, Mathf.Infinity, 1 << LayerMask.NameToLayer("Foreground"));
-        collide_type type = ((collide_type)hit.collider.gameObject.GetComponent("collide_type"));
-        if (type.type == "ship" && Time.time > lastFire + fireRate)
+        if (hit)
         {
-            Quaternion rotation = Quaternion.FromToRotation(projectile.transform.up, turret.transform.up);
-            GameObject proj = Instantiate(projectile, turret.transform.position, rotation);
-            lastFire = Time.time;
+            collide_type type = ((collide_type)hit.collider.gameObject.GetComponent("collide_type"));
+            if (type.type == "ship" && Time.time > lastFire + fireRate)
+            {
+                Quaternion rotation = Quaternion.FromToRotation(projectile.transform.up, turret.transform.up);
+                GameObject proj = Instantiate(projectile, turret.transform.position, rotation);
+                lastFire = Time.time;
+            }
         }
 
     }
