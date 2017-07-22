@@ -6,7 +6,6 @@ public class player_ship : MonoBehaviour
     
 
     private float rotationSpeed;
-    private int projectileSpeed;
     private int acceleration;
     private int maxVelocity;
 
@@ -29,7 +28,6 @@ public class player_ship : MonoBehaviour
         acceleration = 1000;
         maxVelocity = 600;
         rotationSpeed = 200;
-        projectileSpeed = 3000;
     }
 
     // Update is called once per frame
@@ -50,9 +48,6 @@ public class player_ship : MonoBehaviour
         {
             Quaternion rotation = Quaternion.FromToRotation(projectile.transform.up, turret.transform.up);
             GameObject proj = Instantiate(projectile, turret.transform.position, rotation);
-            
-            proj.GetComponent<Rigidbody2D>().AddRelativeForce(Vector2.up * projectileSpeed, ForceMode2D.Force);
-            
         }
     }
 
@@ -99,5 +94,6 @@ public class player_ship : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
 
 }

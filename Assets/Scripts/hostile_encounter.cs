@@ -61,6 +61,12 @@ public class hostile_encounter : MonoBehaviour {
 
         colliders.Add(player.GetComponent<PolygonCollider2D>());
 
+        GameObject enemy = Resources.Load(@"Ships/enemy_cruiser") as GameObject;
+        GameObject enemySpawn = GameObject.Find("EnemySpawn");
+        Quaternion rotation = Quaternion.Inverse(enemy.transform.rotation);
+        Instantiate(enemy, enemySpawn.transform.position, rotation);
+        colliders.Add(enemy.GetComponent<PolygonCollider2D>());
+
         // Spawn asteroids
         asteroid_type = "Brown";
         System.Random rand = new System.Random(System.DateTime.Now.Millisecond);
