@@ -2,6 +2,7 @@
 /Library/
 /Obj/
 /obj/
+.vs/**
 *.csproj
 *.sln
 *.user
