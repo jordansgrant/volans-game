@@ -7,6 +7,18 @@ public class bullet_script : MonoBehaviour {
 
     public GameObject explosion;
 
+    public int speed;
+
+    void Start()
+    {
+        speed = 2;
+    }
+
+    void Update()
+    {
+        transform.position += transform.up * speed;
+    }
+
     void OnBecameInvisible()
     {
         Destroy(gameObject);
@@ -17,4 +29,5 @@ public class bullet_script : MonoBehaviour {
         Instantiate(explosion, collision.transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
+
 }
