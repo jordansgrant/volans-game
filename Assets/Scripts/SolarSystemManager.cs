@@ -42,13 +42,23 @@ public class SolarSystemManager : MonoBehaviour
     }
 
     //Spawn a random number of travelables in random positions
-    bool SpawnTravelable(int count)
+    bool SpawnTravelable(int count, float horzOffset)
     {
         GameObject Travelable;
 
-        float x = Random.Range(-13.0f, 13.0f);
+        float rightBound = 13.0f;
+        float leftBound = -13.0f;
+
+        if (count == 0) {
+            rightBound = -10.5f;
+        }
+        if(count == NumberOfTravelables - 1) {
+            leftBound = 10.5f;
+        }
+
+        float x = Random.Range(leftBound, rightBound);
         float y = Random.Range(-9.0f, 9.0f);
-    
+       
         Travelable = Instantiate(Travelables[UsedNames[count]][0], new Vector2(x, y), Quaternion.identity);
         return true;
     }
@@ -76,11 +86,16 @@ public class SolarSystemManager : MonoBehaviour
 
     void Start ()
     {
+        float horzOffset = 0f;
         int count = 0;
         do
         {
-            if (SpawnTravelable(count))
+            if (SpawnTravelable(count, horzOffset))
+            {
                 count++;
+                horzOffset += .5f;
+            }
+                
 
         } while (count < NumberOfTravelables);
         
