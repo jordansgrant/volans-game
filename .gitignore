@@ -2,6 +2,9 @@
 /Library/
 /Obj/
 /obj/
+.vs/**
+/volans_Data/
+*.exe
 *.csproj
 *.sln
 *.user

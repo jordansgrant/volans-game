@@ -17,16 +17,21 @@ public class enemy_find_player : MonoBehaviour {
 	void Update () {
         if (player == null)
         {
-            player = GameObject.FindGameObjectWithTag("Player").transform;
+            GameObject oPlayer = GameObject.FindGameObjectWithTag("Player");
+
+            if (oPlayer == null)
+                return;
+
+            player = oPlayer.transform;
         }
 
         if (player != null)
         {
-            RotateTowards(player.position);
+            MoveTowards(player.position);
         }
 	}
 
-    public void RotateTowards(Vector3 position)
+    public void MoveTowards(Vector3 position)
     {
   
         Vector3 dir = position - transform.position;

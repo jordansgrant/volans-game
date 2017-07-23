@@ -6,15 +6,13 @@ public class enemy_ship : MonoBehaviour
     
     private float fireRate = 0.25f;
     private float lastFire = 0.0f;
-    //private int acceleration;
-    //private int maxVelocity;
+    private Transform player;
 
     public GameObject projectile;
     private GameObject turret;
     private SpriteRenderer thruster;
-    private Rigidbody2D self;
 
-    private Transform player;
+    private bool isGameOver = false;
 
     // Use this for initialization
     void Start()
@@ -24,14 +22,10 @@ public class enemy_ship : MonoBehaviour
 
     void Awake()
     {
-        self = GetComponent<Rigidbody2D>();
         armor = 300;
         
         turret = GameObject.Find("enemy_turret");
         thruster = GameObject.Find("enemy_thruster").GetComponent<SpriteRenderer>();
-        //acceleration = 1000;
-        //maxVelocity = 400;
-        //rotationSpeed = 200;
     }
 
     // Update is called once per frame
@@ -39,16 +33,32 @@ public class enemy_ship : MonoBehaviour
     {
         if (player == null)
         {
-            player = GameObject.FindGameObjectWithTag("Player").transform;
+            GameObject oPlayer = GameObject.FindGameObjectWithTag("Player");
+
+            if (oPlayer == null )
+            {
+                if (!isGameOver)
+                {
+                    GameObject gameOver = Resources.Load("UI/Game Over") as GameObject;
+                    Instantiate(gameOver, new Vector2(0, 2.5f), Quaternion.identity);
+                    isGameOver = true;
+                }
+                return;
+            }
+
+            player = oPlayer.transform;
         }
 
         RaycastHit2D hit = Physics2D.Raycast(turret.transform.position, turret.transform.up, Mathf.Infinity, 1 << LayerMask.NameToLayer("Foreground"));
-        collide_type type = ((collide_type)hit.collider.gameObject.GetComponent("collide_type"));
-        if (type.type == "ship" && Time.time > lastFire + fireRate)
+        if (hit)
         {
-            Quaternion rotation = Quaternion.FromToRotation(projectile.transform.up, turret.transform.up);
-            GameObject proj = Instantiate(projectile, turret.transform.position, rotation);
-            lastFire = Time.time;
+            collide_type type = ((collide_type)hit.collider.gameObject.GetComponent("collide_type"));
+            if (type.type == "ship" && Time.time > lastFire + fireRate)
+            {
+                Quaternion rotation = Quaternion.FromToRotation(projectile.transform.up, turret.transform.up);
+                GameObject proj = Instantiate(projectile, turret.transform.position, rotation);
+                lastFire = Time.time;
+            }
         }
 
     }
@@ -95,6 +105,9 @@ public class enemy_ship : MonoBehaviour
     {
         if (armor < 0)
         {
+            GameObject gameOver = Resources.Load("UI/Game Over Win") as GameObject;
+            Instantiate(gameOver, new Vector2(0, 2.5f), Quaternion.identity);
+            isGameOver = true;
             Destroy(gameObject);
         }
     }
