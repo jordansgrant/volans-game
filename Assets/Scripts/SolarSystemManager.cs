@@ -44,22 +44,32 @@ public class SolarSystemManager : MonoBehaviour
     //Spawn a random number of travelables in random positions
     bool SpawnTravelable(int count, float horzOffset)
     {
-        GameObject Travelable;
+        GameObject TravelableObject;
 
         float rightBound = 13.0f;
         float leftBound = -13.0f;
 
         if (count == 0) {
-            rightBound = -10.5f;
+            rightBound = -10.5f; // Spawn near left side of screen            
         }
         if(count == NumberOfTravelables - 1) {
-            leftBound = 10.5f;
+            leftBound = 10.5f; // Spawn near right side of screen
         }
 
         float x = Random.Range(leftBound, rightBound);
         float y = Random.Range(-9.0f, 9.0f);
-       
-        Travelable = Instantiate(Travelables[UsedNames[count]][0], new Vector2(x, y), Quaternion.identity);
+
+        TravelableObject = Instantiate(Travelables[UsedNames[count]][0], new Vector2(x, y), Quaternion.identity);
+
+        Travelable Script = TravelableObject.GetComponent<Travelable>();
+
+        List<string> Connections = new List<string> { "test" };
+
+        if (count == 0)
+        {
+            //Script.Initialize(UsedNames[count], Connections,
+              //  1, true);
+        }
         return true;
     }
 

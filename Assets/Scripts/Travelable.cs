@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Travelable : MonoBehaviour {
 
-    public List<int> Connections;
+    public List<string> Connections;
 
 
     //public Vector2 Position;
@@ -27,12 +27,13 @@ public class Travelable : MonoBehaviour {
         get { return WasVisited;  }
     }
 
-    public void Initialize(string Name, Vector2 Position,
-         List<int> Connections, int Difficulty)
+    public void Initialize(string Name, List<string> Connections,
+        int Difficulty, bool IsPlayerHere)
     {
         this.Name = Name;
         this.WasVisited = false;
         this.Difficulty = Difficulty;
+        this.IsPlayerHere = IsPlayerHere;
     }
     
 }
