@@ -1,0 +1,12 @@
+/Temp/
+/Library/
+/Obj/
+/obj/
+.vs/**
+/volans_Data/
+*.exe
+*.csproj
+*.sln
+*.user
+*.userprefs
+*.DS_Store
