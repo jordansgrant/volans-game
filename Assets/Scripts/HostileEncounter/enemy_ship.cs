@@ -83,7 +83,7 @@ public class enemy_ship : MonoBehaviour
                 armor -= type.damage;
                 break;
         }
-        Debug.Log(" Enemy Here at a collision");
+
         checkForDead();
     }
 
