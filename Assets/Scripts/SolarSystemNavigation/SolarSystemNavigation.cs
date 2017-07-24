@@ -31,15 +31,12 @@ public class SolarSystemNavigation : MonoBehaviour {
     void SetTargetPosition()
     {
         //check that the target position is valid - may bave to be through an edge matrix
-
-
+        
         //if valid, set to current mouse position
         targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         targetPosition.z = transform.position.z;
         if (isMoving == false)
             isMoving = true;
-
-
 
     }
 

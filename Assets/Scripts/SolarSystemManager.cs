@@ -18,6 +18,16 @@ public class SolarSystemManager : MonoBehaviour
 
     public GameObject PlayerShipUI;
 
+    public GameObject GetPlayerShipUI()
+    {
+        return PlayerShipUI;
+    }
+
+    public void SetPlayerShipUI(Vector3 position)
+    {
+        this.PlayerShipUI.transform.position = position;
+    }
+
     int TotalMoves; // Total moves made by the player
     int PlayerPosition; // Travelable ID where player is currently at
 
@@ -49,7 +59,7 @@ public class SolarSystemManager : MonoBehaviour
         GameObject TravelableObject;
 
         float rightBound = 13.0f;
-        float leftBound = -13.0f;
+        float leftBound = -10.5f;
 
         if (count == 0) {
             rightBound = -10.5f; // Spawn near left side of screen            
@@ -72,8 +82,15 @@ public class SolarSystemManager : MonoBehaviour
         {
             Script.Initialize(UsedNames[count], Connections,
                  1, true);
-            Instantiate(PlayerShipUI, new Vector2(x, (y - 1.75f)), Quaternion.identity);
+            PlayerShipUI = Instantiate(PlayerShipUI, new Vector2(x, (y - 1.75f)), Quaternion.identity);
         }
+        else
+        {
+            Script.Initialize(UsedNames[count], Connections,
+                 1, true);
+        }
+
+
 
         if (count == NumberOfTravelables - 1)
         {
