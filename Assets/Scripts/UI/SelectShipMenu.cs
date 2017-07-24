@@ -90,7 +90,7 @@ public class SelectShipMenu : MonoBehaviour
     {
         Debug.Log("Start Game!");
         if (isSelectionMade == true)
-            LoadScene(2);
+            SceneManager.LoadScene("SolarSystem");
         else
         {
             DisplayNotification("Please select a ship before continuing!");
