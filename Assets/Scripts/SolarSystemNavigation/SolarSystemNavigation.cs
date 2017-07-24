@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SolarSystemNavigation : MonoBehaviour {
     private float speed = 10;       //how fast the player will move
@@ -32,6 +33,13 @@ public class SolarSystemNavigation : MonoBehaviour {
         //check that the target position is valid - may bave to be through an edge matrix
 
 
+        //if valid, set to current mouse position
+        targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        targetPosition.z = transform.position.z;
+        if (isMoving == false)
+            isMoving = true;
+
+
 
     }
 
@@ -43,5 +51,17 @@ public class SolarSystemNavigation : MonoBehaviour {
         //stop if you're there
         if (transform.position == targetPosition)
             isMoving = false;
+    }
+
+    //when the player ship collides with an object, change to the appropriate scene
+    //private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Anomaly")//check the tag of the obj collided with
+            //Application.LoadLevel("HostileEncounter");
+            SceneManager.LoadScene("HostileEncounter");
+
+        if (collision.gameObject.tag == "Exit")
+            SceneManager.LoadScene("SolarSystemNavigation");
     }
 }
