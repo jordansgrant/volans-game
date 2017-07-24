@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 public class Travelable : MonoBehaviour {
@@ -38,19 +39,13 @@ public class Travelable : MonoBehaviour {
     {
         SolarSystemManager script = Camera.main.GetComponent<SolarSystemManager>();
         script.GetPlayerShipUI();
-        //Debug.Log(gameObject.name);
-        //Debug.Log("Clicked on " + Name);
-
-        print("playership start " + script.GetPlayerShipUI());
-
-        print("destination " + gameObject.transform.position);
 
         Destination = gameObject.transform.position;
         Destination.y = Destination.y - 1.75f;
 
         script.SetPlayerShipUI(Destination);
 
-        print("playership end " + script.GetPlayerShipUI());
+        SceneManager.LoadScene("HostileEncounter");
     }
 
     private void TravelHere()

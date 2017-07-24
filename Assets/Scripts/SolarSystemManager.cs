@@ -69,7 +69,7 @@ public class SolarSystemManager : MonoBehaviour
         }
 
         float x = Random.Range(leftBound, rightBound);
-        float y = Random.Range(-9.0f, 9.0f);
+        float y = Random.Range(-8.0f, 9.0f);
 
         TravelableObject = Instantiate(Travelables[UsedNames[count]][0], new Vector2(x, y), Quaternion.identity);
         //TravelableObject = Instantiate(canvas, new Vector2(x, y), Quaternion.identity);
