@@ -11,21 +11,12 @@ public class Travelable : MonoBehaviour {
     public string Type;
     public string Name;
 
-    bool IsPlayerHere
-    {
-        set { IsPlayerHere = value; }
-        get { return IsPlayerHere; }
-    }
-    int Difficulty
-    {
-        set { Difficulty = value; }
-        get { return Difficulty; }
-    }
-    bool WasVisited
-    {
-        set { WasVisited = value; }
-        get { return WasVisited;  }
-    }
+    public bool IsPlayerHere;
+
+    public int Difficulty;
+
+    public bool WasVisited;
+
 
     public void Initialize(string Name, List<string> Connections,
         int Difficulty, bool IsPlayerHere)

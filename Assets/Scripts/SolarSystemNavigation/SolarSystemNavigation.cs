@@ -9,15 +9,15 @@ public class SolarSystemNavigation : MonoBehaviour {
     private bool isMoving;          //check if player is moving
     const int LEFT_MOUSE_BUTTON = 0;//is the mouse clicked
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start ()
     {
         targetPosition = transform.position;
         isMoving = false;
-	}
-	
-	// Update is called once per frame
-	void Update ()
+    }
+    
+    // Update is called once per frame
+    void Update ()
     {
         //if the mouse button has been pressed, set the target position
         if (Input.GetMouseButton(LEFT_MOUSE_BUTTON))
@@ -26,7 +26,7 @@ public class SolarSystemNavigation : MonoBehaviour {
         //if the player is moving, keep moving
         if (isMoving)
             MovePlayer();
-	}
+    }
 
     void SetTargetPosition()
     {
@@ -55,7 +55,7 @@ public class SolarSystemNavigation : MonoBehaviour {
 
     //when the player ship collides with an object, change to the appropriate scene
     //private void OnTriggerEnter2D(Collider2D collision)
-    private void OnTriggerEnter(Collider2D collision)
+    private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.tag == "Anomaly")//check the tag of the obj collided with
             //Application.LoadLevel("HostileEncounter");
