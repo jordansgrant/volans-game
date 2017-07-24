@@ -16,6 +16,18 @@ public class SolarSystemManager : MonoBehaviour
 
     public int NumberOfTravelables;
 
+    public GameObject PlayerShipUI;
+
+    public GameObject GetPlayerShipUI()
+    {
+        return PlayerShipUI;
+    }
+
+    public void SetPlayerShipUI(Vector3 position)
+    {
+        this.PlayerShipUI.transform.position = position;
+    }
+
     int TotalMoves; // Total moves made by the player
     int PlayerPosition; // Travelable ID where player is currently at
 
@@ -47,7 +59,7 @@ public class SolarSystemManager : MonoBehaviour
         GameObject TravelableObject;
 
         float rightBound = 13.0f;
-        float leftBound = -13.0f;
+        float leftBound = -10.5f;
 
         if (count == 0) {
             rightBound = -10.5f; // Spawn near left side of screen            
@@ -57,9 +69,10 @@ public class SolarSystemManager : MonoBehaviour
         }
 
         float x = Random.Range(leftBound, rightBound);
-        float y = Random.Range(-9.0f, 9.0f);
+        float y = Random.Range(-8.0f, 9.0f);
 
         TravelableObject = Instantiate(Travelables[UsedNames[count]][0], new Vector2(x, y), Quaternion.identity);
+        //TravelableObject = Instantiate(canvas, new Vector2(x, y), Quaternion.identity);
 
         Travelable Script = TravelableObject.GetComponent<Travelable>();
 
@@ -67,8 +80,25 @@ public class SolarSystemManager : MonoBehaviour
 
         if (count == 0)
         {
-            //Script.Initialize(UsedNames[count], Connections,
-              //  1, true);
+            Script.Initialize(UsedNames[count], Connections,
+                 1, true);
+            PlayerShipUI = Instantiate(PlayerShipUI, new Vector2(x, (y - 1.75f)), Quaternion.identity);
+        }
+        else
+        {
+            Script.Initialize(UsedNames[count], Connections,
+                 1, true);
+        }
+
+
+
+        if (count == NumberOfTravelables - 1)
+        {
+            TravelableObject.tag = "Exit";
+        }
+        else
+        {
+            TravelableObject.tag = "Anomaly";
         }
         return true;
     }
@@ -80,7 +110,11 @@ public class SolarSystemManager : MonoBehaviour
 
         UsedNames = new List<string> { };
 
-        for(int i = 0; i < NumberOfTravelables; i++)
+        GameObject PlayerShipUI = new GameObject();
+        //PlayerShipUI = (GameObject)(Resources.Load(@"UI\" + "PlayerShipUI"));
+        //Debug.Log(PlayerShipUI);
+
+        for (int i = 0; i < NumberOfTravelables; i++)
         {
             string currentName = GetUniqueRandomName();
 
