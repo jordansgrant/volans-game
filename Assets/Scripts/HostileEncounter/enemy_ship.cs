@@ -2,7 +2,7 @@
 
 public class enemy_ship : MonoBehaviour
 {
-    public int armor;
+    public static int armor;
     
     private float fireRate = 0.25f;
     private float lastFire = 0.0f;
@@ -61,6 +61,8 @@ public class enemy_ship : MonoBehaviour
             }
         }
 
+        checkForDead();
+
     }
 
 
@@ -83,8 +85,7 @@ public class enemy_ship : MonoBehaviour
                 armor -= type.damage;
                 break;
         }
-
-        checkForDead();
+        
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -97,8 +98,7 @@ public class enemy_ship : MonoBehaviour
                 armor -= type.damage;
                 break;
         }
-
-        checkForDead();
+        
     }
 
     private void checkForDead()

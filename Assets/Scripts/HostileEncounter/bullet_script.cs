@@ -7,11 +7,11 @@ public class bullet_script : MonoBehaviour {
 
     public GameObject explosion;
 
-    public int speed;
+    public float speed;
 
     void Start()
     {
-        speed = 1;
+        speed = 0.5f;
     }
 
     void Update()

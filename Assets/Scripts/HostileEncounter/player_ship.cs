@@ -2,7 +2,7 @@
 
 public class player_ship : MonoBehaviour
 {
-    public int armor;
+    public static int armor;
 
     private float rotationSpeed;
     private int acceleration;
@@ -48,6 +48,8 @@ public class player_ship : MonoBehaviour
             Quaternion rotation = Quaternion.FromToRotation(projectile.transform.up, turret.transform.up);
             GameObject proj = Instantiate(projectile, turret.transform.position, rotation);
         }
+
+        checkForDead();
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -68,8 +70,7 @@ public class player_ship : MonoBehaviour
                 armor -= type.damage;
                 break;
         }
-
-        checkForDead();
+        
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -82,8 +83,7 @@ public class player_ship : MonoBehaviour
                 armor -= type.damage;
                 break;
         }
-
-        checkForDead();
+        
     }
 
     private void checkForDead()

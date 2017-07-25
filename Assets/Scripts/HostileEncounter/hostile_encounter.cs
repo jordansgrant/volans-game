@@ -64,7 +64,7 @@ public class hostile_encounter : MonoBehaviour {
         GameObject enemy = Resources.Load(@"Ships/enemy_cruiser") as GameObject;
         GameObject enemySpawn = GameObject.Find("EnemySpawn");
         Quaternion rotation = Quaternion.Inverse(enemy.transform.rotation);
-        Instantiate(enemy, enemySpawn.transform.position, rotation);
+        enemy = Instantiate(enemy, enemySpawn.transform.position, rotation) as GameObject;
         colliders.Add(enemy.GetComponent<PolygonCollider2D>());
 
         // Spawn asteroids
@@ -84,6 +84,13 @@ public class hostile_encounter : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+        
+    }
+
+    void OnGUI()
+    {
+        GUI.Label(new Rect(10, 10, 150, 30), "Player Armor:  " + ((player_ship.armor < 0) ? 0 : player_ship.armor));
+        GUI.Label(new Rect(10, 25, 150, 30), "Enemy Armor: " + ((enemy_ship.armor < 0) ? 0 :enemy_ship.armor));
         
     }
 
