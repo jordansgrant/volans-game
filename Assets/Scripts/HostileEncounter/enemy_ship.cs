@@ -4,7 +4,7 @@ public class enemy_ship : MonoBehaviour
 {
     public static int armor;
     
-    private float fireRate = 0.25f;
+    private float fireRate = 0.20f;
     private float lastFire = 0.0f;
     private Transform player;
 

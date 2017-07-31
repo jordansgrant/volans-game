@@ -5,7 +5,7 @@ using UnityEngine;
 public class enemy_find_player : MonoBehaviour {
     
     public float speed = 2;
-
+    public float rotationSpeed = 2f;
     private Transform player;
     
     // Use this for initialization
@@ -38,7 +38,7 @@ public class enemy_find_player : MonoBehaviour {
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         Quaternion rot = Quaternion.AngleAxis(angle - 90, Vector3.forward);
         // perform rotation slowly toward player 
-        transform.rotation = Quaternion.Slerp(transform.rotation, rot, Time.deltaTime);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rot, rotationSpeed * Time.deltaTime);
 
         
         //move towards the player

@@ -11,12 +11,12 @@ public class bullet_script : MonoBehaviour {
 
     void Start()
     {
-        speed = 0.5f;
+        speed = 25f;
     }
 
     void Update()
     {
-        transform.position += transform.up * speed;
+        transform.position += transform.up * speed * Time.deltaTime;
     }
 
     void OnBecameInvisible()
