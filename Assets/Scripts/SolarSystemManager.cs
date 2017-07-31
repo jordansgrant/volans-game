@@ -64,8 +64,10 @@ public class SolarSystemManager : MonoBehaviour
         if (count == 0) {
             rightBound = -10.5f; // Spawn near left side of screen            
         }
+
         if(count == NumberOfTravelables - 1) {
             leftBound = 10.5f; // Spawn near right side of screen
+            
         }
 
         float x = Random.Range(leftBound, rightBound);
@@ -82,16 +84,14 @@ public class SolarSystemManager : MonoBehaviour
         {
             Script.Initialize(UsedNames[count], Connections,
                  1, true);
-            PlayerShipUI = Instantiate(PlayerShipUI, new Vector2(x, (y - 1.75f)), Quaternion.identity);
+            //PlayerShipUI = Instantiate(PlayerShipUI, new Vector2(x, (y - 1.75f)), Quaternion.identity);
         }
         else
         {
             Script.Initialize(UsedNames[count], Connections,
                  1, true);
         }
-
-
-
+        
         if (count == NumberOfTravelables - 1)
         {
             TravelableObject.tag = "Exit";
@@ -100,6 +100,7 @@ public class SolarSystemManager : MonoBehaviour
         {
             TravelableObject.tag = "Anomaly";
         }
+
         return true;
     }
 
@@ -146,7 +147,8 @@ public class SolarSystemManager : MonoBehaviour
     }
     
     // Update is called once per frame
-    void Update () {
-        
+    void Update ()
+    {
+
     }
 }

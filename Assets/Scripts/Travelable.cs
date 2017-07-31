@@ -44,8 +44,7 @@ public class Travelable : MonoBehaviour {
         Destination.y = Destination.y - 1.75f;
 
         script.SetPlayerShipUI(Destination);
-
-        SceneManager.LoadScene("HostileEncounter");
+        //SceneManager.LoadScene("HostileEncounter");
     }
 
     private void TravelHere()
@@ -63,9 +62,26 @@ public class Travelable : MonoBehaviour {
 
     void Update()
     {
-        TravelHere();      
+        TravelHere();
+
     }
     void TaskOnClick()
     {
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+
+        if (other.gameObject.tag == "Player")//check the tag of the obj collided with
+        {
+            Debug.Log("COLLIDED");
+            SceneManager.LoadScene("HostileEncounter");
+        }
+
+        if (other.gameObject.tag == "Exit")
+        {
+            //SceneManager.LoadScene("SolarSystemNavigation");
+        }
+    }
 }
+
