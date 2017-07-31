@@ -8,7 +8,7 @@ public class SolarSystemNavigation : MonoBehaviour {
     private Vector3 targetPosition; //player position
     private bool isMoving;          //check if player is moving
     const int LEFT_MOUSE_BUTTON = 0;//is the mouse clicked
-
+    const float range = 8.0f;
     // Use this for initialization
     void Start ()
     {
@@ -32,9 +32,16 @@ public class SolarSystemNavigation : MonoBehaviour {
     void SetTargetPosition()
     {
         //check that the target position is valid - may bave to be through an edge matrix
+        Vector2 currentPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
         
         //if valid, set to current mouse position
         targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        
+        if(currentPosition.x + range < targetPosition.x)
+        {
+            return;
+        }
+
         targetPosition.z = transform.position.z;
         if (isMoving == false)
             isMoving = true;

@@ -74,7 +74,6 @@ public class Travelable : MonoBehaviour {
 
         if (other.gameObject.tag == "Player")//check the tag of the obj collided with
         {
-            Debug.Log("COLLIDED");
             SceneManager.LoadScene("HostileEncounter");
         }
 

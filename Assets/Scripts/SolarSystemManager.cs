@@ -54,54 +54,61 @@ public class SolarSystemManager : MonoBehaviour
     }
 
     //Spawn a random number of travelables in random positions
-    bool SpawnTravelable(int count, float horzOffset)
-    {
-        GameObject TravelableObject;
+    void SpawnTravelable()
+    {    
+        float rightBound = -4.0f;
+        float leftBound = -16.0f;
+        float topBound = 9.0f;
+        float botBound = 1.0f;
+        float horzOffset = 0f;
+        float vertOffset = 0f;
 
-        float rightBound = 13.0f;
-        float leftBound = -10.5f;
-
-        if (count == 0) {
-            rightBound = -10.5f; // Spawn near left side of screen            
-        }
-
-        if(count == NumberOfTravelables - 1) {
-            leftBound = 10.5f; // Spawn near right side of screen
-            
-        }
-
-        float x = Random.Range(leftBound, rightBound);
-        float y = Random.Range(-8.0f, 9.0f);
-
-        TravelableObject = Instantiate(Travelables[UsedNames[count]][0], new Vector2(x, y), Quaternion.identity);
-        //TravelableObject = Instantiate(canvas, new Vector2(x, y), Quaternion.identity);
-
-        Travelable Script = TravelableObject.GetComponent<Travelable>();
-
-        List<string> Connections = new List<string> { "test" };
-
-        if (count == 0)
+        for(int j = 0; j < 2; j++)
         {
-            Script.Initialize(UsedNames[count], Connections,
-                 1, true);
-            //PlayerShipUI = Instantiate(PlayerShipUI, new Vector2(x, (y - 1.75f)), Quaternion.identity);
-        }
-        else
-        {
-            Script.Initialize(UsedNames[count], Connections,
-                 1, true);
+            for (int i = 0; i < NumberOfTravelables; i++)
+            {
+                GameObject TravelableObject;
+
+                //Generate random position
+                float x = Random.Range(leftBound += horzOffset,
+                    rightBound += horzOffset);
+                float y = Random.Range(topBound + vertOffset, botBound + vertOffset);
+
+                TravelableObject = Instantiate(Travelables[UsedNames[i]][0], new Vector2(x, y), Quaternion.identity);
+
+                Travelable Script = TravelableObject.GetComponent<Travelable>();
+
+                //Check here if new object collides with an existing object
+
+                List<string> Connections = new List<string> { "test" };
+
+                if (i == 0)
+                {
+                    Script.Initialize(UsedNames[i], Connections,
+                         1, true);
+                }
+                else
+                {
+                    Script.Initialize(UsedNames[i], Connections,
+                         1, true);
+                }
+
+                if (i == NumberOfTravelables - 1)
+                {
+                    TravelableObject.tag = "Exit";
+                }
+                else
+                {
+                    TravelableObject.tag = "Anomaly";
+                }
+
+                horzOffset += 3;
+            }
+
+            vertOffset -= 6;
+            horzOffset = 0f;
         }
         
-        if (count == NumberOfTravelables - 1)
-        {
-            TravelableObject.tag = "Exit";
-        }
-        else
-        {
-            TravelableObject.tag = "Anomaly";
-        }
-
-        return true;
     }
 
     // Use this for initialization
@@ -112,8 +119,6 @@ public class SolarSystemManager : MonoBehaviour
         UsedNames = new List<string> { };
 
         GameObject PlayerShipUI = new GameObject();
-        //PlayerShipUI = (GameObject)(Resources.Load(@"UI\" + "PlayerShipUI"));
-        //Debug.Log(PlayerShipUI);
 
         for (int i = 0; i < NumberOfTravelables; i++)
         {
@@ -133,16 +138,7 @@ public class SolarSystemManager : MonoBehaviour
     {
         float horzOffset = 0f;
         int count = 0;
-        do
-        {
-            if (SpawnTravelable(count, horzOffset))
-            {
-                count++;
-                horzOffset += .5f;
-            }
-                
-
-        } while (count < NumberOfTravelables);
+        SpawnTravelable();
         
     }
     
