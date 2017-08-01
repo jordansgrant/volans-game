@@ -90,8 +90,10 @@ public class hostile_encounter : MonoBehaviour {
     void OnGUI()
     {
         GUI.Label(new Rect(10, 10, 150, 30), "Player Armor:  " + ((player_ship.armor < 0) ? 0 : player_ship.armor));
-        GUI.Label(new Rect(10, 25, 150, 30), "Enemy Armor: " + ((enemy_ship.armor < 0) ? 0 :enemy_ship.armor));
-        
+        GUI.Label(new Rect(10, 25, 150, 30), "Player Power:  " + ((player_ship.power < 0) ? 0 : player_ship.power));
+        GUI.Label(new Rect(10, 40, 150, 30), "Enemy Armor: " + ((enemy_ship.armor < 0) ? 0 : enemy_ship.armor));
+       
+
     }
 
     private bool randomAsteroidSpawn()

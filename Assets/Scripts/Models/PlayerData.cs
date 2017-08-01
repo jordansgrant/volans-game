@@ -12,5 +12,7 @@ public class PlayerData
     public int acceleration;
     public int maxVelocity;
 
+    public string projectile;
+
 
 }

@@ -2,31 +2,37 @@
 
 public class player_ship : MonoBehaviour
 {
-    public static int armor;
+    public int maxArmor;
+    public int maxPower;
+    public int powerRechargeSize;
 
-    private float rotationSpeed;
-    private int acceleration;
-    private int maxVelocity;
+    public static int armor;
+    public static int power;
+    public static GameObject playerRef;
+
+    private float rotationSpeed = 200;
+    private int acceleration = 1000;
+    private int maxVelocity = 600;
+
+    private float powerRechargeRate = 0.4f;
+    private float lastRechargeTick = 0.0f;
 
     public GameObject projectile;
     private GameObject turret;
     private Rigidbody2D player;
+    private Shield shield;
 
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
-    void Awake()
+   void Awake()
     {
         player = GetComponent<Rigidbody2D>();
-        armor = 300;
+        armor = maxArmor;
+        power = maxPower;
 
         turret = GameObject.Find("turret");
-        acceleration = 1000;
-        maxVelocity = 600;
-        rotationSpeed = 200;
+
+        playerRef = this.gameObject;
+
+        shield = gameObject.GetComponentInChildren<Shield>();
     }
 
     // Update is called once per frame
@@ -49,11 +55,26 @@ public class player_ship : MonoBehaviour
             GameObject proj = Instantiate(projectile, turret.transform.position, rotation);
         }
 
+        if (!Input.GetKey("c") &&
+            Time.time > lastRechargeTick + powerRechargeRate 
+            && power < maxPower)
+        {
+            if (power + powerRechargeSize > maxPower)
+                power = maxPower;
+
+            else
+                power += powerRechargeSize;
+
+            lastRechargeTick = Time.time;
+        }
+
         checkForDead();
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
+        if (shield.isEnabled)
+            return;
         var type = collision.gameObject.GetComponent("collide_type") as collide_type;
         switch (type.type)
         {
@@ -75,6 +96,8 @@ public class player_ship : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
+        if (shield.isEnabled)
+            return;
         var type = collision.gameObject.GetComponent("collide_type") as collide_type;
         
         switch (type.type)
