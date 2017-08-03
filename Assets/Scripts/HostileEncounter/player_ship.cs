@@ -87,6 +87,9 @@ public class player_ship : MonoBehaviour
             case "asteroid_small":
                 armor -= type.damage;
                 break;
+            case "shield":
+                armor -= type.damage;
+                break;
             case "ship":
                 armor -= type.damage;
                 break;

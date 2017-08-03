@@ -14,6 +14,8 @@ public class Shield : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        Rigidbody2D body = GetComponent<Rigidbody2D>();
+
         shield = GetComponent<SpriteRenderer>();
         circleCollider = GetComponent<CircleCollider2D>();
 
@@ -42,6 +44,7 @@ public class Shield : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D collision)
     {
         collide_type type = collision.GetComponent<collide_type>();
+        Debug.Log("Hit by: " + type.type + " in shield trigger");
         switch (type.type)
         {
             case "projectile":
@@ -52,6 +55,7 @@ public class Shield : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D collision)
     {
         collide_type type = collision.collider.GetComponent<collide_type>();
+        Debug.Log("Hit by: " + type.type + " in shield collider");
         switch (type.type)
         {
             case "asteroid_large":
@@ -70,14 +74,14 @@ public class Shield : MonoBehaviour {
     private void disable()
     {
         shield.enabled = false;
-        circleCollider.isTrigger = true;
+        circleCollider.enabled = false;
         isEnabled = false;
     }
 
     private void enable()
     {
         shield.enabled = true;
-        circleCollider.isTrigger = false;
+        circleCollider.enabled = true;
         isEnabled = true;
     }
 }
