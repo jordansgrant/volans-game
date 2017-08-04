@@ -8,14 +8,7 @@ public class GameManager : MonoBehaviour {
     public static GameManager game;
 
     // Player Information
-    public int playerArmor;
-    public int playerPower;
-
-    public float playerRotationSpeed;
-    public int playerAcceleration;
-    public int playerMaxVelocity;
-
-    public string playerProjectile;
+    public PlayerData pData;
 
     // Solar System Information
 
@@ -40,15 +33,6 @@ public class GameManager : MonoBehaviour {
         // Save Player information
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/player.dat");
-        PlayerData pData = new PlayerData();
-        pData.armor = playerArmor;
-        pData.power = playerPower;
-
-        pData.rotationSpeed = playerRotationSpeed;
-        pData.acceleration = playerAcceleration;
-        pData.maxVelocity = playerMaxVelocity;
-
-        pData.projectile = playerProjectile;
 
         bf.Serialize(file, pData);
         file.Close();
@@ -60,11 +44,8 @@ public class GameManager : MonoBehaviour {
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Open(Application.persistentDataPath + "/player.dat", FileMode.Open);
 
-        PlayerData pData = (PlayerData)bf.Deserialize(file);
+        pData = bf.Deserialize(file) as PlayerData;
         file.Close();
-
-        playerArmor = pData.armor;
-        playerPower = pData.power;
     }
 
 

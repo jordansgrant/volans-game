@@ -105,6 +105,6 @@ public class SelectShipMenu : MonoBehaviour
     // Set ship type in playerprefs.
     void SaveShipType(string ship)
     {
-        PlayerPrefs.SetString("ship_type", ship);
+        GameManager.game.pData.shipType = ship;
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
 
 public class TitleMenu : MonoBehaviour {
 
@@ -13,6 +14,20 @@ public class TitleMenu : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
+        try
+        {
+            FileStream file = File.Open(Application.persistentDataPath + "/player.dat", FileMode.Open);
+            file.Close();
+            continueGame.interactable = true;
+        }
+        catch
+        {
+            continueGame.interactable = false;
+        }
+    }
+
+    void Awake()
+    {
         Button btn = newGame.GetComponent<Button>();
         btn.onClick.AddListener(DoNewGame);
 
@@ -21,23 +36,24 @@ public class TitleMenu : MonoBehaviour {
 
         btn = exitGame.GetComponent<Button>();
         btn.onClick.AddListener(DoExitGame);
-    }
-    
-    // Update is called once per frame
-    void Update ()
-    {
         
     }
 
     void DoNewGame()
     {
         Debug.Log("New Game!");
-        LoadScene(1);
+        LoadScene("ShipSelection");
     }
 
     void DoContinueGame()
     {
         Debug.Log("Continue Game!");
+        
+        GameObject manager = new GameObject("GameManager");
+        manager.AddComponent<GameManager>();
+        GameManager.game.Load();
+
+        LoadScene("SolarSystem");
     }
 
     void DoExitGame()
@@ -45,8 +61,8 @@ public class TitleMenu : MonoBehaviour {
         Application.Quit();
     }
 
-    public void LoadScene(int SceneNumber)
+    public void LoadScene(string scene)
     {
-        SceneManager.LoadScene(SceneNumber);
+        SceneManager.LoadScene(scene);
     }
 }
