@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 [System.Serializable]
 public class PlayerData
@@ -16,5 +17,15 @@ public class PlayerData
 
     public int      powerRechargeSize;
     public float    powerRechargeRate;
+
+    public List<IModule> moduleInventory;
+    public List<IModule> moduleAttached;
+
+
+    public PlayerData()
+    {
+        moduleInventory = new List<IModule>();
+        moduleAttached = new List<IModule>();
+    }
 
 }
