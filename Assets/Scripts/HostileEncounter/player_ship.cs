@@ -2,20 +2,13 @@
 
 public class player_ship : MonoBehaviour
 {
-    public int maxArmor;
-    public int maxPower;
-    public int powerRechargeSize;
-
     public static int armor;
     public static int power;
     public static GameObject playerRef;
-
-    private float rotationSpeed = 200;
-    private int acceleration = 1000;
-    private int maxVelocity = 600;
-
-    private float powerRechargeRate = 0.4f;
+    
     private float lastRechargeTick = 0.0f;
+
+    private PlayerData pData;
 
     public GameObject projectile;
     private GameObject turret;
@@ -25,14 +18,20 @@ public class player_ship : MonoBehaviour
    void Awake()
     {
         player = GetComponent<Rigidbody2D>();
-        armor = maxArmor;
-        power = maxPower;
+
+        pData = GameManager.game.pData;
+        armor = pData.maxArmor;
+        power = pData.maxPower;
+
+        Debug.Log("Player Ship: " + pData.shipType);
 
         turret = GameObject.Find("turret");
 
         playerRef = this.gameObject;
 
         shield = gameObject.GetComponentInChildren<Shield>();
+
+        
     }
 
     // Update is called once per frame
@@ -41,12 +40,12 @@ public class player_ship : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal");
         bool isVerticalPressed = Input.GetButton("Vertical");
 
-        transform.Rotate(new Vector3(0, 0, horizontal * Time.deltaTime * rotationSpeed));
+        transform.Rotate(new Vector3(0, 0, horizontal * Time.deltaTime * pData.rotationSpeed));
 
         if (isVerticalPressed)
         {
-            float accelCoefficient = 1.0f - (player.velocity.magnitude / maxVelocity);
-            player.AddForce(transform.up * Time.deltaTime * acceleration * accelCoefficient);
+            float accelCoefficient = 1.0f - (player.velocity.magnitude / pData.maxVelocity);
+            player.AddForce(transform.up * Time.deltaTime * pData.acceleration * accelCoefficient);
         }
 
         if (Input.GetKeyDown("space"))
@@ -56,14 +55,14 @@ public class player_ship : MonoBehaviour
         }
 
         if (!Input.GetKey("c") &&
-            Time.time > lastRechargeTick + powerRechargeRate 
-            && power < maxPower)
+            Time.time > lastRechargeTick + pData.powerRechargeRate 
+            && power < pData.maxPower)
         {
-            if (power + powerRechargeSize > maxPower)
-                power = maxPower;
+            if (power + pData.powerRechargeSize > pData.maxPower)
+                power = pData.maxPower;
 
             else
-                power += powerRechargeSize;
+                power += pData.powerRechargeSize;
 
             lastRechargeTick = Time.time;
         }
@@ -85,6 +84,9 @@ public class player_ship : MonoBehaviour
                 armor -= type.damage;
                 break;
             case "asteroid_small":
+                armor -= type.damage;
+                break;
+            case "shield":
                 armor -= type.damage;
                 break;
             case "ship":

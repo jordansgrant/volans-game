@@ -27,12 +27,11 @@ public class bullet_script : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D collision)
     {
         collide_type type = collision.GetComponent<collide_type>();
-        if (type.type == "shield")
+        if (type.type != "shield")
         {
-            Debug.Log("Bullet hit shield!");
-            return;
+            Instantiate(explosion, collision.transform.position, Quaternion.identity);
         }
-        Instantiate(explosion, collision.transform.position, Quaternion.identity);
+        
         Destroy(gameObject);
     }
     
