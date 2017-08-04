@@ -58,7 +58,7 @@ public class SolarSystemManager : MonoBehaviour
     {    
         float rightBound = -4.0f;
         float leftBound = -16.0f;
-        float topBound = 9.0f;
+        float topBound = 7.75f;
         float botBound = 1.0f;
         float horzOffset = 0f;
         float vertOffset = 0f;
@@ -118,7 +118,7 @@ public class SolarSystemManager : MonoBehaviour
 
         UsedNames = new List<string> { };
 
-        GameObject PlayerShipUI = new GameObject();
+        //GameObject PlayerShipUI = new GameObject();
 
         for (int i = 0; i < NumberOfTravelables; i++)
         {
@@ -136,8 +136,8 @@ public class SolarSystemManager : MonoBehaviour
 
     void Start ()
     {
-        float horzOffset = 0f;
-        int count = 0;
+        //float horzOffset = 0f;
+        //int count = 0;
         SpawnTravelable();
         
     }

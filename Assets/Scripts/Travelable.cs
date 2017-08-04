@@ -63,10 +63,6 @@ public class Travelable : MonoBehaviour {
     void Update()
     {
         TravelHere();
-
-    }
-    void TaskOnClick()
-    {
     }
 
     private void OnTriggerEnter2D(Collider2D other)
