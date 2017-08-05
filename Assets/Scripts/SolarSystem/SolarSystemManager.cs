@@ -109,9 +109,10 @@ public class SolarSystemManager : MonoBehaviour
                 //Save current planet in game manager
                 //Debug.Log(TravelableObject.GetComponent<Travelable>().Name);
                 //print(Script.name + " " + TravelableObject.transform.position.x);
+                print("NAME: " + TravelableObject.GetComponent<Travelable>().Name);
                 GameManager.game.sData.Planets.Add(TravelableObject.GetComponent<Travelable>().Name, TravelableObject);
                 print("from gamemanager " + GameManager.game.sData.Planets[TravelableObject.GetComponent<Travelable>().Name]);
-                print("planet count: " + GameManager.game.sData.Planets.Count);
+                //print("planet count: " + GameManager.game.sData.Planets.Count);
             }
         }
     }

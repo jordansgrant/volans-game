@@ -4,21 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+public class ShipFitting : MonoBehaviour {
 
-public class ShipFittingManager : MonoBehaviour {
-    
-    public PlayerInventory inventory;
     public Button solarSystem;
 
     //Load Player's current inventory
-    public void loadInventory()
-    {
-        print(inventory.items[0].itemName);
-    }
 
     void awake()
     {
-        inventory = gameObject.GetComponents<PlayerInventory>()[0];
 
     }
 
@@ -37,13 +30,4 @@ public class ShipFittingManager : MonoBehaviour {
         Debug.Log("SOLAR SYSTEM BTN");
         SceneManager.LoadScene("SolarSystem");
     }
-    //Move item from inventory to ship
-    //Remove item from inventory
-    //Add to ship
-
-    //Remove item from ship and into inventory
-    //remove item from ship
-    //add to inventory
-
-    //Trash item from inventory
 }

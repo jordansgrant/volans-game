@@ -67,8 +67,9 @@ public class Travelable : MonoBehaviour {
         print("collider type" + other.GetType());
         if (other.gameObject.tag == "Player")//check the tag of the obj collided with
         {
+            print(WasVisited);
             WasVisited = true;
-            SceneManager.LoadScene("HostileEncounter");
+            //SceneManager.LoadScene("HostileEncounter");
         }
 
         if (other.gameObject.tag == "Exit")
