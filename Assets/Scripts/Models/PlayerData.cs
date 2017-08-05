@@ -28,4 +28,7 @@ public class PlayerData
         moduleAttached = new List<IModule>();
     }
 
+    //I was not sure whether to implement a wrapper class
+    //for player inventory.
+    public Dictionary<string, GameObject> playerInventory;
 }

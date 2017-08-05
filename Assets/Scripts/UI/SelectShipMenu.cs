@@ -102,7 +102,7 @@ public class SelectShipMenu : MonoBehaviour
         SceneManager.LoadScene(SceneNumber);
     }
 
-    // Set ship type in playerprefs.
+    // Set ship type in game manager.
     void SaveShipType(string ship)
     {
         GameManager.game.pData.shipType = ship;

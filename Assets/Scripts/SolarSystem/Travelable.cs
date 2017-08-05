@@ -9,30 +9,27 @@ public class Travelable : MonoBehaviour {
 
     public List<string> Connections;
 
-    public Button yourButton;
-
-    //public Vector2 Position;
     public string Type;
     public string Name;
-
     public bool IsPlayerHere;
-
     public int Difficulty;
-
     public bool WasVisited;
 
+    public IModule Module;
     public GameObject PlayerShipUI;
+
+    //Put slot to hold a module
 
     private Vector2 Destination;
 
-
     public void Initialize(string Name, List<string> Connections,
-        int Difficulty, bool IsPlayerHere)
+        int Difficulty, bool IsPlayerHere, IModule Module = null)
     {
         this.Name = Name;
         this.WasVisited = false;
         this.Difficulty = Difficulty;
         this.IsPlayerHere = IsPlayerHere;
+        this.Module = Module;
     }
 
     public void OnMouseDown()
@@ -67,9 +64,10 @@ public class Travelable : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-
+        print("collider type" + other.GetType());
         if (other.gameObject.tag == "Player")//check the tag of the obj collided with
         {
+            WasVisited = true;
             SceneManager.LoadScene("HostileEncounter");
         }
 

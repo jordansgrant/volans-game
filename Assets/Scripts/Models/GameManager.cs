@@ -11,7 +11,8 @@ public class GameManager : MonoBehaviour {
     public PlayerData pData;
 
     // Solar System Information
-
+    public SolarSystem sData; 
+    
     // Use this for initialization
     void Awake() {
 
@@ -36,6 +37,7 @@ public class GameManager : MonoBehaviour {
         FileStream file = File.Create(Application.persistentDataPath + "/player.dat");
 
         bf.Serialize(file, pData);
+        bf.Serialize(file, sData);
         file.Close();
     }
 
@@ -46,6 +48,7 @@ public class GameManager : MonoBehaviour {
         FileStream file = File.Open(Application.persistentDataPath + "/player.dat", FileMode.Open);
 
         pData = bf.Deserialize(file) as PlayerData;
+        sData = bf.Deserialize(file) as SolarSystem;
         file.Close();
     }
 

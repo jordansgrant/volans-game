@@ -23,6 +23,12 @@ public class hostile_encounter : MonoBehaviour {
         // Instantiate Data Storage
         asteroids = new Dictionary<string, List<GameObject>>();
         colliders = new List<PolygonCollider2D>();
+        Debug.Log(GameManager.game);
+
+        ship_type = GameManager.game.pData.shipType;
+        Debug.Log(ship_type);
+
+        player = (GameObject)Resources.Load(@"Ships/" + ship_type);
 
         // Setup Collidable prefabs
         asteroids.Add("Brown", new List<GameObject>());
