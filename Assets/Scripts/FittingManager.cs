@@ -61,8 +61,7 @@ public class FittingManager : MonoBehaviour
 
         //Load current ship sprite
         LoadShip();
-
-
+        print(GameManager.game.sData.test);
     }
 
     void Start()
@@ -73,6 +72,7 @@ public class FittingManager : MonoBehaviour
     void BackToSolar()
     {
         Debug.Log("Back to Solar System!");
+
         SceneManager.LoadScene("SolarSystem");
     }
     //Move item from inventory to ship

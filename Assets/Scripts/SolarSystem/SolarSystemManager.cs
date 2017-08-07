@@ -97,7 +97,6 @@ public class SolarSystemManager : MonoBehaviour
 
             if (collisionDetected(currCollider))
             {
-                print("Destroyed");
                 Destroy(TravelableObject);
                 i = i - 1; //Redo this iteration.
             }
@@ -106,13 +105,29 @@ public class SolarSystemManager : MonoBehaviour
                 colliders.Add(currCollider);
 
                 //Save current planet in game manager
-                //Debug.Log(TravelableObject.GetComponent<Travelable>().Name);
-                //print(Script.name + " " + TravelableObject.transform.position.x);
-                print("NAME: " + TravelableObject.GetComponent<Travelable>().Name);
                 GameManager.game.sData.Planets.Add(TravelableObject.GetComponent<Travelable>().Name, TravelableObject);
-                print("from gamemanager " + GameManager.game.sData.Planets[TravelableObject.GetComponent<Travelable>().Name]);
-                //print("planet count: " + GameManager.game.sData.Planets.Count);
+                GameManager.game.sData.test = 10;
+                print(GameManager.game.sData.Planets[TravelableObject.GetComponent<Travelable>().Name]);
+                print("planet count: " + GameManager.game.sData.Planets.Count);
+               
             }
+        }
+
+        print(GameManager.game.sData.test);
+    }
+
+    //Load an already existing solar system.
+    void LoadSolarSystem()
+    {
+        var Planets = GameManager.game.sData.Planets;
+        print("planet count: " + GameManager.game.sData.Planets.Count);
+
+        foreach (var planetName in Planets.Values)
+        {
+            print(GameManager.game.sData.test);
+            print(planetName);
+            print(planetName.transform.position);
+            //Instantiate(Planets[planetName], Planets[planetName].transform.position, Quaternion.identity);
         }
     }
 
@@ -151,12 +166,16 @@ public class SolarSystemManager : MonoBehaviour
 
     void Start ()
     {
-        SpawnTravelable();        
+        if (!GameManager.game.sData.isSpawned)
+        {
+            SpawnTravelable();
+            GameManager.game.sData.isSpawned = true;
+        }
+        else
+        {
+            LoadSolarSystem();
+            print("reload");
+        }  
     }
     
-    // Update is called once per frame
-    void Update ()
-    {
-
-    }
 }

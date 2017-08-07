@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour {
 
         pData = bf.Deserialize(file) as PlayerData;
         sData = bf.Deserialize(file) as SolarSystem;
+
         file.Close();
     }
 
