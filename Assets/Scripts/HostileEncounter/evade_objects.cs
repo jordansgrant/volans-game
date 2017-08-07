@@ -1,18 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class evade_objects : MonoBehaviour
 { 
-
-    private GameObject turret;
     public float speed = 2;
-
-    // Use this for initialization
-    void Start()
-    {
-        turret = GameObject.Find("enemy_turret");
-    }
 
     // Update is called once per frame
     void Update()

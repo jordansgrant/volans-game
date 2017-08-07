@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Threading;
+using UnityEngine;
 
 public class player_ship : MonoBehaviour
 {
@@ -7,6 +9,7 @@ public class player_ship : MonoBehaviour
     public static GameObject playerRef;
     
     private float lastRechargeTick = 0.0f;
+    private float lastFired = 0.0f;
 
     private PlayerData pData;
 
@@ -15,7 +18,7 @@ public class player_ship : MonoBehaviour
     private Rigidbody2D player;
     private Shield shield;
 
-   void Awake()
+   void Start()
     {
         player = GetComponent<Rigidbody2D>();
 
@@ -23,7 +26,7 @@ public class player_ship : MonoBehaviour
         armor = pData.maxArmor;
         power = pData.maxPower;
 
-        Debug.Log("Player Ship: " + pData.shipType);
+        projectile = Resources.Load(pData.weapon.projectile) as GameObject;
 
         turret = GameObject.Find("turret");
 
@@ -47,11 +50,11 @@ public class player_ship : MonoBehaviour
             float accelCoefficient = 1.0f - (player.velocity.magnitude / pData.maxVelocity);
             player.AddForce(transform.up * Time.deltaTime * pData.acceleration * accelCoefficient);
         }
-
-        if (Input.GetKeyDown("space"))
+        
+        if (Input.GetKeyDown(KeyCode.Space) && Time.time > lastFired + pData.weapon.fireRate)
         {
-            Quaternion rotation = Quaternion.FromToRotation(projectile.transform.up, turret.transform.up);
-            GameObject proj = Instantiate(projectile, turret.transform.position, rotation);
+            lastFired = Time.time;
+            Fire(pData.weapon.fireCount);
         }
 
         if (!Input.GetKey("c") &&
@@ -68,6 +71,24 @@ public class player_ship : MonoBehaviour
         }
 
         checkForDead();
+    }
+
+    void Fire(int count)
+    {
+        Quaternion rotation = Quaternion.FromToRotation(projectile.transform.up, turret.transform.up);
+        Instantiate(projectile, turret.transform.position, rotation);
+
+        StartCoroutine(FireDelayed(count - 1));
+    }
+
+    IEnumerator FireDelayed(int count)
+    {
+        Quaternion rotation = Quaternion.FromToRotation(projectile.transform.up, turret.transform.up);
+        for (int i = 0; i < count - 1; i++)
+        {
+            yield return new WaitForSeconds(pData.weapon.fireDelay);
+            Instantiate(projectile, turret.transform.position, rotation);
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision)

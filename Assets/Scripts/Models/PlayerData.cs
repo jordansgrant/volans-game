@@ -12,19 +12,20 @@ public class PlayerData
     public int      acceleration;
     public int      maxVelocity;
 
-    public string   projectile;
+    public WeaponInfo weapon;
+
     public string   shipType;
 
     public int      powerRechargeSize;
     public float    powerRechargeRate;
 
-    public List<GameObject> moduleInventory;
+    public List<IModule> moduleInventory;
     public List<IModule> moduleAttached;
 
 
     public PlayerData()
     {
-        moduleInventory = new List<GameObject>();
+        moduleInventory = new List<IModule>();
         moduleAttached = new List<IModule>();
     }
 

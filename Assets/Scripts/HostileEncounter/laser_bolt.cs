@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 
-public class bullet_script : MonoBehaviour {
+public class laser_bolt : MonoBehaviour {
 
     public GameObject explosion;
 
-    private float speed = 30f;
+    private float speed = 25f;
 
     void Update()
     {
@@ -23,9 +23,8 @@ public class bullet_script : MonoBehaviour {
         {
             Instantiate(explosion, collision.transform.position, Quaternion.identity);
         }
-        
+
         Destroy(gameObject);
     }
-    
 
 }
