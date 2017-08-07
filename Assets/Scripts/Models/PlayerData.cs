@@ -19,13 +19,13 @@ public class PlayerData
     public int      powerRechargeSize;
     public float    powerRechargeRate;
 
-    public List<IModule> moduleInventory;
+    public List<string> moduleInventory;
     public List<IModule> moduleAttached;
 
 
     public PlayerData()
     {
-        moduleInventory = new List<IModule>();
+        moduleInventory = new List<string>();
         moduleAttached = new List<IModule>();
     }
 

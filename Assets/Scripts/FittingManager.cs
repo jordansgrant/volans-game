@@ -12,6 +12,8 @@ public class FittingManager : MonoBehaviour
     public Image Ship;
 
     private Sprite shipImg;
+    private List<GameObject> modules;
+    private GameObject module;
 
     private void LoadShip()
     {
@@ -21,15 +23,26 @@ public class FittingManager : MonoBehaviour
 
     private void DrawShip()
     {
-        //print(Ship);
         Ship.GetComponent<Image>().sprite = shipImg;
     }
 
-    //Load Player's current inventory
-    public void LoadInventory()
+    private void LoadInventory()
     {
+        GameObject.Find("ItemSlot0");
+        int i = 0;
+        string path;
+        foreach (var mod in GameManager.game.pData.moduleInventory)
+        {
+            module = Resources.Load<GameObject>(@"Modules\" + mod) as GameObject;
+            print(module);
+            modules.Add(module);
+            path = "InventorySlot" + i + "/ItemImage";
 
-        //print(inventory.items[0].itemName);
+            GameObject.Find(path).GetComponent<Image>().sprite = module.GetComponentInChildren<Image>().sprite;
+            GameObject.Find(path).GetComponent<Image>().enabled = true;
+
+            i++;
+        }
     }
 
     void Awake()
@@ -37,18 +50,19 @@ public class FittingManager : MonoBehaviour
         Button btn = SolarSys.GetComponent<Button>();
         btn.onClick.AddListener(BackToSolar);
 
+        modules = new List<GameObject>();
+
+        //Test data
+        GameManager.game.pData.moduleInventory.Add("ArmorMod");
+        GameManager.game.pData.moduleInventory.Add("PowerMod");
+
         //Load Inventory
-        print(GameObject.Find("ItemSlot0"));
+        LoadInventory();
 
         //Load current ship sprite
         LoadShip();
 
-        //GameManager.game.pData.moduleInventory.Add();
 
-        foreach (var mod in GameManager.game.pData.moduleInventory)
-        {
-            //print(mod.getName());
-        }
     }
 
     void Start()
