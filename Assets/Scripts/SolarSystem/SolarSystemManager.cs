@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class SolarSystemManager : MonoBehaviour
 {
-
     //private List<Travelable> SolarSystem;
     //public Dictionary<string, Dictionary<string, GameObject>> SolarSystem;
 

@@ -41,7 +41,6 @@ public class Travelable : MonoBehaviour {
         Destination.y = Destination.y - 1.75f;
 
         script.SetPlayerShipUI(Destination);
-        //SceneManager.LoadScene("HostileEncounter");
     }
 
     private void TravelHere()
@@ -64,14 +63,19 @@ public class Travelable : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        print("collider type" + other.GetType());
-        if (other.gameObject.tag == "Player")//check the tag of the obj collided with
+        //print("collider type" + other.GetType());
+        
+        if (other.gameObject.tag == "Player" && this.WasVisited == false)
         {
             print(WasVisited);
             WasVisited = true;
             //SceneManager.LoadScene("HostileEncounter");
         }
-
+        if (this.WasVisited == true)
+        {
+            print("running");
+            SolarSystemGUI.instance.DisplayNotification("You have already visited this planet!");
+        }
         if (other.gameObject.tag == "Exit")
         {
             //SceneManager.LoadScene("SolarSystemNavigation");

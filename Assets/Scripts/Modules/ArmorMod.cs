@@ -1,8 +1,17 @@
-﻿[System.Serializable]
-public class ArmorMod : IModule {
+﻿using UnityEngine;
+
+[System.Serializable]
+public class ArmorMod : MonoBehaviour, IModule {
 
     public int additionalArmor = 50;
     private bool active = false;
+
+    public string name; 
+
+    public string getName()
+    {
+        return name;
+    }
 
     public bool isActive()
     {

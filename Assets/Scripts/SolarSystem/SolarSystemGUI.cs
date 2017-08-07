@@ -45,7 +45,7 @@ public class SolarSystemGUI : MonoBehaviour {
 
     void DoShipInventory()
     {
-        SceneManager.LoadScene("PlayerInventory");
+        SceneManager.LoadScene("FittingMenu");
     }
 
     public void DisplayNotification(string str)

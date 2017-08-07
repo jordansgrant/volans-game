@@ -3,4 +3,5 @@
     bool isActive();
     void addEffect();
     void removeEffect();
+    string getName();
 }
