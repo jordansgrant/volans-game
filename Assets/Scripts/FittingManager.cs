@@ -8,21 +8,41 @@ using UnityEngine.SceneManagement;
 public class FittingManager : MonoBehaviour
 {
 
-    public Button solarSys;
-    //Load Player's current inventory
-    public void loadInventory()
+    public Button SolarSys;
+    public Image Ship;
+
+    private Sprite shipImg;
+
+    private void LoadShip()
     {
+        string shipType = GameManager.game.pData.shipType;
+        shipImg = Resources.Load<Sprite>(@"Ships\ShipSprites\" + shipType) as Sprite;
+    }
+
+    private void DrawShip()
+    {
+        //print(Ship);
+        Ship.GetComponent<Image>().sprite = shipImg;
+    }
+
+    //Load Player's current inventory
+    public void LoadInventory()
+    {
+
         //print(inventory.items[0].itemName);
     }
 
     void Awake()
     {
-        Button btn = solarSys.GetComponent<Button>();
+        Button btn = SolarSys.GetComponent<Button>();
         btn.onClick.AddListener(BackToSolar);
 
         //Load Inventory
         print(GameObject.Find("ItemSlot0"));
-        print(GameObject.Find("ArmorMod"));
+
+        //Load current ship sprite
+        LoadShip();
+
         //GameManager.game.pData.moduleInventory.Add();
 
         foreach (var mod in GameManager.game.pData.moduleInventory)
@@ -31,9 +51,9 @@ public class FittingManager : MonoBehaviour
         }
     }
 
-    void start()
+    void Start()
     {
-        //loadInventory();
+        DrawShip();
     }
 
     void BackToSolar()
