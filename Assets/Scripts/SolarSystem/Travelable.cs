@@ -11,11 +11,11 @@ public class Travelable : MonoBehaviour {
 
     public string Type;
     public string Name;
-    public bool IsPlayerHere;
     public int Difficulty;
+    public string EncounterType;
     public bool WasVisited;
 
-    public IModule Module;
+    public IModule ModuleReward;
     public GameObject PlayerShipUI;
 
     //Put slot to hold a module
@@ -23,13 +23,12 @@ public class Travelable : MonoBehaviour {
     private Vector2 Destination;
 
     public void Initialize(string Name, List<string> Connections,
-        int Difficulty, bool IsPlayerHere, IModule Module = null)
+        int Difficulty, bool IsPlayerHere, IModule ModuleReward = null)
     {
         this.Name = Name;
         this.WasVisited = false;
         this.Difficulty = Difficulty;
-        this.IsPlayerHere = IsPlayerHere;
-        this.Module = Module;
+        this.ModuleReward = ModuleReward;
     }
 
     public void OnMouseDown()
@@ -73,8 +72,10 @@ public class Travelable : MonoBehaviour {
         }
         if (this.WasVisited == true)
         {
-            print("running");
-            SolarSystemGUI.instance.DisplayNotification("You have already visited this planet!");
+            print("Already Visited");
+            Color tmp = this.gameObject.GetComponent<SpriteRenderer>().color;
+            tmp.a = .25f;
+            this.gameObject.GetComponent<SpriteRenderer>().color = tmp;
         }
         if (other.gameObject.tag == "Exit")
         {

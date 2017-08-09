@@ -62,8 +62,6 @@ public class SolarSystemManager : MonoBehaviour
         float leftBound = -13.0f;
         float topBound = 7.00f;
         float botBound = -6.0f;
-        float horzOffset = 0f;
-        float vertOffset = 0f;
 
         for(int i = 0; i < NumberOfTravelables; i++)
         {

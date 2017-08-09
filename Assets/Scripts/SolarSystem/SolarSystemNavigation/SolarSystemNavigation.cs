@@ -7,6 +7,7 @@ public class SolarSystemNavigation : MonoBehaviour {
     private float speed = 5;       //how fast the player will move
     private Vector3 targetPosition; //player position
     private bool isMoving;          //check if player is moving
+    private bool isAtPlanet;
     const int LEFT_MOUSE_BUTTON = 0;//is the mouse clicked
     const float range = 8.0f;
 
@@ -15,6 +16,7 @@ public class SolarSystemNavigation : MonoBehaviour {
     {
         targetPosition = transform.position;
         isMoving = false;
+        isAtPlanet = false;
     }
 
     // Update is called once per frame
@@ -50,6 +52,18 @@ public class SolarSystemNavigation : MonoBehaviour {
 
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Anomaly")
+        {
+            isAtPlanet = true;
+        }
+        else
+        {
+            isAtPlanet = false;
+        }
+    }
+
     void MovePlayer()
     {
         //move towards the target
@@ -60,8 +74,17 @@ public class SolarSystemNavigation : MonoBehaviour {
         //stop if you're there
         if (transform.position == targetPosition)
         {
-            SolarSystemGUI.instance.DisplayNotification("Choose a new destination.");
-            isMoving = false;
+            if(isAtPlanet == false)
+            {
+                SolarSystemGUI.instance.DisplayNotification("Choose a new destination.");
+                isMoving = false;
+            }
+            else if(isAtPlanet == true)
+            {
+                SolarSystemGUI.instance.DisplayNotification("You have already visited this planet.");
+                isMoving = false;
+            }
+
         }
     }
 }
