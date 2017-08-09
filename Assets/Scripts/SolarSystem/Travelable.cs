@@ -75,7 +75,6 @@ public class Travelable : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        //print("collider type" + other.GetType());
         
         if (other.gameObject.tag == "Player" && this.WasVisited == false)
         {

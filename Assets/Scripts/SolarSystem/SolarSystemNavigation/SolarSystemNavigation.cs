@@ -8,6 +8,7 @@ public class SolarSystemNavigation : MonoBehaviour {
     private Vector3 targetPosition; //player position
     private bool isMoving;          //check if player is moving
     private bool isAtPlanet;
+    public Vector2 currentPosition;
     const int LEFT_MOUSE_BUTTON = 0;//is the mouse clicked
     const float range = 8.0f;
 
@@ -15,6 +16,16 @@ public class SolarSystemNavigation : MonoBehaviour {
     void Start ()
     {
         targetPosition = transform.position;
+        if (GameManager.game.sData.isStartingPosition == true)
+        {
+            transform.position = new Vector2(-17.0f, 0.0f);
+            GameManager.game.sData.isStartingPosition = false;
+        }
+        else
+        {
+            transform.position = GameManager.game.sData.playerPosition;
+        }
+
         isMoving = false;
         isAtPlanet = false;
     }
@@ -74,7 +85,10 @@ public class SolarSystemNavigation : MonoBehaviour {
         //stop if you're there
         if (transform.position == targetPosition)
         {
-            if(isAtPlanet == false)
+            currentPosition = transform.position;
+            GameManager.game.sData.playerPosition = currentPosition;
+
+            if (isAtPlanet == false)
             {
                 SolarSystemGUI.instance.DisplayNotification("Choose a new destination.");
                 isMoving = false;

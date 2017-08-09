@@ -117,6 +117,7 @@ public class SolarSystemManager : MonoBehaviour
                 newPlanet.Tag = (string)TravelableObject.tag;
                 newPlanet.wasVisited = false;
                 SolarSystem.PlanetsData[currentName] = newPlanet;
+                
             }
         }
     }
