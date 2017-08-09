@@ -78,7 +78,8 @@ public class player_ship : MonoBehaviour
         Quaternion rotation = Quaternion.FromToRotation(projectile.transform.up, turret.transform.up);
         Instantiate(projectile, turret.transform.position, rotation);
 
-        StartCoroutine(FireDelayed(count - 1));
+        if (count - 1 > 0) 
+            StartCoroutine(FireDelayed(count - 1));
     }
 
     IEnumerator FireDelayed(int count)
