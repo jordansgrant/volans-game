@@ -25,6 +25,7 @@ public class SolarSystemGUI : MonoBehaviour {
 
         //Sets this to not be destroyed when reloading scene
         DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(this);
     }
 
     void Start()

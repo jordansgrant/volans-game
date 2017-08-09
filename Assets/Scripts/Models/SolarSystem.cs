@@ -6,14 +6,34 @@ using UnityEngine;
 public class SolarSystem
 {
 
+    public class PlanetData
+    {
+        public string Name { get; set; }
+        public int PreFabNum { get; set; }
+        public Vector2 Position { get; set; }
+
+        public int Difficulty { get; set; }
+        public string Tag { get; set; }
+        public bool wasVisited { get; set; }
+
+        //Module Reward
+        //Encounter type
+    }
+
+    public List<string> UsedNames;
     public Dictionary<string, GameObject> Planets;
+    public Dictionary<string, PlanetData> PlanetsData;
+
     public bool isSpawned;
-    public int test;
+    public Vector2 playerPosition;
+    public bool isStartingPosition = true;
 
     public SolarSystem()
     {
-        test = 1;
+        playerPosition = new Vector2();
         isSpawned = false;
+        UsedNames = new List<string>();
         Planets = new Dictionary<string, GameObject>();
+        PlanetsData = new Dictionary<string, PlanetData>();
     }
 }

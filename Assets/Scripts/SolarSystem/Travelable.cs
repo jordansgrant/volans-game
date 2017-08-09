@@ -11,25 +11,24 @@ public class Travelable : MonoBehaviour {
 
     public string Type;
     public string Name;
-    public bool IsPlayerHere;
     public int Difficulty;
+    public string EncounterType;
     public bool WasVisited;
+    public string Tag;
 
-    public IModule Module;
+    public IModule ModuleReward;
     public GameObject PlayerShipUI;
 
     //Put slot to hold a module
 
     private Vector2 Destination;
 
-    public void Initialize(string Name, List<string> Connections,
-        int Difficulty, bool IsPlayerHere, IModule Module = null)
+    public void Initialize(string Name, int Difficulty, IModule ModuleReward = null)
     {
         this.Name = Name;
         this.WasVisited = false;
         this.Difficulty = Difficulty;
-        this.IsPlayerHere = IsPlayerHere;
-        this.Module = Module;
+        this.ModuleReward = ModuleReward;
     }
 
     public void OnMouseDown()
@@ -59,23 +58,37 @@ public class Travelable : MonoBehaviour {
     void Update()
     {
         TravelHere();
+
+        if (this.WasVisited == true)
+        {
+            ChangetoVisited();
+        }
+
+    }
+
+    private void ChangetoVisited()
+    {
+        Color tmp = this.gameObject.GetComponent<SpriteRenderer>().color;
+        tmp.a = .25f;
+        this.gameObject.GetComponent<SpriteRenderer>().color = tmp;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        //print("collider type" + other.GetType());
         
         if (other.gameObject.tag == "Player" && this.WasVisited == false)
         {
             print(WasVisited);
             WasVisited = true;
+            GameManager.game.sData.PlanetsData[this.Name].wasVisited = true;
             //SceneManager.LoadScene("HostileEncounter");
         }
+
         if (this.WasVisited == true)
         {
-            print("running");
-            SolarSystemGUI.instance.DisplayNotification("You have already visited this planet!");
+            ChangetoVisited();
         }
+
         if (other.gameObject.tag == "Exit")
         {
             //SceneManager.LoadScene("SolarSystemNavigation");

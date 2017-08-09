@@ -61,7 +61,6 @@ public class FittingManager : MonoBehaviour
 
         //Load current ship sprite
         LoadShip();
-        print(GameManager.game.sData.test);
     }
 
     void Start()
