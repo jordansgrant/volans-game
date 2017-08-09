@@ -16,16 +16,15 @@ public class SolarSystemGUI : MonoBehaviour {
 
     void Awake()
     {
+        if (instance == null)
+            instance = this;
+
+        //If instance already exists and it's not this:
+        else if (instance != this) 
+            Destroy(gameObject);
+
+        //Sets this to not be destroyed when reloading scene
         DontDestroyOnLoad(gameObject);
-        //if (instance == null)
-        //    instance = this;
-
-        ////If instance already exists and it's not this:
-        //else if (instance != this) 
-        //    Destroy(gameObject);
-
-        ////Sets this to not be destroyed when reloading scene
-        //DontDestroyOnLoad(gameObject);
     }
 
     void Start()

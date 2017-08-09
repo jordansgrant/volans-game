@@ -124,6 +124,11 @@ public class SolarSystemManager : MonoBehaviour
     //Load an already existing solar system.
     void LoadSolarSystem()
     {
+        LoadPlanets();
+    }
+
+    void LoadPlanets()
+    {
         var Planets = GameManager.game.sData.PlanetsData;
         colliders = new List<BoxCollider2D>();
         print(GameManager.game.sData.isSpawned);
@@ -141,10 +146,12 @@ public class SolarSystemManager : MonoBehaviour
 
             //Instantiate
             TravelableObject = Instantiate(currentPlanetPrefab, currentPlanet.Position, Quaternion.identity);
-
+            
             //Initialize script
             Travelable Script = TravelableObject.GetComponent<Travelable>();
             Script.Initialize(currentPlanet.Name, difficulty);
+            print(currentPlanet.wasVisited);
+            Script.WasVisited = currentPlanet.wasVisited;
 
             //Add collider
             BoxCollider2D currCollider = TravelableObject.GetComponentInChildren<BoxCollider2D>();

@@ -6,7 +6,7 @@ using UnityEngine;
 public class SolarSystem
 {
 
-    public struct PlanetData
+    public class PlanetData
     {
         public string Name { get; set; }
         public int PreFabNum { get; set; }

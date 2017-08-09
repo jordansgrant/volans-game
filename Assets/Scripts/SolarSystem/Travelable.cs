@@ -58,6 +58,19 @@ public class Travelable : MonoBehaviour {
     void Update()
     {
         TravelHere();
+
+        if (this.WasVisited == true)
+        {
+            ChangetoVisited();
+        }
+
+    }
+
+    private void ChangetoVisited()
+    {
+        Color tmp = this.gameObject.GetComponent<SpriteRenderer>().color;
+        tmp.a = .25f;
+        this.gameObject.GetComponent<SpriteRenderer>().color = tmp;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -68,15 +81,15 @@ public class Travelable : MonoBehaviour {
         {
             print(WasVisited);
             WasVisited = true;
+            GameManager.game.sData.PlanetsData[this.Name].wasVisited = true;
             //SceneManager.LoadScene("HostileEncounter");
         }
+
         if (this.WasVisited == true)
         {
-            print("Already Visited");
-            Color tmp = this.gameObject.GetComponent<SpriteRenderer>().color;
-            tmp.a = .25f;
-            this.gameObject.GetComponent<SpriteRenderer>().color = tmp;
+            ChangetoVisited();
         }
+
         if (other.gameObject.tag == "Exit")
         {
             //SceneManager.LoadScene("SolarSystemNavigation");
