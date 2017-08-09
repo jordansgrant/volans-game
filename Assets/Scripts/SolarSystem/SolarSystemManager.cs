@@ -4,14 +4,6 @@ using UnityEngine;
 
 public class SolarSystemManager : MonoBehaviour
 {
-    //private List<Travelable> SolarSystem;
-    //public Dictionary<string, Dictionary<string, GameObject>> SolarSystem;
-
-    //Stores possible travelable prefabs
-    public Dictionary<string, List<GameObject>> Travelables;
-
-    //Store actual spawned travelables
-
     //Number actually spawned
     public int NumberOfTravelables;
 
@@ -19,6 +11,8 @@ public class SolarSystemManager : MonoBehaviour
 
     private List<GameObject> PlayerInventory;
     private List<BoxCollider2D> colliders;
+
+    private int difficulty = 1;
 
     public GameObject GetPlayerShipUI()
     {
@@ -36,7 +30,9 @@ public class SolarSystemManager : MonoBehaviour
     private List<string> Names =
          new List<string> {"Nobreinia", "Padraurus", "Ratune", "Cuchov",
              "Vewhapus", "Glokutis", "Smowanope", "Clillon 9U5M", "Gromia N0F", "Stov HN3",
-        "Sinq Laison", "Jita", "Gaia", "Phaedrus"};
+        "Sinq Laison", "Jita", "Gaia", "Phaedrus", "Aridia", "Adia", "Amod", "Niajara", "HED-GP",
+         "Rancer", "Ami", "Fensi", "Amodonen", "Dodixie", "Egghelande", "Vylade", "Ney", "Goinard",
+         "Jel", "Angur", "Antem", "Kino", "Nani", "Ruvas"};
 
     private List<string> UsedNames;
 
@@ -56,45 +52,54 @@ public class SolarSystemManager : MonoBehaviour
     }
 
     //Spawn a random number of travelables in random positions
-    void SpawnTravelable()
+    void SpawnTravelables()
     {    
         float rightBound = 15.5f;
         float leftBound = -13.0f;
         float topBound = 7.00f;
         float botBound = -6.0f;
 
-        for(int i = 0; i < NumberOfTravelables; i++)
+        var SolarSystem = GameManager.game.sData;
+        colliders = new List<BoxCollider2D>();
+
+        UsedNames = new List<string> { };
+
+        for (int i = 0; i < NumberOfTravelables; i++)
         {
             GameObject TravelableObject;
+            GameObject currentPlanet;
+            SolarSystem.PlanetData newPlanet = new SolarSystem.PlanetData();
+
+            string currentName = GetUniqueRandomName();
+
+            SolarSystem.UsedNames.Add(currentName);
+
+            int prefabNum = Random.Range(0, 7);
+            currentPlanet = Resources.Load(@"Travelables\" + Prefabs[prefabNum]) as GameObject;
 
             //Generate random position
             float x = Random.Range(leftBound, rightBound);
             float y = Random.Range(topBound, botBound);
+            Vector2 position = new Vector2(x, y);
 
-            TravelableObject = Instantiate(Travelables[UsedNames[i]][0], new Vector2(x, y), Quaternion.identity);
 
+            TravelableObject = Instantiate(currentPlanet, position, Quaternion.identity);
+            TravelableObject.tag = "Anomaly";
             Travelable Script = TravelableObject.GetComponent<Travelable>();
             BoxCollider2D currCollider = TravelableObject.GetComponentInChildren<BoxCollider2D>();
-
-            //Check here if new object collides with an existing object
-
-            List<string> Connections = new List<string> { "test" };
        
             //Initialize Travelable Object's Traits
-            Script.Initialize(UsedNames[i], Connections, 1, true);
-                
+            Script.Initialize(SolarSystem.UsedNames[i], difficulty);
+            
 
             if (i == NumberOfTravelables - 1)
             {
                 TravelableObject.tag = "Exit";
             }
-            else
-            {
-                TravelableObject.tag = "Anomaly";
-            }            
 
             if (collisionDetected(currCollider))
             {
+                Names.Add(currentName);
                 Destroy(TravelableObject);
                 i = i - 1; //Redo this iteration.
             }
@@ -102,30 +107,48 @@ public class SolarSystemManager : MonoBehaviour
             {
                 colliders.Add(currCollider);
 
+                //print("Spawn: " + i);
+
                 //Save current planet in game manager
-                GameManager.game.sData.Planets.Add(TravelableObject.GetComponent<Travelable>().Name, TravelableObject);
-                GameManager.game.sData.test = 10;
-                print(GameManager.game.sData.Planets[TravelableObject.GetComponent<Travelable>().Name]);
-                print("planet count: " + GameManager.game.sData.Planets.Count);
-               
+                newPlanet.Name = currentName;
+                newPlanet.PreFabNum = prefabNum;
+                newPlanet.Difficulty = difficulty;
+                newPlanet.Position = position;
+                newPlanet.Tag = (string)TravelableObject.tag;
+                newPlanet.wasVisited = false;
+                SolarSystem.PlanetsData[currentName] = newPlanet;
             }
         }
-
-        print(GameManager.game.sData.test);
     }
 
     //Load an already existing solar system.
     void LoadSolarSystem()
     {
-        var Planets = GameManager.game.sData.Planets;
-        print("planet count: " + GameManager.game.sData.Planets.Count);
+        var Planets = GameManager.game.sData.PlanetsData;
+        colliders = new List<BoxCollider2D>();
+        print(GameManager.game.sData.isSpawned);
 
-        foreach (var planetName in Planets.Values)
+        print("planet count: " + Planets.Count);
+
+        foreach (var currentPlanet in Planets.Values)
         {
-            print(GameManager.game.sData.test);
-            print(planetName);
-            print(planetName.transform.position);
-            //Instantiate(Planets[planetName], Planets[planetName].transform.position, Quaternion.identity);
+            GameObject TravelableObject;
+            GameObject currentPlanetPrefab;
+
+            currentPlanetPrefab = Resources.Load(@"Travelables\" + Prefabs[currentPlanet.PreFabNum]) as GameObject;
+
+            print(currentPlanet.Name);
+
+            //Instantiate
+            TravelableObject = Instantiate(currentPlanetPrefab, currentPlanet.Position, Quaternion.identity);
+
+            //Initialize script
+            Travelable Script = TravelableObject.GetComponent<Travelable>();
+            Script.Initialize(currentPlanet.Name, difficulty);
+
+            //Add collider
+            BoxCollider2D currCollider = TravelableObject.GetComponentInChildren<BoxCollider2D>();
+            colliders.Add(currCollider);
         }
     }
 
@@ -138,35 +161,13 @@ public class SolarSystemManager : MonoBehaviour
         }
         return false;
     }
-    // Use this for initialization
-    void Awake ()
-    {
-        Travelables = new Dictionary<string, List<GameObject>>();
-        colliders = new List<BoxCollider2D>();
-
-        //Debug.Log(GameManager.game.sData);
-
-       UsedNames = new List<string> { };
-
-        for (int i = 0; i < NumberOfTravelables; i++)
-        {
-            string currentName = GetUniqueRandomName();
-
-            UsedNames.Add(currentName);
-
-            Travelables.Add(currentName, new List<GameObject>());
-
-            Travelables[UsedNames[i]].Add(Resources.Load(@"Travelables\" +
-                Prefabs[Random.Range(0, 7)]) as GameObject);
-        }
-
-    }
 
     void Start ()
     {
-        if (!GameManager.game.sData.isSpawned)
+        if(!GameManager.game.sData.isSpawned)
         {
-            SpawnTravelable();
+            //newSolarSystem();
+            SpawnTravelables();
             GameManager.game.sData.isSpawned = true;
         }
         else

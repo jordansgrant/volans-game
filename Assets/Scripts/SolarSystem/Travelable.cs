@@ -14,6 +14,7 @@ public class Travelable : MonoBehaviour {
     public int Difficulty;
     public string EncounterType;
     public bool WasVisited;
+    public string Tag;
 
     public IModule ModuleReward;
     public GameObject PlayerShipUI;
@@ -22,8 +23,7 @@ public class Travelable : MonoBehaviour {
 
     private Vector2 Destination;
 
-    public void Initialize(string Name, List<string> Connections,
-        int Difficulty, bool IsPlayerHere, IModule ModuleReward = null)
+    public void Initialize(string Name, int Difficulty, IModule ModuleReward = null)
     {
         this.Name = Name;
         this.WasVisited = false;
