@@ -1,11 +1,13 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class enemy_ship : MonoBehaviour
 {
     public static int armor;
-    
-    private float fireRate = 0.20f;
+
+    public WeaponInfo weapon;
     private float lastFire = 0.0f;
+
     private Transform player;
 
     public GameObject projectile;
@@ -18,6 +20,11 @@ public class enemy_ship : MonoBehaviour
     void Start()
     {
         thruster.enabled = true;
+
+        weapon.projectile = "laser_bolt";
+        weapon.fireRate = 0.30f;
+        weapon.fireDelay = 0.05f;
+        weapon.fireCount = 1;
     }
 
     void Awake()
@@ -53,10 +60,11 @@ public class enemy_ship : MonoBehaviour
         if (hit)
         {
             collide_type type = ((collide_type)hit.collider.gameObject.GetComponent("collide_type"));
-            if (type.type == "ship" && Time.time > lastFire + fireRate)
+            if (type.type == "ship" && Time.time > lastFire + weapon.fireRate)
             {
-                Quaternion rotation = Quaternion.FromToRotation(projectile.transform.up, turret.transform.up);
-                GameObject proj = Instantiate(projectile, turret.transform.position, rotation);
+                //Quaternion rotation = Quaternion.FromToRotation(projectile.transform.up, turret.transform.up);
+                //GameObject proj = Instantiate(projectile, turret.transform.position, rotation);
+                Fire(weapon.fireCount);
                 lastFire = Time.time;
             }
         }
@@ -65,7 +73,24 @@ public class enemy_ship : MonoBehaviour
 
     }
 
+    void Fire(int count)
+    {
+        Quaternion rotation = Quaternion.FromToRotation(projectile.transform.up, turret.transform.up);
+        Instantiate(projectile, turret.transform.position, rotation);
 
+        if (count - 1 > 0)
+            StartCoroutine(FireDelayed(count - 1));
+    }
+
+    IEnumerator FireDelayed(int count)
+    {
+        Quaternion rotation = Quaternion.FromToRotation(projectile.transform.up, turret.transform.up);
+        for (int i = 0; i < count - 1; i++)
+        {
+            yield return new WaitForSeconds(weapon.fireDelay);
+            Instantiate(projectile, turret.transform.position, rotation);
+        }
+    }
 
     void OnCollisionEnter2D(Collision2D collision)
     {

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
-
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
 
@@ -11,7 +11,9 @@ public class GameManager : MonoBehaviour {
     public PlayerData pData;
 
     // Solar System Information
-    public SolarSystem sData; 
+    public SolarSystem sData;
+
+    public Dictionary<string, WeaponInfo> weaponTypes;
     
     // Use this for initialization
     void Awake() {
@@ -27,6 +29,20 @@ public class GameManager : MonoBehaviour {
         {
             Destroy(gameObject);
         }
+
+        weaponTypes = new Dictionary<string, WeaponInfo>();
+
+        weaponTypes.Add("laser_bolt", new WeaponInfo());
+        weaponTypes["laser_bolt"].fireCount = 1;
+        weaponTypes["laser_bolt"].fireDelay = 0.05f;
+        weaponTypes["laser_bolt"].fireRate = 0.3f;
+        weaponTypes["laser_bolt"].projectile = "laser_bolt";
+
+        weaponTypes.Add("bullet", new WeaponInfo());
+        weaponTypes["bullet"].fireCount = 3;
+        weaponTypes["bullet"].fireDelay = 0.05f;
+        weaponTypes["bullet"].fireRate = 0.3f;
+        weaponTypes["bullet"].projectile = "bullet";
 
     }
 
