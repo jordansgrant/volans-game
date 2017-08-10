@@ -22,10 +22,6 @@ public class SolarSystemGUI : MonoBehaviour {
         //If instance already exists and it's not this:
         else if (instance != this) 
             Destroy(gameObject);
-
-        //Sets this to not be destroyed when reloading scene
-        DontDestroyOnLoad(gameObject);
-        DontDestroyOnLoad(this);
     }
 
     void Start()
