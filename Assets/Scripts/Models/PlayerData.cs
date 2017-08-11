@@ -20,13 +20,13 @@ public class PlayerData
     public float    powerRechargeRate;
 
     public List<string> moduleInventory;
-    public List<IModule> moduleAttached;
+    public List<string> moduleAttached;
 
 
     public PlayerData()
     {
         moduleInventory = new List<string>();
-        moduleAttached = new List<IModule>();
+        moduleAttached = new List<string>();
     }
 
     //I was not sure whether to implement a wrapper class

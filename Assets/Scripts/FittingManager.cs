@@ -26,6 +26,25 @@ public class FittingManager : MonoBehaviour
         Ship.GetComponent<Image>().sprite = shipImg;
     }
 
+    private void LoadShipFit()
+    {
+        GameObject.Find("ModSlot0");
+        int i = 0;
+        string path;
+        foreach (var mod in GameManager.game.pData.moduleAttached)
+        {
+            module = Resources.Load<GameObject>(@"Modules\" + mod) as GameObject;
+            print(module);
+            modules.Add(module);
+            path = "ModSlot" + i + "/ItemImage";
+
+            GameObject.Find(path).GetComponent<Image>().sprite = module.GetComponentInChildren<Image>().sprite;
+            GameObject.Find(path).GetComponent<Image>().enabled = true;
+
+            i++;
+        }
+    }
+
     private void LoadInventory()
     {
         GameObject.Find("ItemSlot0");
@@ -55,9 +74,13 @@ public class FittingManager : MonoBehaviour
         //Test data
         GameManager.game.pData.moduleInventory.Add("ArmorMod");
         GameManager.game.pData.moduleInventory.Add("PowerMod");
+        GameManager.game.pData.moduleAttached.Add("PowerMod");
 
         //Load Inventory
         LoadInventory();
+
+        //Load Fitted modules
+        LoadShipFit();
 
         //Load current ship sprite
         LoadShip();
