@@ -36,7 +36,7 @@ public class FittingManager : MonoBehaviour
             module = Resources.Load<GameObject>(@"Modules\" + mod) as GameObject;
             print(module);
             modules.Add(module);
-            path = "ModSlot" + i + "/ItemImage";
+            path = "ModSlot" + i + "/Button";
 
             GameObject.Find(path).GetComponent<Image>().sprite = module.GetComponentInChildren<Image>().sprite;
             GameObject.Find(path).GetComponent<Image>().enabled = true;
@@ -55,7 +55,7 @@ public class FittingManager : MonoBehaviour
             module = Resources.Load<GameObject>(@"Modules\" + mod) as GameObject;
             print(module);
             modules.Add(module);
-            path = "InventorySlot" + i + "/ItemImage";
+            path = "InventorySlot" + i + "/Button";
 
             GameObject.Find(path).GetComponent<Image>().sprite = module.GetComponentInChildren<Image>().sprite;
             GameObject.Find(path).GetComponent<Image>().enabled = true;
