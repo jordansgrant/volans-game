@@ -26,30 +26,11 @@ public class FittingManager : MonoBehaviour
         Ship.GetComponent<Image>().sprite = shipImg;
     }
 
-    private void LoadShipFit()
-    {
-        GameObject.Find("ModSlot0");
-        int i = 0;
-        string path;
-        foreach (var mod in GameManager.game.pData.moduleAttached)
-        {
-            module = Resources.Load<GameObject>(@"Modules\" + mod) as GameObject;
-            print(module);
-            modules.Add(module);
-            path = "ModSlot" + i + "/Button";
-
-            GameObject.Find(path).GetComponent<Image>().sprite = module.GetComponentInChildren<Image>().sprite;
-            GameObject.Find(path).GetComponent<Image>().enabled = true;
-
-            i++;
-        }
-    }
-
     private void LoadInventory()
     {
-        GameObject.Find("ItemSlot0");
         int i = 0;
         string path;
+        ClearInventory();
         foreach (var mod in GameManager.game.pData.moduleInventory)
         {
             module = Resources.Load<GameObject>(@"Modules\" + mod) as GameObject;
@@ -65,6 +46,48 @@ public class FittingManager : MonoBehaviour
         }
     }
 
+    private void LoadShipFit()
+    {
+        int i = 0;
+        string path;
+        //ClearFit();
+        foreach (var mod in GameManager.game.pData.moduleAttached)
+        {
+            path = "ModSlot" + i + "/Button";
+            module = Resources.Load<GameObject>(@"Modules\" + mod) as GameObject;
+            print(module);
+            modules.Add(module);
+
+
+            GameObject.Find(path).GetComponent<Image>().sprite = module.GetComponentInChildren<Image>().sprite;
+            GameObject.Find(path).GetComponent<Image>().enabled = true;
+            GameObject.Find(path).GetComponentInChildren<Text>().text = mod;
+
+            i++;
+        }
+    }
+
+    void ClearInventory()
+    {
+        string path;
+        for (int i = 0; i < 6; i++)
+        {
+            path = "InventorySlot" + i + "/InvButton" + i;
+            GameObject.Find(path).GetComponent<Image>().enabled = false;
+            GameObject.Find(path).GetComponentInChildren<Text>().text = "";
+        }
+    }
+
+    void ClearFit()
+    {
+        string path;
+        for (int i = 0; i < 6; i++)
+        {
+            path = "ModSlot" + i;
+            GameObject.Find(path).GetComponent<Image>().enabled = false;
+            GameObject.Find(path).GetComponentInChildren<Text>().text = "";
+        }
+    }
 
     void InitializeInvButtons()
     {
@@ -79,6 +102,18 @@ public class FittingManager : MonoBehaviour
 
     }
 
+    void InitializeFitButtons()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            string path = "ModSlot" + i;
+            print(path);
+            Button btn = GameObject.Find(path).GetComponentInChildren<Button>();
+            print(btn);
+            btn.onClick.AddListener(delegate { AddToInventory(path); });
+        }
+    } 
+
     void Awake()
     {
         //Solar system button
@@ -87,6 +122,7 @@ public class FittingManager : MonoBehaviour
 
         //Module buttons
         InitializeInvButtons();
+        InitializeFitButtons();
 
         modules = new List<GameObject>();
 
@@ -112,24 +148,9 @@ public class FittingManager : MonoBehaviour
 
     void BackToSolar()
     {
-        Debug.Log("Back to Solar System!");
-
         SceneManager.LoadScene("SolarSystem");
     }
 
-    void AddToFit(string current)
-    {
-
-        GameObject.Find(current).GetComponent<Image>().enabled = false;
-        string module = GameObject.Find(current).GetComponentInChildren<Text>().text;
-        GameObject.Find(current).GetComponentInChildren<Text>().text = "";
-        GameManager.game.pData.moduleInventory.Add(module);
-
-        DrawAddedToFitting(module);
-
-        print(GameObject.Find(current).GetComponent<Image>());
-
-    }
 
     bool DrawAddedToFitting(string module)
     {
@@ -144,6 +165,7 @@ public class FittingManager : MonoBehaviour
                 //print(GameObject.Find("ModSlot" + i).GetComponentInChildren<Button>().GetComponent<Image>().sprite);
                 GameObject.Find("ModSlot" + i).GetComponentInChildren<Button>().GetComponent<Image>().sprite = newMod.GetComponentInChildren<Image>().sprite;
                 GameObject.Find("ModSlot" + i).GetComponentInChildren<Button>().GetComponent<Image>().enabled = true;
+                GameObject.Find("ModSlot" + i).GetComponentInChildren<Text>().text = module;
                 return true;
             }
         }
@@ -152,13 +174,37 @@ public class FittingManager : MonoBehaviour
         return false;
     }
     
-    //Move item from inventory to ship
-    //Remove item from inventory
-    //Add to ship
 
-    //Remove item from ship and into inventory
-    //remove item from ship
-    //add to inventory
+    void AddToInventory(string current)
+    {
+        
+        GameObject.Find(current).GetComponentInChildren<Button>().GetComponentInChildren<Image>().enabled = false;
+        string module = GameObject.Find(current).GetComponentInChildren<Text>().text;
+
+        GameObject.Find(current).GetComponentInChildren<Text>().text = "";
+
+        print(module);
+        GameManager.game.pData.moduleInventory.Add(module);
+        GameManager.game.pData.moduleAttached.Remove(module);
+
+        LoadInventory();
+    }
+
+    void AddToFit(string current)
+    {
+        //GameObject.Find(current).GetComponent<Image>().enabled = false;
+        string module = GameObject.Find(current).GetComponentInChildren<Text>().text;
+        //GameObject.Find(current).GetComponentInChildren<Text>().text = "";
+        GameManager.game.pData.moduleAttached.Add(module);
+        GameManager.game.pData.moduleInventory.Remove(module);
+
+        LoadShipFit();
+        LoadInventory();
+        //DrawAddedToFitting(module);
+
+        print(GameObject.Find(current).GetComponent<Image>());
+
+    }
 
     //Trash item from inventory
 }
