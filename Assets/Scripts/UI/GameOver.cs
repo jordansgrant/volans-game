@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class game_over : MonoBehaviour {
+public class GameOver : MonoBehaviour {
     public Button mainMenu,
                   exitGame;
     // Use this for initialization
