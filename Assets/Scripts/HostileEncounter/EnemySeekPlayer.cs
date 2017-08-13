@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class enemy_find_player : MonoBehaviour {
+public class EnemySeekPlayer : MonoBehaviour {
     
     public float speed = 2;
     public float rotationSpeed = 2f;

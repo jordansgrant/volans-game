@@ -2,7 +2,7 @@
 using System.Threading;
 using UnityEngine;
 
-public class player_ship : MonoBehaviour
+public class PlayerShip : MonoBehaviour
 {
     public static int armor;
     public static int power;
@@ -96,7 +96,7 @@ public class player_ship : MonoBehaviour
     {
         if (shield.isEnabled)
             return;
-        var type = collision.gameObject.GetComponent("collide_type") as collide_type;
+        CollideType type = collision.gameObject.GetComponent("CollideType") as CollideType;
         switch (type.type)
         {
             case "asteroid_large":
@@ -122,7 +122,7 @@ public class player_ship : MonoBehaviour
     {
         if (shield.isEnabled)
             return;
-        var type = collision.gameObject.GetComponent("collide_type") as collide_type;
+        CollideType type = collision.gameObject.GetComponent("CollideType") as CollideType;
         
         switch (type.type)
         {

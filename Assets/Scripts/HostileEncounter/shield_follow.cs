@@ -8,7 +8,7 @@ public class shield_follow : MonoBehaviour {
 
     void Start()
     {
-        toFollow = player_ship.playerRef;
+        toFollow = PlayerShip.playerRef;
 
         Debug.Log(toFollow);
     }
@@ -16,7 +16,7 @@ public class shield_follow : MonoBehaviour {
     void Update () {
         if (toFollow == null)
         {
-            toFollow = player_ship.playerRef;
+            toFollow = PlayerShip.playerRef;
         }
         else
         {

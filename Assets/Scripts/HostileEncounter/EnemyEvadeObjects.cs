@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class evade_objects : MonoBehaviour
+public class EnemyEvadeObjects : MonoBehaviour
 { 
     public float speed = 2;
 
@@ -10,7 +10,7 @@ public class evade_objects : MonoBehaviour
 
         //RaycastHit2D hit = Physics2D.CircleCast(turret.transform.position, 2.0f, transform.right);
         Collider2D hit = Physics2D.OverlapCircle(transform.position, 3.0f, 1 << LayerMask.NameToLayer("Foreground"));
-        if (!hit.name.Contains("enemy"))
+        if (hit != null && !hit.name.Contains("enemy"))
         {
             Debug.Log("Here hit: " + hit.name);
             MoveAway(hit.transform.position);

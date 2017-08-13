@@ -1,16 +1,10 @@
 ﻿using UnityEngine;
 
-public class ship_wrap : MonoBehaviour
+public class WrapObject : MonoBehaviour
 {
 
     Vector2 wrap;
     Vector2 maxWrap;
-
-    // Use this for initialization
-    void Start()
-    {
-
-    }
 
     void Awake()
     {

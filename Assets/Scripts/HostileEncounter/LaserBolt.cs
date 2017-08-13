@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 
-public class bullet_script : MonoBehaviour {
+public class LaserBolt : MonoBehaviour {
 
     public GameObject explosion;
 
-    private float speed = 30f;
+    private float speed = 25f;
 
     void Update()
     {
@@ -18,14 +18,13 @@ public class bullet_script : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        collide_type type = collision.GetComponent<collide_type>();
+        CollideType type = collision.GetComponent<CollideType>();
         if (type.type != "shield")
         {
             Instantiate(explosion, collision.transform.position, Quaternion.identity);
         }
-        
+
         Destroy(gameObject);
     }
-    
 
 }

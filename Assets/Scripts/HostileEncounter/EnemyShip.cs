@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class enemy_ship : MonoBehaviour
+public class EnemyShip : MonoBehaviour
 {
     public static int armor;
 
@@ -21,10 +21,7 @@ public class enemy_ship : MonoBehaviour
     {
         thruster.enabled = true;
 
-        weapon.projectile = "laser_bolt";
-        weapon.fireRate = 0.30f;
-        weapon.fireDelay = 0.05f;
-        weapon.fireCount = 1;
+        weapon = GameManager.game.weaponTypes["laser_bolt"];
     }
 
     void Awake()
@@ -59,7 +56,7 @@ public class enemy_ship : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(turret.transform.position, turret.transform.up, Mathf.Infinity, 1 << LayerMask.NameToLayer("Foreground"));
         if (hit)
         {
-            collide_type type = ((collide_type)hit.collider.gameObject.GetComponent("collide_type"));
+            CollideType type = ((CollideType)hit.collider.gameObject.GetComponent("CollideType"));
             if (type.type == "ship" && Time.time > lastFire + weapon.fireRate)
             {
                 //Quaternion rotation = Quaternion.FromToRotation(projectile.transform.up, turret.transform.up);
@@ -94,7 +91,7 @@ public class enemy_ship : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        var type = collision.gameObject.GetComponent("collide_type") as collide_type;
+        CollideType type = collision.gameObject.GetComponent("CollideType") as CollideType;
         switch (type.type)
         {
             case "asteroid_large":
@@ -118,7 +115,7 @@ public class enemy_ship : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        var type = collision.gameObject.GetComponent("collide_type") as collide_type;
+        CollideType type = collision.gameObject.GetComponent("CollideType") as CollideType;
         
         switch (type.type)
         {

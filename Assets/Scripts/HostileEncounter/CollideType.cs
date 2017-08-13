@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class collide_type : MonoBehaviour {
+public class CollideType : MonoBehaviour {
 
     public string type;
     public int damage;

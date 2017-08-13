@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class enemy_thruster : MonoBehaviour {
+public class EnemyThruster : MonoBehaviour {
     public SpriteRenderer thrust;
     // Use this for initialization
     void Start () {

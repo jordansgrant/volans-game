@@ -25,14 +25,14 @@ public class Shield : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (Input.GetKey("c") && player_ship.power > 0)
+        if (Input.GetKey("c") && PlayerShip.power > 0)
         {
             if (!isEnabled)
                 enable();
 
             if (Time.time > lastTick + shieldTickRate)
             {
-                player_ship.power -= 10;
+                PlayerShip.power -= 10;
                 lastTick = Time.time;
             }
         }
@@ -43,7 +43,7 @@ public class Shield : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        collide_type type = collision.GetComponent<collide_type>();
+        CollideType type = collision.GetComponent<CollideType>();
         Debug.Log("Hit by: " + type.type + " in shield trigger");
         switch (type.type)
         {
@@ -54,8 +54,7 @@ public class Shield : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        collide_type type = collision.collider.GetComponent<collide_type>();
-        Debug.Log("Hit by: " + type.type + " in shield collider");
+        CollideType type = collision.collider.GetComponent<CollideType>();
         switch (type.type)
         {
             case "asteroid_large":

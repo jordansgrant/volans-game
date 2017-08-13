@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class hostile_encounter : MonoBehaviour {
+public class HostileEncounter : MonoBehaviour {
 
     // Enemy Ship
     public GameObject enemy;
@@ -49,7 +49,7 @@ public class hostile_encounter : MonoBehaviour {
 
         colliders.Add(player.GetComponent<PolygonCollider2D>());
 
-        GameObject enemy = Resources.Load(@"Ships/enemy_fighter") as GameObject;
+        GameObject enemy = Resources.Load(@"Ships/enemy_battleship") as GameObject;
         GameObject enemySpawn = GameObject.Find("EnemySpawn");
         Quaternion rotation = Quaternion.Inverse(enemy.transform.rotation);
         enemy = Instantiate(enemy, enemySpawn.transform.position, rotation) as GameObject;
@@ -77,9 +77,9 @@ public class hostile_encounter : MonoBehaviour {
 
     void OnGUI()
     {
-        GUI.Label(new Rect(10, 10, 150, 30), "Player Armor:  " + ((player_ship.armor < 0) ? 0 : player_ship.armor));
-        GUI.Label(new Rect(10, 25, 150, 30), "Player Power:  " + ((player_ship.power < 0) ? 0 : player_ship.power));
-        GUI.Label(new Rect(10, 40, 150, 30), "Enemy Armor: " + ((enemy_ship.armor < 0) ? 0 : enemy_ship.armor));
+        GUI.Label(new Rect(10, 10, 150, 30), "Player Armor:  " + ((PlayerShip.armor < 0) ? 0 : PlayerShip.armor));
+        GUI.Label(new Rect(10, 25, 150, 30), "Player Power:  " + ((PlayerShip.power < 0) ? 0 : PlayerShip.power));
+        GUI.Label(new Rect(10, 40, 150, 30), "Enemy Armor: " + ((EnemyShip.armor < 0) ? 0 : EnemyShip.armor));
        
 
     }
