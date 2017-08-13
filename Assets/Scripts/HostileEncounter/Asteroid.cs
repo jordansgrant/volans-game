@@ -16,7 +16,7 @@ public class Asteroid : MonoBehaviour
     void Start()
     {
         Random.InitState(System.DateTime.Now.Millisecond);
-        hostile_encounter h = (hostile_encounter)GameObject.Find("Main Camera").GetComponent("hostile_encounter");
+        HostileEncounter h = (HostileEncounter)GameObject.Find("Main Camera").GetComponent("HostileEncounter");
         asteroids = h.asteroids;
         asteroid_type = h.asteroid_type;
 
@@ -32,7 +32,7 @@ public class Asteroid : MonoBehaviour
     // breakup asteroid on collision with projectile
     void OnTriggerEnter2D(Collider2D collision)
     {
-        var type = collision.gameObject.GetComponent("collide_type") as collide_type;
+        CollideType type = collision.gameObject.GetComponent("CollideType") as CollideType;
 
         switch (type.type)
         {
@@ -45,7 +45,7 @@ public class Asteroid : MonoBehaviour
     // currently no additional logic for these specific collisions
     void OnCollisionEnter2D(Collision2D collision)
     {
-        var type = collision.gameObject.GetComponent("collide_type") as collide_type;
+        CollideType type = collision.gameObject.GetComponent("CollideType") as CollideType;
 
         switch (type.type)
         {
