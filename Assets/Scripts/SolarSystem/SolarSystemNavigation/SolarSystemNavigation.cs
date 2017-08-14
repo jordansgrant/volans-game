@@ -36,7 +36,7 @@ public class SolarSystemNavigation : MonoBehaviour {
     void Update ()
     {
         //if the mouse button has been pressed and ship is not moving, set the target position
-        if (Input.GetMouseButton(LEFT_MOUSE_BUTTON) && isMoving == false)
+        if (Input.GetKeyDown(KeyCode.Mouse0) && isMoving == false)
             SetTargetPosition();
 
         //if the player is moving, keep moving
@@ -72,7 +72,7 @@ public class SolarSystemNavigation : MonoBehaviour {
 
     private void ExpandHostileArea()
     {
-        Vector3 scaleFactor = new Vector3(2.0f, 0.0f);
+        Vector3 scaleFactor = new Vector3(1.5f, 0.0f);
         EnemyFleet.transform.localScale += scaleFactor;
         print(EnemyFleet.GetComponent<Transform>().localScale);
     }
