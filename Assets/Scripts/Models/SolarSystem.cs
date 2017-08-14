@@ -25,12 +25,14 @@ public class SolarSystem
     public Dictionary<string, PlanetData> PlanetsData;
 
     public bool isSpawned;
+    public int Turn;
     public Vector2 playerPosition;
     public bool isStartingPosition = true;
 
     public SolarSystem()
     {
         playerPosition = new Vector2();
+        Turn = 0;
         isSpawned = false;
         UsedNames = new List<string>();
         Planets = new Dictionary<string, GameObject>();

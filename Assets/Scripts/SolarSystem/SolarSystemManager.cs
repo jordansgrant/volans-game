@@ -184,5 +184,11 @@ public class SolarSystemManager : MonoBehaviour
             print("reload");
         }  
     }
-    
+
+    void Update()
+    {
+
+
+    }
+
 }

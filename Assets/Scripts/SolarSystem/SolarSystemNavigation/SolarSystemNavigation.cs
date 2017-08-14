@@ -12,6 +12,8 @@ public class SolarSystemNavigation : MonoBehaviour {
     const int LEFT_MOUSE_BUTTON = 0;//is the mouse clicked
     const float range = 8.0f;
 
+    public GameObject EnemyFleet;
+
     // Use this for initialization
     void Start ()
     {
@@ -45,7 +47,6 @@ public class SolarSystemNavigation : MonoBehaviour {
 
     void SetTargetPosition()
     {
-        //check that the target position is valid - may bave to be through an edge matrix
         Vector2 currentPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
 
         //if valid, set to current mouse position
@@ -61,6 +62,19 @@ public class SolarSystemNavigation : MonoBehaviour {
         if (isMoving == false)
             isMoving = true;
 
+        //Increment Turn
+        GameManager.game.sData.Turn++;
+        print(GameManager.game.sData.Turn);
+
+        ExpandHostileArea();
+
+    }
+
+    private void ExpandHostileArea()
+    {
+        Vector3 scaleFactor = new Vector3(2.0f, 0.0f);
+        EnemyFleet.transform.localScale += scaleFactor;
+        print(EnemyFleet.GetComponent<Transform>().localScale);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
