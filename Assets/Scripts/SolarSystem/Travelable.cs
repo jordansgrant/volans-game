@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-
 public class Travelable : MonoBehaviour {
 
     public List<string> Connections;
@@ -78,8 +77,8 @@ public class Travelable : MonoBehaviour {
         
         if (other.gameObject.tag == "Player" && this.WasVisited == false)
         {
-            print(WasVisited);
             WasVisited = true;
+            print(this.Name);
             GameManager.game.sData.PlanetsData[this.Name].wasVisited = true;
             //SceneManager.LoadScene("HostileEncounter");
         }

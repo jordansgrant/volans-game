@@ -107,10 +107,9 @@ public class SolarSystemManager : MonoBehaviour
             {
                 colliders.Add(currCollider);
 
-                //print("Spawn: " + i);
-
                 //Save current planet in game manager
                 newPlanet.Name = currentName;
+                print(newPlanet.Name);
                 newPlanet.PreFabNum = prefabNum;
                 newPlanet.Difficulty = difficulty;
                 newPlanet.Position = position;
@@ -174,7 +173,6 @@ public class SolarSystemManager : MonoBehaviour
     {
         if(!GameManager.game.sData.isSpawned)
         {
-            //newSolarSystem();
             SpawnTravelables();
             GameManager.game.sData.isSpawned = true;
         }

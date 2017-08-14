@@ -47,12 +47,23 @@ public class SolarSystemNavigation : MonoBehaviour {
 
     void SetTargetPosition()
     {
-        Vector2 currentPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
+        Vector3 currentPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
 
-        //if valid, set to current mouse position
+        //Set to current mouse position
         targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        
-        if(currentPosition.x + range < targetPosition.x)
+
+        float centerX = EnemyFleet.GetComponent<BoxCollider2D>().offset.x;
+        float size = EnemyFleet.GetComponent<BoxCollider2D>().size.x;
+
+        print("trgtX:" + targetPosition.x + " centerX: " + (centerX+size));
+
+        if (centerX + size > targetPosition.x)
+        {
+            print("point is inside collider");
+
+        }
+
+        if (currentPosition.x + range < targetPosition.x)
         {
             SolarSystemGUI.instance.DisplayNotification("That destination is too far away. Please make another selection.");
             return;
@@ -74,7 +85,7 @@ public class SolarSystemNavigation : MonoBehaviour {
     {
         Vector3 scaleFactor = new Vector3(1.5f, 0.0f);
         EnemyFleet.transform.localScale += scaleFactor;
-        print(EnemyFleet.GetComponent<Transform>().localScale);
+        //print(EnemyFleet.GetComponent<Transform>().localScale);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
