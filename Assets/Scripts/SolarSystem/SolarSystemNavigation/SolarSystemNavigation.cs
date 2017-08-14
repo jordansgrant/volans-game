@@ -12,6 +12,8 @@ public class SolarSystemNavigation : MonoBehaviour {
     const int LEFT_MOUSE_BUTTON = 0;//is the mouse clicked
     const float range = 8.0f;
 
+    public GameObject EnemyFleet;
+
     // Use this for initialization
     void Start ()
     {
@@ -34,7 +36,7 @@ public class SolarSystemNavigation : MonoBehaviour {
     void Update ()
     {
         //if the mouse button has been pressed and ship is not moving, set the target position
-        if (Input.GetMouseButton(LEFT_MOUSE_BUTTON) && isMoving == false)
+        if (Input.GetKeyDown(KeyCode.Mouse0) && isMoving == false)
             SetTargetPosition();
 
         //if the player is moving, keep moving
@@ -45,13 +47,23 @@ public class SolarSystemNavigation : MonoBehaviour {
 
     void SetTargetPosition()
     {
-        //check that the target position is valid - may bave to be through an edge matrix
-        Vector2 currentPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
+        Vector3 currentPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
 
-        //if valid, set to current mouse position
+        //Set to current mouse position
         targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        
-        if(currentPosition.x + range < targetPosition.x)
+
+        float centerX = EnemyFleet.GetComponent<BoxCollider2D>().offset.x;
+        float size = EnemyFleet.GetComponent<BoxCollider2D>().size.x;
+
+        print("trgtX:" + targetPosition.x + " centerX: " + (centerX+size));
+
+        if (centerX + size > targetPosition.x)
+        {
+            print("point is inside collider");
+
+        }
+
+        if (currentPosition.x + range < targetPosition.x)
         {
             SolarSystemGUI.instance.DisplayNotification("That destination is too far away. Please make another selection.");
             return;
@@ -61,6 +73,19 @@ public class SolarSystemNavigation : MonoBehaviour {
         if (isMoving == false)
             isMoving = true;
 
+        //Increment Turn
+        GameManager.game.sData.Turn++;
+        print(GameManager.game.sData.Turn);
+
+        ExpandHostileArea();
+
+    }
+
+    private void ExpandHostileArea()
+    {
+        Vector3 scaleFactor = new Vector3(1.5f, 0.0f);
+        EnemyFleet.transform.localScale += scaleFactor;
+        //print(EnemyFleet.GetComponent<Transform>().localScale);
     }
 
     private void OnTriggerEnter2D(Collider2D other)

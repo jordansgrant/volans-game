@@ -99,7 +99,8 @@ public class SolarSystemManager : MonoBehaviour
 
             if (collisionDetected(currCollider))
             {
-                Names.Add(currentName);
+                SolarSystem.UsedNames.Remove(currentName);//Remove currentName from used names
+                Names.Add(currentName);//re-add currentName to unused name pool upon destruction
                 Destroy(TravelableObject);
                 i = i - 1; //Redo this iteration.
             }
@@ -107,16 +108,16 @@ public class SolarSystemManager : MonoBehaviour
             {
                 colliders.Add(currCollider);
 
-                //print("Spawn: " + i);
-
                 //Save current planet in game manager
                 newPlanet.Name = currentName;
+                //print("newPlanet.Name " + newPlanet.Name);
+                //print(newPlanet.Name);
                 newPlanet.PreFabNum = prefabNum;
                 newPlanet.Difficulty = difficulty;
                 newPlanet.Position = position;
                 newPlanet.Tag = (string)TravelableObject.tag;
                 newPlanet.wasVisited = false;
-                SolarSystem.PlanetsData[currentName] = newPlanet;
+                SolarSystem.PlanetsData[newPlanet.Name] = newPlanet;
                 
             }
         }
@@ -174,7 +175,6 @@ public class SolarSystemManager : MonoBehaviour
     {
         if(!GameManager.game.sData.isSpawned)
         {
-            //newSolarSystem();
             SpawnTravelables();
             GameManager.game.sData.isSpawned = true;
         }
@@ -184,5 +184,11 @@ public class SolarSystemManager : MonoBehaviour
             print("reload");
         }  
     }
-    
+
+    void Update()
+    {
+
+
+    }
+
 }
