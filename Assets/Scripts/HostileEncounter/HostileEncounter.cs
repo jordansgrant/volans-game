@@ -49,7 +49,7 @@ public class HostileEncounter : MonoBehaviour {
 
         colliders.Add(player.GetComponent<PolygonCollider2D>());
 
-        GameObject enemy = Resources.Load(@"Ships/enemy_battleship") as GameObject;
+        GameObject enemy = Resources.Load(@"Ships/npc_fighter") as GameObject;
         GameObject enemySpawn = GameObject.Find("EnemySpawn");
         Quaternion rotation = Quaternion.Inverse(enemy.transform.rotation);
         enemy = Instantiate(enemy, enemySpawn.transform.position, rotation) as GameObject;
