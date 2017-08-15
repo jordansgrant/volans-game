@@ -130,8 +130,8 @@ public class EnemyShip : MonoBehaviour
     {
         if (armor < 0)
         {
-            GameObject gameOver = Resources.Load("UI/Game Over Win") as GameObject;
-            Instantiate(gameOver, new Vector2(0, 2.5f), Quaternion.identity);
+            GameObject playerVictory = Resources.Load("UI/Victory Achieved") as GameObject;
+            Instantiate(playerVictory, new Vector2(0, 2.5f), Quaternion.identity);
             isGameOver = true;
             Destroy(gameObject);
         }
