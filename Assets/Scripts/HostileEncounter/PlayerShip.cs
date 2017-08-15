@@ -40,7 +40,7 @@ public class PlayerShip : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float horizontal = Input.GetAxis("Horizontal");
+        float horizontal = Input.GetAxis("Horizontal") * -1;
         bool isVerticalPressed = Input.GetButton("Vertical");
 
         transform.Rotate(new Vector3(0, 0, horizontal * Time.deltaTime * pData.rotationSpeed));

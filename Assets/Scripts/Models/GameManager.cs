@@ -50,9 +50,12 @@ public class GameManager : MonoBehaviour {
     {
         // Save Player information
         BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Create(Application.persistentDataPath + "/player.dat");
 
+        FileStream file = File.Create(Application.persistentDataPath + "/player.dat");
         bf.Serialize(file, pData);
+        file.Close();
+
+        file = File.Create(Application.persistentDataPath + "/solar_system.dat");
         bf.Serialize(file, sData);
         file.Close();
     }
@@ -61,11 +64,13 @@ public class GameManager : MonoBehaviour {
     {
         // Load Player Information
         BinaryFormatter bf = new BinaryFormatter();
+
         FileStream file = File.Open(Application.persistentDataPath + "/player.dat", FileMode.Open);
-
         pData = bf.Deserialize(file) as PlayerData;
-        sData = bf.Deserialize(file) as SolarSystem;
+        file.Close();
 
+        file = File.Open(Application.persistentDataPath + "/solar_system.dat", FileMode.Open);
+        sData = bf.Deserialize(file) as SolarSystem;
         file.Close();
     }
 
