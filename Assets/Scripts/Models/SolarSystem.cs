@@ -29,6 +29,7 @@ public class SolarSystem
     public bool isFleetEncounter = false;
     public bool isTest = true;
     public int Level;
+    public Vector2 gatePosition;
 
     public SolarSystem()
     {

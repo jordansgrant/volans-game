@@ -9,6 +9,7 @@ public class SolarSystemManager : MonoBehaviour
 
     public GameObject PlayerShipUI;
     public GameObject EnemyFleet;
+    public GameObject Gate;
 
     private List<GameObject> PlayerInventory;
     private List<BoxCollider2D> colliders;
@@ -23,6 +24,11 @@ public class SolarSystemManager : MonoBehaviour
     public void SetPlayerShipUI(Vector3 position)
     {
         this.PlayerShipUI.transform.position = position;
+    }
+
+    public Vector2 SetGatePosition(Vector3 position)
+    {
+        return Gate.transform.position = position;
     }
 
     int TotalMoves; // Total moves made by the player
@@ -122,6 +128,12 @@ public class SolarSystemManager : MonoBehaviour
                 
             }
         }
+        float xGate = Random.Range(15.8f, 16.8f);
+        float yGate = Random.Range(-5.5f, 9.0f);
+        Vector3 gatePos = SetGatePosition(new Vector3(xGate, yGate, 0f));
+        Gate.transform.position = gatePos;
+        Gate.GetComponent<SpriteRenderer>().enabled = true;
+        GameManager.game.sData.gatePosition = gatePos;
     }
 
     //Load an already existing solar system.
@@ -129,6 +141,9 @@ public class SolarSystemManager : MonoBehaviour
     {
         LoadPlanets();
         LoadEnemyFleet();
+
+        Gate.transform.position = GameManager.game.sData.gatePosition;
+        Gate.GetComponent<SpriteRenderer>().enabled = true;
     }
 
     void LoadEnemyFleet()
