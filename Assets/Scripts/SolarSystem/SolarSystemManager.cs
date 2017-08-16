@@ -8,6 +8,7 @@ public class SolarSystemManager : MonoBehaviour
     public int NumberOfTravelables;
 
     public GameObject PlayerShipUI;
+    public GameObject EnemyFleet;
 
     private List<GameObject> PlayerInventory;
     private List<BoxCollider2D> colliders;
@@ -127,6 +128,16 @@ public class SolarSystemManager : MonoBehaviour
     void LoadSolarSystem()
     {
         LoadPlanets();
+        LoadEnemyFleet();
+    }
+
+    void LoadEnemyFleet()
+    {
+        //
+        float scale = (GameManager.game.sData.Turn * 2.75f);
+        Vector3 FleetWidth = new Vector3(scale, 20f, 0f);
+
+        EnemyFleet.transform.localScale = FleetWidth;
     }
 
     void LoadPlanets()

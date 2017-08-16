@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 
 public class FittingManager : MonoBehaviour
 {
-
     public Button SolarSys;
     public Image Ship;
 
@@ -31,11 +30,14 @@ public class FittingManager : MonoBehaviour
         int i = 0;
         string path;
         ClearInventory();
+        print("After loading inventory");
+        print(GameManager.game.pData.moduleAttached.Count);
+        print(GameManager.game.pData.moduleInventory.Count);
         foreach (var mod in GameManager.game.pData.moduleInventory)
         {
             module = Resources.Load<GameObject>(@"Modules\" + mod) as GameObject;
-            print(module);
-            modules.Add(module);
+            //print(module);
+            //modules.Add(module);
             path = "InventorySlot" + i + "/InvButton" + i;
 
             GameObject.Find(path).GetComponent<Image>().sprite = module.GetComponentInChildren<Image>().sprite;
@@ -51,12 +53,15 @@ public class FittingManager : MonoBehaviour
         int i = 0;
         string path;
         //ClearFit();
+        print("After loading ship fit");
+        print(GameManager.game.pData.moduleAttached.Count);
+        print(GameManager.game.pData.moduleInventory.Count);
         foreach (var mod in GameManager.game.pData.moduleAttached)
         {
             path = "ModSlot" + i + "/Button";
             module = Resources.Load<GameObject>(@"Modules\" + mod) as GameObject;
-            print(module);
-            modules.Add(module);
+            //print(module);
+            //modules.Add(module);
 
 
             GameObject.Find(path).GetComponent<Image>().sprite = module.GetComponentInChildren<Image>().sprite;
@@ -95,7 +100,7 @@ public class FittingManager : MonoBehaviour
         for(int i = 0; i < 6; i++)
         {
             string path = "InvButton" + i;
-            print(path);
+            //print(path);
             Button btn = GameObject.Find(path).GetComponent<Button>();
             btn.onClick.AddListener(delegate { AddToFit(path); });
         }
@@ -107,9 +112,9 @@ public class FittingManager : MonoBehaviour
         for (int i = 0; i < 4; i++)
         {
             string path = "ModSlot" + i;
-            print(path);
+            //print(path);
             Button btn = GameObject.Find(path).GetComponentInChildren<Button>();
-            print(btn);
+            //print(btn);
             btn.onClick.AddListener(delegate { AddToInventory(path); });
         }
     } 
@@ -127,9 +132,14 @@ public class FittingManager : MonoBehaviour
         modules = new List<GameObject>();
 
         //Test data
-        GameManager.game.pData.moduleInventory.Add("ArmorMod");
-        GameManager.game.pData.moduleInventory.Add("PowerMod");
-        GameManager.game.pData.moduleAttached.Add("PowerMod");
+        if(GameManager.game.pData.isTestDataLoaded == false)
+        {
+            GameManager.game.pData.moduleInventory.Add("ArmorMod");
+            GameManager.game.pData.moduleInventory.Add("PowerMod");
+            GameManager.game.pData.moduleAttached.Add("PowerMod");
+            GameManager.game.pData.isTestDataLoaded = true;
+        }
+
 
         //Load Inventory
         LoadInventory();
@@ -148,6 +158,12 @@ public class FittingManager : MonoBehaviour
 
     void BackToSolar()
     {
+        //ClearFit();
+        print("Before back to solar");
+        print(GameManager.game.pData.moduleAttached.Count);
+        print(GameManager.game.pData.moduleInventory.Count);
+
+        ClearInventory();
         SceneManager.LoadScene("SolarSystem");
     }
 

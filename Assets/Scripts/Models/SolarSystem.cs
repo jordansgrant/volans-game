@@ -15,9 +15,6 @@ public class SolarSystem
         public int Difficulty { get; set; }
         public string Tag { get; set; }
         public bool wasVisited { get; set; }
-
-        //Module Reward
-        //Encounter type
     }
 
     public List<string> UsedNames;
@@ -26,13 +23,18 @@ public class SolarSystem
 
     public bool isSpawned;
     public int Turn;
+
     public Vector2 playerPosition;
     public bool isStartingPosition = true;
+    public bool isInEnemy = false;
+    public bool isTest = true;
+    public int Level;
 
     public SolarSystem()
     {
         playerPosition = new Vector2();
         Turn = 0;
+        Level = 0;
         isSpawned = false;
         UsedNames = new List<string>();
         Planets = new Dictionary<string, GameObject>();

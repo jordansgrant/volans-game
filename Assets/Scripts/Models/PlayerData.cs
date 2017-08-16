@@ -22,11 +22,13 @@ public class PlayerData
     public List<string> moduleInventory;
     public List<string> moduleAttached;
 
+    public bool isTestDataLoaded = false;
 
     public PlayerData()
     {
         moduleInventory = new List<string>();
         moduleAttached = new List<string>();
+
     }
 
     //I was not sure whether to implement a wrapper class
