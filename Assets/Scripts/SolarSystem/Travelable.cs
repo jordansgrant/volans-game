@@ -74,23 +74,16 @@ public class Travelable : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        
         if (other.gameObject.tag == "Player" && this.WasVisited == false)
         {
             WasVisited = true;
             print(this.Name);
             GameManager.game.sData.PlanetsData[this.Name].wasVisited = true;
-            //SceneManager.LoadScene("HostileEncounter");
         }
 
         if (this.WasVisited == true)
         {
             ChangetoVisited();
-        }
-
-        if (other.gameObject.tag == "Exit")
-        {
-            //SceneManager.LoadScene("SolarSystemNavigation");
         }
     }
 }

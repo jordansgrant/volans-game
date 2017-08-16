@@ -58,10 +58,17 @@ public class SolarSystemManager : MonoBehaviour
         return name;
     }
 
+    void DeactivateBoxColliders()
+    {
+        foreach (var collider in colliders)
+        {
+            collider.enabled = false;
+        }
+    }
     //Spawn a random number of travelables in random positions
     void SpawnTravelables()
     {    
-        float rightBound = 15.5f;
+        float rightBound = 15.0f;
         float leftBound = -13.0f;
         float topBound = 7.00f;
         float botBound = -6.0f;
@@ -128,10 +135,15 @@ public class SolarSystemManager : MonoBehaviour
                 
             }
         }
+
+        DeactivateBoxColliders();
+
         float xGate = Random.Range(15.8f, 16.8f);
         float yGate = Random.Range(-5.5f, 9.0f);
+
         Vector3 gatePos = SetGatePosition(new Vector3(xGate, yGate, 0f));
         Gate.transform.position = gatePos;
+
         Gate.GetComponent<SpriteRenderer>().enabled = true;
         GameManager.game.sData.gatePosition = gatePos;
     }
@@ -141,6 +153,7 @@ public class SolarSystemManager : MonoBehaviour
     {
         LoadPlanets();
         LoadEnemyFleet();
+        //deactivate box colliders
 
         Gate.transform.position = GameManager.game.sData.gatePosition;
         Gate.GetComponent<SpriteRenderer>().enabled = true;
@@ -158,7 +171,7 @@ public class SolarSystemManager : MonoBehaviour
     void LoadPlanets()
     {
         var Planets = GameManager.game.sData.PlanetsData;
-        colliders = new List<BoxCollider2D>();
+        //colliders = new List<BoxCollider2D>();
         print(GameManager.game.sData.isSpawned);
 
         print("planet count: " + Planets.Count);
@@ -178,9 +191,8 @@ public class SolarSystemManager : MonoBehaviour
             Script.Initialize(currentPlanet.Name, difficulty);
             Script.WasVisited = currentPlanet.wasVisited;
 
-            //Add collider
-            BoxCollider2D currCollider = TravelableObject.GetComponentInChildren<BoxCollider2D>();
-            colliders.Add(currCollider);
+            //Deactivate collider
+            TravelableObject.GetComponentInChildren<BoxCollider2D>().enabled = false;
         }
     }
 

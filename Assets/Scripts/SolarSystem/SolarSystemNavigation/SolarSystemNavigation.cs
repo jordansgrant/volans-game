@@ -65,6 +65,12 @@ public class SolarSystemNavigation : MonoBehaviour {
         SceneManager.LoadScene("HostileEncounter");
     }
 
+    private void LoadHostileEncounter()
+    {
+        GameManager.game.sData.isFleetEncounter = false;
+        SceneManager.LoadScene("HostileEncounter");
+    }
+
     private bool CheckIfInEnemy()
     {
         if (EnemyFleet.GetComponent<BoxCollider2D>().IsTouching(this.gameObject.GetComponent<CircleCollider2D>()))
@@ -123,13 +129,24 @@ public class SolarSystemNavigation : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+       
         if (other.gameObject.tag == "Anomaly")
         {
-            isAtPlanet = true;
+            if (CheckIfInEnemy())
+            {
+                print("anom + enemey fleet");
+                LoadFleetEncounter();
+            }
+            else{
+                print("anom");
+                LoadHostileEncounter();
+            }
         }
-        else
+        else if(other.gameObject.tag == "Exit")
         {
-            isAtPlanet = false;
+            //Load new solar system
+            //Store current fleet position
+            print("exit");
         }
     }
 
