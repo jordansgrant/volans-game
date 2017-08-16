@@ -222,5 +222,17 @@ public class FittingManager : MonoBehaviour
 
     }
 
+    void AddModuleEffect(string mod)
+    {
+        GameObject module = Resources.Load("Modules/" + mod) as GameObject;
+        module.GetComponent<IModule>().addEffect();
+    }
+
+    void RemoveModuleEffect(string mod)
+    {
+        GameObject module = Resources.Load("Modules/" + mod) as GameObject;
+        module.GetComponent<IModule>().removeEffect();
+    }
+
     //Trash item from inventory
 }
