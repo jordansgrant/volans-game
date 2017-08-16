@@ -26,7 +26,6 @@ public class SolarSystemNavigation : MonoBehaviour {
             print("hello");
             GameManager.game.sData.playerPosition = new Vector2(-17.0f, 0.0f);
             transform.position = GameManager.game.sData.playerPosition;
-            //GameManager.game.sData.isStartingPosition = false;
         }
         else
         {
@@ -50,37 +49,29 @@ public class SolarSystemNavigation : MonoBehaviour {
         if (isMoving)
             MovePlayer();
 
-        if(!isMoving)
+        if(!isMoving && CheckIfInEnemy())
         {
-            CheckIfInEnemy();
+            LoadFleetEncounter();
         }
-
+        else
+        {
+            GameManager.game.sData.isFleetEncounter = false;
+        }
     }
 
-    private void CheckIfInEnemy()
+    private void LoadFleetEncounter()
     {
+        GameManager.game.sData.isFleetEncounter = true;
+        SceneManager.LoadScene("HostileEncounter");
+    }
 
-        //BoxCollider2D fleetCollider = EnemyFleet.GetComponent<Renderer>().bounds;
-        //CircleCollider2D shipCollider = gameObject.GetComponent<CircleCollider2D>();
-
-        //if (EnemyFleet.GetComponent<Renderer>().bounds.Intersects(gameObject.GetComponent<Renderer>().bounds))
-        //{
-        //    print("point is inside collider");
-        //    return true;
-        //}
-
-        //return false;        
-        float centerX = EnemyFleet.GetComponent<BoxCollider2D>().transform.position.x;
-        float size = EnemyFleet.GetComponent<BoxCollider2D>().size.x;
-        float playerPosition = gameObject.transform.position.x;
-
-        //print(scaleFactor.x + " " + (centerX + scaleFactor.x) + " " + playerPosition);
-
-        if (centerX + scaleFactor.x > playerPosition)
+    private bool CheckIfInEnemy()
+    {
+        if (EnemyFleet.GetComponent<BoxCollider2D>().IsTouching(this.gameObject.GetComponent<CircleCollider2D>()))
         {
-            //print("point is inside collider");
-
+            return true;
         }
+        return false;
     }
 
     void SetTargetPosition()

@@ -26,7 +26,7 @@ public class SolarSystem
 
     public Vector2 playerPosition;
     public bool isStartingPosition = true;
-    public bool isInEnemy = false;
+    public bool isFleetEncounter = false;
     public bool isTest = true;
     public int Level;
 
