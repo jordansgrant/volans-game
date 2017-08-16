@@ -90,7 +90,10 @@ public class SelectShipMenu : MonoBehaviour
     {
         Debug.Log("Start Game!");
         if (isSelectionMade == true)
+        {
+            GameManager.game.pData.moduleAttached.Add("BulletMod");
             SceneManager.LoadScene("SolarSystem");
+        }
         else
         {
             DisplayNotification("Please select a ship before continuing!");
