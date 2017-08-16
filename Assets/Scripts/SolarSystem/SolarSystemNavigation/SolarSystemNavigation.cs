@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class SolarSystemNavigation : MonoBehaviour {
     private float speed = 5;       //how fast the player will move
@@ -80,10 +81,17 @@ public class SolarSystemNavigation : MonoBehaviour {
 
     void SetTargetPosition()
     {
+   
         Vector3 currentPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
 
         //Set to current mouse position
         targetPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        //Prevent movement on click of a menu element.
+        if(EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
 
         float centerX = EnemyFleet.GetComponent<BoxCollider2D>().offset.x;
         float size = EnemyFleet.GetComponent<BoxCollider2D>().size.x;

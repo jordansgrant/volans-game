@@ -31,7 +31,6 @@ public class SolarSystemGUI : MonoBehaviour {
 
         btn = shipFitting.GetComponent<Button>();
         btn.onClick.AddListener(DoShipInventory);
-
     }
 
     void DoSelectMainMenu()
