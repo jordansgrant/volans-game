@@ -164,7 +164,7 @@ public class FittingManager : MonoBehaviour
         print(GameManager.game.pData.moduleInventory.Count);
 
         ClearInventory();
-        SceneManager.LoadScene("SolarSystem");
+        SceneManager.LoadScene(GameManager.game.sData.Level);
     }
 
 

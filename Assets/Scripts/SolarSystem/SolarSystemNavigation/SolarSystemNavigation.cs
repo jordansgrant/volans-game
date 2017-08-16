@@ -145,8 +145,22 @@ public class SolarSystemNavigation : MonoBehaviour {
         else if(other.gameObject.tag == "Exit")
         {
             //Load new solar system
-            //Store current fleet position
-            print("exit");
+            if (GameManager.game.sData.Level == "SolarSystem1" || GameManager.game.sData.Level == "SolarSystem")
+            {
+                GameManager.game.sData.Turn = 0;
+                GameManager.game.sData.isSpawned = false; //reset solar system
+                GameManager.game.sData.isStartingPosition = true; //reset player position
+                SceneManager.LoadScene("SolarSystem2");
+            }
+            else if (GameManager.game.sData.Level == "SolarSystem2")
+            {
+                GameManager.game.sData.Turn = 0;
+                GameManager.game.sData.isSpawned = false;
+                GameManager.game.sData.isStartingPosition = true;
+                SceneManager.LoadScene("SolarSystem3");
+            }
+                //Store current fleet position
+                print("exit");
         }
     }
 

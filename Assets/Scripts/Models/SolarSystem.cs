@@ -28,14 +28,13 @@ public class SolarSystem
     public bool isStartingPosition = true;
     public bool isFleetEncounter = false;
     public bool isTest = true;
-    public int Level;
+    public string Level;
     public Vector2 gatePosition;
 
     public SolarSystem()
     {
         playerPosition = new Vector2();
         Turn = 0;
-        Level = 0;
         isSpawned = false;
         UsedNames = new List<string>();
         Planets = new Dictionary<string, GameObject>();
