@@ -155,15 +155,12 @@ public class SolarSystemManager : MonoBehaviour
 
             currentPlanetPrefab = Resources.Load(@"Travelables\" + Prefabs[currentPlanet.PreFabNum]) as GameObject;
 
-            print(currentPlanet.Name);
-
             //Instantiate
             TravelableObject = Instantiate(currentPlanetPrefab, currentPlanet.Position, Quaternion.identity);
             
             //Initialize script
             Travelable Script = TravelableObject.GetComponent<Travelable>();
             Script.Initialize(currentPlanet.Name, difficulty);
-            print(currentPlanet.wasVisited);
             Script.WasVisited = currentPlanet.wasVisited;
 
             //Add collider

@@ -23,11 +23,15 @@ public class SolarSystemNavigation : MonoBehaviour {
         targetPosition = transform.position;
         if (GameManager.game.sData.isStartingPosition == true)
         {
-            transform.position = new Vector2(-17.0f, 0.0f);
-            GameManager.game.sData.isStartingPosition = false;
+            print("hello");
+            GameManager.game.sData.playerPosition = new Vector2(-17.0f, 0.0f);
+            transform.position = GameManager.game.sData.playerPosition;
+            //GameManager.game.sData.isStartingPosition = false;
         }
         else
         {
+            print("reload ship pos");
+            print(GameManager.game.sData.playerPosition);
             transform.position = GameManager.game.sData.playerPosition;
         }
 
@@ -81,7 +85,9 @@ public class SolarSystemNavigation : MonoBehaviour {
 
     void SetTargetPosition()
     {
-   
+        //Prevents placing player at spawn on subsequent turns
+        GameManager.game.sData.isStartingPosition = false;
+
         Vector3 currentPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
 
         //Set to current mouse position
