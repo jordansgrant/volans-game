@@ -147,6 +147,7 @@ public class SolarSystemNavigation : MonoBehaviour {
             //Load new solar system
             if (GameManager.game.sData.Level == "SolarSystem1" || GameManager.game.sData.Level == "SolarSystem")
             {
+                GameManager.game.sData.PlanetsData.Clear();//remove previous system's planets
                 GameManager.game.sData.Turn = 0;
                 GameManager.game.sData.isSpawned = false; //reset solar system
                 GameManager.game.sData.isStartingPosition = true; //reset player position
@@ -154,6 +155,7 @@ public class SolarSystemNavigation : MonoBehaviour {
             }
             else if (GameManager.game.sData.Level == "SolarSystem2")
             {
+                GameManager.game.sData.PlanetsData.Clear();
                 GameManager.game.sData.Turn = 0;
                 GameManager.game.sData.isSpawned = false;
                 GameManager.game.sData.isStartingPosition = true;

@@ -160,8 +160,6 @@ public class FittingManager : MonoBehaviour
     {
         //ClearFit();
         print("Before back to solar");
-        print(GameManager.game.pData.moduleAttached.Count);
-        print(GameManager.game.pData.moduleInventory.Count);
 
         ClearInventory();
         SceneManager.LoadScene(GameManager.game.sData.Level);

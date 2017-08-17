@@ -212,7 +212,6 @@ public class SolarSystemManager : MonoBehaviour
         //Select solar system scene
         Scene scene = SceneManager.GetActiveScene();
         GameManager.game.sData.Level = scene.name;
-        print(GameManager.game.sData.Level);
         if (!GameManager.game.sData.isSpawned)
         {
             print("new spawn");
