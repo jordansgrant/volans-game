@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.EventSystems;
 
 public class FittingManager : MonoBehaviour
 {
@@ -21,6 +21,7 @@ public class FittingManager : MonoBehaviour
     private int currFittedMods = 0;
     private int currInvMods = 0;
 
+    bool trash = false;
     bool isWeaponEquiped;
 
     private void LoadShip()
@@ -158,6 +159,8 @@ public class FittingManager : MonoBehaviour
             j++;
         }
 
+        GameObject.Find("DeleteInvMods").GetComponent<Button>().onClick.AddListener(TurnDeleteOn);
+
     }
 
     void InitializeFitButtons()
@@ -254,9 +257,14 @@ public class FittingManager : MonoBehaviour
     }
     
 
+    void TurnDeleteOn()
+    {
+        print("del on");
+        trash = true;
+    }
+
     void AddToInventory(string current)
     {
-
         print("inv: " + currInvMods);
         print("fitted: " + currFittedMods);
         if (currInvMods >= InventorySlots)
@@ -279,6 +287,18 @@ public class FittingManager : MonoBehaviour
 
     void AddToFit(string current)
     {
+        //Remove item 
+        if (trash == true)
+        {
+            print(GameObject.Find(current).GetComponentInChildren<Text>().text);
+            string mod = GameObject.Find(current).GetComponentInChildren<Text>().text;
+
+            GameManager.game.pData.moduleInventory.Remove(mod);
+            LoadInventory();
+            trash = false;
+            return;
+        }
+
 
         print("inv: " + currInvMods);
         print("fitted: " + currFittedMods);
