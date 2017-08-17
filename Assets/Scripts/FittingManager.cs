@@ -261,7 +261,7 @@ public class FittingManager : MonoBehaviour
     void AddRewardToInventory()
     {
         string mod = GameObject.Find("RewardButton").GetComponentInChildren<Text>().text;
-        if(currInvMods + 1 < InventorySlots)
+        if(currInvMods < InventorySlots)
         {
             GameManager.game.pData.reward = "";
             GameManager.game.pData.moduleInventory.Add(mod);
