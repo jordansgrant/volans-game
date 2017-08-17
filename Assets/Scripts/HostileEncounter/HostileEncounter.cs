@@ -49,7 +49,7 @@ public class HostileEncounter : MonoBehaviour {
 
         colliders.Add(player.GetComponent<PolygonCollider2D>());
 
-        GameObject enemy = Resources.Load(@"Ships/npc_cruiser") as GameObject;
+        GameObject enemy = GetEnemyShip(false);
         GameObject enemySpawn = GameObject.Find("EnemySpawn");
         Quaternion rotation = Quaternion.Inverse(enemy.transform.rotation);
         enemy = Instantiate(enemy, enemySpawn.transform.position, rotation) as GameObject;
@@ -112,5 +112,27 @@ public class HostileEncounter : MonoBehaviour {
                 return true;
         }
         return false;
+    }
+
+    private GameObject GetEnemyShip(bool isEmpire)
+    {
+        string shipClass = (isEmpire) ? "enemy" : "npc";
+        System.Random rnd = new System.Random(System.DateTime.Now.Millisecond);
+        int shipIndex = rnd.Next(0,3);
+
+        Debug.Log(shipIndex);
+
+        switch(shipIndex)
+        {
+            case 0:
+                return Resources.Load(@"Ships/" + shipClass + "_fighter") as GameObject;
+            case 1:
+                return Resources.Load(@"Ships/" + shipClass + "_cruiser") as GameObject;
+            case 2:
+                return Resources.Load(@"Ships/" + shipClass + "_battleship") as GameObject;
+        }
+
+        return null;
+
     }
 }
