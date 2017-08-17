@@ -22,6 +22,8 @@ public class PlayerData
     public List<string> moduleInventory;
     public List<string> moduleAttached;
 
+    public string reward;
+
     public bool isTestDataLoaded = false;
 
     public PlayerData()

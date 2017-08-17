@@ -21,6 +21,8 @@ public class FittingManager : MonoBehaviour
     private int currFittedMods = 0;
     private int currInvMods = 0;
 
+    bool isWeaponEquiped;
+
     private void LoadShip()
     {
         string shipType = GameManager.game.pData.shipType;
@@ -66,7 +68,8 @@ public class FittingManager : MonoBehaviour
         print("After loading inventory");
         //print(GameManager.game.pData.moduleAttached.Count);
         //print(GameManager.game.pData.moduleInventory.Count);
-        //currInvMods = 0;
+        print("before loadinventory loop: " + currFittedMods);
+        currInvMods = 0;
         foreach (var mod in GameManager.game.pData.moduleInventory)
         {
             module = Resources.Load<GameObject>(@"Modules\" + mod) as GameObject;
@@ -82,17 +85,19 @@ public class FittingManager : MonoBehaviour
             currInvMods++;
         }
         print("mods in inventory after load: " + currInvMods);
+        print("mods in fit after load: " + currFittedMods);
     }
 
     private void LoadShipFit()
     {
         int i = 0;
         string path;
-        //ClearFit();
+        ClearFit();
         print("After loading ship fit");
         //print(GameManager.game.pData.moduleAttached.Count);
         //print(GameManager.game.pData.moduleInventory.Count);
-        //currInvMods = 0;
+        print("before loadshipfit loop: " + currFittedMods);// = 0;
+        currFittedMods = 0;
         foreach (var mod in GameManager.game.pData.moduleAttached)
         {
             path = "ModSlot" + i + "/Button";
@@ -128,7 +133,7 @@ public class FittingManager : MonoBehaviour
         string path;
         for (int i = 0; i < ShipSlots; i++)
         {
-            path = "ModSlot" + i;
+            path = "ModSlot" + i + "/Button";
             GameObject.Find(path).GetComponent<Image>().enabled = false;
             GameObject.Find(path).GetComponentInChildren<Text>().text = "";
         }
@@ -140,7 +145,7 @@ public class FittingManager : MonoBehaviour
         for(int i = 0; i < InventorySlots; i++)
         {
             string path = "InvButton" + i;
-            print(path);
+            //print(path);
             Button btn = GameObject.Find(path).GetComponent<Button>();
             btn.onClick.AddListener(delegate { AddToFit(path); });
             j = i + 1;
@@ -197,6 +202,7 @@ public class FittingManager : MonoBehaviour
             GameManager.game.pData.moduleInventory.Add("ArmorMod");
             GameManager.game.pData.moduleInventory.Add("PowerMod");
             GameManager.game.pData.moduleAttached.Add("PowerMod");
+            GameManager.game.pData.moduleAttached.Add("LaserBoltMod");
             GameManager.game.pData.isTestDataLoaded = true;
         }
 
@@ -250,16 +256,12 @@ public class FittingManager : MonoBehaviour
 
     void AddToInventory(string current)
     {
+
         print("inv: " + currInvMods);
         print("fitted: " + currFittedMods);
         if (currInvMods >= InventorySlots)
         {
             return;
-        }
-        else
-        {
-            //currInvMods++;
-            //currFittedMods--;
         }
 
         GameObject.Find(current).GetComponentInChildren<Button>().GetComponentInChildren<Image>().enabled = false;
@@ -271,7 +273,7 @@ public class FittingManager : MonoBehaviour
         GameManager.game.pData.moduleInventory.Add(module);
         GameManager.game.pData.moduleAttached.Remove(module);
 
-
+        LoadShipFit();
         LoadInventory();
     }
 
@@ -284,19 +286,14 @@ public class FittingManager : MonoBehaviour
         {
             return;
         }
-        else
-        {
-            //currInvMods--;
-            //currFittedMods++;
-        }
-        print("after add to fit in inv: " + currInvMods);
-        print("after add to fit in fitted: " + currFittedMods);
-
         //GameObject.Find(current).GetComponent<Image>().enabled = false;
         string module = GameObject.Find(current).GetComponentInChildren<Text>().text;
         //GameObject.Find(current).GetComponentInChildren<Text>().text = "";
         GameManager.game.pData.moduleAttached.Add(module);
         GameManager.game.pData.moduleInventory.Remove(module);
+
+        print("after add to fit in inv: " + currInvMods);
+        print("after add to fit in fitted: " + currFittedMods);
 
         LoadShipFit();
         LoadInventory();
