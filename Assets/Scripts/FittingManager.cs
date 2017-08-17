@@ -206,8 +206,12 @@ public class FittingManager : MonoBehaviour
             GameManager.game.pData.moduleInventory.Add("PowerMod");
             GameManager.game.pData.moduleAttached.Add("PowerMod");
             GameManager.game.pData.moduleAttached.Add("LaserBoltMod");
+            GameManager.game.pData.reward = "LaserBoltMod";
             GameManager.game.pData.isTestDataLoaded = true;
         }
+
+        //Load Last Rewarded
+        LoadReward();
 
         //Load Inventory
         LoadInventory();
@@ -230,9 +234,42 @@ public class FittingManager : MonoBehaviour
         print("Before back to solar");
 
         ClearInventory();
-        SceneManager.LoadScene(GameManager.game.sData.Level);
+        SceneManager.LoadScene("SolarSystem1");
     }
 
+
+    void LoadReward()
+    {
+        string mod = GameManager.game.pData.reward;
+
+        if (mod != "")
+        {
+            print("hello from loadreward");
+            module = Resources.Load<GameObject>(@"Modules\" + mod) as GameObject;
+
+            GameObject.Find("RewardButton").GetComponent<Image>().sprite = module.GetComponentInChildren<Image>().sprite;
+            GameObject.Find("RewardButton").GetComponent<Image>().enabled = true;
+
+            GameObject.Find("RewardButton").GetComponentInChildren<Text>().text = mod;
+
+            Button btn = GameObject.Find("RewardButton").GetComponent<Button>();
+            btn.onClick.AddListener(AddRewardToInventory);
+        }
+
+    }
+
+    void AddRewardToInventory()
+    {
+        string mod = GameObject.Find("RewardButton").GetComponentInChildren<Text>().text;
+        if(currInvMods + 1 < InventorySlots)
+        {
+            GameManager.game.pData.reward = "";
+            GameManager.game.pData.moduleInventory.Add(mod);
+            GameObject.Find("RewardButton").GetComponentInChildren<Text>().text = "";
+            GameObject.Find("RewardButton").GetComponent<Image>().enabled = false;
+            LoadInventory();
+        }
+    }
 
     bool DrawAddedToFitting(string module)
     {
