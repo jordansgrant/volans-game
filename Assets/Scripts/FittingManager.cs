@@ -14,6 +14,13 @@ public class FittingManager : MonoBehaviour
     private List<GameObject> modules;
     private GameObject module;
 
+    private int ShipSlots;
+    private int InventorySlots;
+    private string ship_type;
+
+    private int currFittedMods = 0;
+    private int currInvMods = 0;
+
     private void LoadShip()
     {
         string shipType = GameManager.game.pData.shipType;
@@ -25,10 +32,31 @@ public class FittingManager : MonoBehaviour
         Ship.GetComponent<Image>().sprite = shipImg;
     }
 
-    private void LoadInventorySlots()
+    void SetupSlots()
     {
 
+        ship_type = GameManager.game.pData.shipType;
+        switch (ship_type)
+        {
+            case "fighter":
+                ShipSlots = 2;
+                InventorySlots = 3;
+                break;
+            case "cruiser":
+                ShipSlots = 3;
+                InventorySlots = 4;
+                break;
+            case "battleship":
+                ShipSlots = 4;
+                InventorySlots = 5;
+                break;
+            default:
+                ShipSlots = 2;
+                InventorySlots = 2;
+                break;
+        }
     }
+
 
     private void LoadInventory()
     {
@@ -36,8 +64,9 @@ public class FittingManager : MonoBehaviour
         string path;
         ClearInventory();
         print("After loading inventory");
-        print(GameManager.game.pData.moduleAttached.Count);
-        print(GameManager.game.pData.moduleInventory.Count);
+        //print(GameManager.game.pData.moduleAttached.Count);
+        //print(GameManager.game.pData.moduleInventory.Count);
+        //currInvMods = 0;
         foreach (var mod in GameManager.game.pData.moduleInventory)
         {
             module = Resources.Load<GameObject>(@"Modules\" + mod) as GameObject;
@@ -50,7 +79,9 @@ public class FittingManager : MonoBehaviour
             GameObject.Find(path).GetComponentInChildren<Text>().text = mod;
 
             i++;
+            currInvMods++;
         }
+        print("mods in inventory after load: " + currInvMods);
     }
 
     private void LoadShipFit()
@@ -59,8 +90,9 @@ public class FittingManager : MonoBehaviour
         string path;
         //ClearFit();
         print("After loading ship fit");
-        print(GameManager.game.pData.moduleAttached.Count);
-        print(GameManager.game.pData.moduleInventory.Count);
+        //print(GameManager.game.pData.moduleAttached.Count);
+        //print(GameManager.game.pData.moduleInventory.Count);
+        //currInvMods = 0;
         foreach (var mod in GameManager.game.pData.moduleAttached)
         {
             path = "ModSlot" + i + "/Button";
@@ -68,21 +100,24 @@ public class FittingManager : MonoBehaviour
             //print(module);
             //modules.Add(module);
 
-
             GameObject.Find(path).GetComponent<Image>().sprite = module.GetComponentInChildren<Image>().sprite;
             GameObject.Find(path).GetComponent<Image>().enabled = true;
             GameObject.Find(path).GetComponentInChildren<Text>().text = mod;
 
             i++;
+            currFittedMods++;
         }
+
+        print("mods fitted after load: " + currFittedMods);
     }
 
     void ClearInventory()
     {
         string path;
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < InventorySlots; i++)
         {
             path = "InventorySlot" + i + "/InvButton" + i;
+            //print(path);
             GameObject.Find(path).GetComponent<Image>().enabled = false;
             GameObject.Find(path).GetComponentInChildren<Text>().text = "";
         }
@@ -91,7 +126,7 @@ public class FittingManager : MonoBehaviour
     void ClearFit()
     {
         string path;
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < ShipSlots; i++)
         {
             path = "ModSlot" + i;
             GameObject.Find(path).GetComponent<Image>().enabled = false;
@@ -101,26 +136,44 @@ public class FittingManager : MonoBehaviour
 
     void InitializeInvButtons()
     {
-        
-        for(int i = 0; i < 6; i++)
+        int j = 0;
+        for(int i = 0; i < InventorySlots; i++)
         {
             string path = "InvButton" + i;
-            //print(path);
+            print(path);
             Button btn = GameObject.Find(path).GetComponent<Button>();
             btn.onClick.AddListener(delegate { AddToFit(path); });
+            j = i + 1;
+        }
+
+        while(j < 5)
+        {
+            string path = "InventorySlot" + j +"BackgroundImage";
+            GameObject.Find(path).GetComponent<Image>().enabled = false;
+            j++;
         }
 
     }
 
     void InitializeFitButtons()
     {
-        for (int i = 0; i < 4; i++)
+
+        int j = 0;
+        for (int i = 0; i < ShipSlots; i++)
         {
             string path = "ModSlot" + i;
             //print(path);
             Button btn = GameObject.Find(path).GetComponentInChildren<Button>();
             //print(btn);
             btn.onClick.AddListener(delegate { AddToInventory(path); });
+            j = i + 1;
+        }
+
+        while (j < 4)
+        {
+            string path = "ModSlot" + j + "BackgroundImage";
+            GameObject.Find(path).GetComponent<Image>().enabled = false;
+            j++;
         }
     } 
 
@@ -129,6 +182,8 @@ public class FittingManager : MonoBehaviour
         //Solar system button
         Button btn = SolarSys.GetComponent<Button>();
         btn.onClick.AddListener(BackToSolar);
+
+        SetupSlots();
 
         //Module buttons
         InitializeInvButtons();
@@ -144,7 +199,6 @@ public class FittingManager : MonoBehaviour
             GameManager.game.pData.moduleAttached.Add("PowerMod");
             GameManager.game.pData.isTestDataLoaded = true;
         }
-
 
         //Load Inventory
         LoadInventory();
@@ -177,7 +231,7 @@ public class FittingManager : MonoBehaviour
         GameObject newMod = Resources.Load<GameObject>(@"Modules\" + module) as GameObject;
         
         //4 should eventually be replaced by number of slots on a ship
-        for(int i = 0; i < 4; i++)
+        for(int i = 0; i < ShipSlots; i++)
         {
             if(GameObject.Find("ModSlot" + i).GetComponentInChildren<Button>().GetComponent<Image>().sprite.name == "UISprite")
             {
@@ -196,7 +250,18 @@ public class FittingManager : MonoBehaviour
 
     void AddToInventory(string current)
     {
-        
+        print("inv: " + currInvMods);
+        print("fitted: " + currFittedMods);
+        if (currInvMods >= InventorySlots)
+        {
+            return;
+        }
+        else
+        {
+            //currInvMods++;
+            //currFittedMods--;
+        }
+
         GameObject.Find(current).GetComponentInChildren<Button>().GetComponentInChildren<Image>().enabled = false;
         string module = GameObject.Find(current).GetComponentInChildren<Text>().text;
 
@@ -206,11 +271,27 @@ public class FittingManager : MonoBehaviour
         GameManager.game.pData.moduleInventory.Add(module);
         GameManager.game.pData.moduleAttached.Remove(module);
 
+
         LoadInventory();
     }
 
     void AddToFit(string current)
     {
+
+        print("inv: " + currInvMods);
+        print("fitted: " + currFittedMods);
+        if (currFittedMods >= ShipSlots)
+        {
+            return;
+        }
+        else
+        {
+            //currInvMods--;
+            //currFittedMods++;
+        }
+        print("after add to fit in inv: " + currInvMods);
+        print("after add to fit in fitted: " + currFittedMods);
+
         //GameObject.Find(current).GetComponent<Image>().enabled = false;
         string module = GameObject.Find(current).GetComponentInChildren<Text>().text;
         //GameObject.Find(current).GetComponentInChildren<Text>().text = "";
@@ -221,8 +302,7 @@ public class FittingManager : MonoBehaviour
         LoadInventory();
         //DrawAddedToFitting(module);
 
-        print(GameObject.Find(current).GetComponent<Image>());
-
+        //print(GameObject.Find(current).GetComponent<Image>());
     }
 
     void AddModuleEffect(string mod)
