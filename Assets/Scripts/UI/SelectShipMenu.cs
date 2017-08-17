@@ -57,6 +57,7 @@ public class SelectShipMenu : MonoBehaviour
     {
         string ship_type = "fighter";
         SaveShipType(ship_type);
+        AdjustShipQualities(300, 200);
         isSelectionMade = true;
 
         DisplayNotification("Fighter Selected!");
@@ -66,6 +67,7 @@ public class SelectShipMenu : MonoBehaviour
     {
         string ship_type = "cruiser";
         SaveShipType(ship_type);
+        AdjustShipQualities(500, 400);
         isSelectionMade = true;
 
         DisplayNotification("Cruiser Selected!");
@@ -75,6 +77,7 @@ public class SelectShipMenu : MonoBehaviour
     {
         string ship_type = "battleship";
         SaveShipType(ship_type);
+        AdjustShipQualities(400, 300);
         isSelectionMade = true;
 
         DisplayNotification("Battleship Selected!");
@@ -90,7 +93,10 @@ public class SelectShipMenu : MonoBehaviour
     {
         Debug.Log("Start Game!");
         if (isSelectionMade == true)
+        {
+            GameManager.game.pData.moduleAttached.Add("BulletMod");
             SceneManager.LoadScene("SolarSystem");
+        }
         else
         {
             DisplayNotification("Please select a ship before continuing!");
@@ -106,5 +112,11 @@ public class SelectShipMenu : MonoBehaviour
     void SaveShipType(string ship)
     {
         GameManager.game.pData.shipType = ship;
+    }
+
+    private void AdjustShipQualities(int armor, int power)
+    {
+        GameManager.game.pData.maxArmor = armor;
+        GameManager.game.pData.maxPower = power;
     }
 }

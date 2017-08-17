@@ -11,7 +11,7 @@ public class TitleMusic : MonoBehaviour {
     public bool lastSongWasTitle;
 
     // Use this for initialization
-    void Start() {
+    void Awake() {
         // Set Don't destroy if this is the first time GameManager is Instantiated
         if (music == null)
         {
@@ -23,7 +23,10 @@ public class TitleMusic : MonoBehaviour {
         {
             Destroy(gameObject);
         }
+    }
 
+    void Start()
+    {
         AudioSource audio = GetComponent<AudioSource>(); ;
         MusicInfo m = GameObject.Find("Main Camera").GetComponent<MusicInfo>();
         audio.clip = audioClips[m.songIndex];
@@ -31,12 +34,11 @@ public class TitleMusic : MonoBehaviour {
 
         SceneManager.activeSceneChanged += SceneChanged;
     }
-    
+
     void SceneChanged(Scene prevScene, Scene activeScene)
     {
         AudioSource audio = GetComponent<AudioSource>();
         MusicInfo m = GameObject.Find("Main Camera").GetComponent<MusicInfo>();
-        Debug.Log("Changing Song: " + m.songIndex + " " + m.isTitleSong);
         if (!m.isTitleSong || !lastSongWasTitle)
         {
             Debug.Log("Changing Song: " + m.songIndex + " " + m.isTitleSong);
