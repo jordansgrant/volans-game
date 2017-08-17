@@ -23,14 +23,13 @@ public class SolarSystemNavigation : MonoBehaviour {
         targetPosition = transform.position;
         if (GameManager.game.sData.isStartingPosition == true)
         {
-            print("hello");
             GameManager.game.sData.playerPosition = new Vector2(-17.0f, 0.0f);
             transform.position = GameManager.game.sData.playerPosition;
         }
         else
         {
             print("reload ship pos");
-            print(GameManager.game.sData.playerPosition);
+            //print(GameManager.game.sData.playerPosition);
             transform.position = GameManager.game.sData.playerPosition;
         }
 
@@ -51,7 +50,7 @@ public class SolarSystemNavigation : MonoBehaviour {
 
         if(!isMoving && CheckIfInEnemy())
         {
-            LoadFleetEncounter();
+            //LoadFleetEncounter();
         }
         else
         {
@@ -62,12 +61,14 @@ public class SolarSystemNavigation : MonoBehaviour {
     private void LoadFleetEncounter()
     {
         GameManager.game.sData.isFleetEncounter = true;
+        print(this.name);
         SceneManager.LoadScene("HostileEncounter");
     }
 
     private void LoadHostileEncounter()
     {
         GameManager.game.sData.isFleetEncounter = false;
+        print(this.name);
         SceneManager.LoadScene("HostileEncounter");
     }
 
@@ -135,11 +136,11 @@ public class SolarSystemNavigation : MonoBehaviour {
             if (CheckIfInEnemy())
             {
                 print("anom + enemey fleet");
-                LoadFleetEncounter();
+                //LoadFleetEncounter();
             }
             else{
                 print("anom");
-                LoadHostileEncounter();
+                //LoadHostileEncounter();
             }
         }
         else if(other.gameObject.tag == "Exit")

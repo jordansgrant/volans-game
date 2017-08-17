@@ -41,7 +41,6 @@ public class TitleMenu : MonoBehaviour {
 
     void DoNewGame()
     {
-        Debug.Log("New Game!");
         LoadScene("ShipSelection");
     }
 

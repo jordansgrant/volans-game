@@ -43,7 +43,6 @@ public class SelectShipMenu : MonoBehaviour
     void DisplayNotification(string text)
     {
         notification.text = text;
-        Debug.Log(text);
         notificationPanel.SetActive(true);
     }
 
@@ -91,7 +90,6 @@ public class SelectShipMenu : MonoBehaviour
 
     void DoSelectStartGame()
     {
-        Debug.Log("Start Game!");
         if (isSelectionMade == true)
         {
             GameManager.game.pData.moduleAttached.Add("BulletMod");

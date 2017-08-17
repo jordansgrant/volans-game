@@ -25,6 +25,11 @@ public class FittingManager : MonoBehaviour
         Ship.GetComponent<Image>().sprite = shipImg;
     }
 
+    private void LoadInventorySlots()
+    {
+
+    }
+
     private void LoadInventory()
     {
         int i = 0;
