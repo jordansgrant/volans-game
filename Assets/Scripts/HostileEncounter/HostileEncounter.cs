@@ -41,11 +41,14 @@ public class HostileEncounter : MonoBehaviour {
     // Use this for initialization
     void Start () {
         string solarSystem = GameManager.game.sData.Level;
-        Debug.Log(solarSystem);
 
-        int difficulty;
-        if (!int.TryParse(solarSystem.Remove(solarSystem.Length - 1), out difficulty))
+        int difficulty = -1;
+        if (!int.TryParse(solarSystem.Remove(0,solarSystem.Length - 1), out difficulty))
+        {
             difficulty = 1;
+        }
+
+        Debug.Log(difficulty);
         GameManager.game.pData.reward = GetRandomReward(difficulty);
 
         // Get Player Ship Prefab
@@ -136,8 +139,6 @@ public class HostileEncounter : MonoBehaviour {
         string shipClass = (isEmpire) ? "enemy" : "npc";
         System.Random rnd = new System.Random(System.DateTime.Now.Millisecond);
         int shipIndex = rnd.Next(0,3);
-
-        Debug.Log(shipIndex);
 
         switch(shipIndex)
         {
