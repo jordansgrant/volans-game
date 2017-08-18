@@ -19,7 +19,8 @@ public class VictoryAchieved : MonoBehaviour {
 
     void DoSolarSystem()
     {
-        SceneManager.LoadScene("SolarSystem");
+        print(GameManager.game.sData.Level);
+        SceneManager.LoadScene(GameManager.game.sData.Level);
     }
 
     void DoFittingMenu()

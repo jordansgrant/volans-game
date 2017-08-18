@@ -131,27 +131,17 @@ public class SolarSystemNavigation : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D other)
     {
        
-        if (other.gameObject.tag == "Anomaly")
+        if(other.gameObject.tag == "Exit")
         {
-            if (CheckIfInEnemy())
-            {
-                print("anom + enemey fleet");
-                //LoadFleetEncounter();
-            }
-            else{
-                print("anom");
-                //LoadHostileEncounter();
-            }
-        }
-        else if(other.gameObject.tag == "Exit")
-        {
+            print(other.gameObject.tag);
             //Load new solar system
-            if (GameManager.game.sData.Level == "SolarSystem1" || GameManager.game.sData.Level == "SolarSystem")
+            if (GameManager.game.sData.Level == "SolarSystem1")
             {
                 GameManager.game.sData.PlanetsData.Clear();//remove previous system's planets
                 GameManager.game.sData.Turn = 0;
                 GameManager.game.sData.isSpawned = false; //reset solar system
                 GameManager.game.sData.isStartingPosition = true; //reset player position
+                GameManager.game.sData.Level = "SolarSystem2";
                 SceneManager.LoadScene("SolarSystem2");
             }
             else if (GameManager.game.sData.Level == "SolarSystem2")
@@ -160,10 +150,9 @@ public class SolarSystemNavigation : MonoBehaviour {
                 GameManager.game.sData.Turn = 0;
                 GameManager.game.sData.isSpawned = false;
                 GameManager.game.sData.isStartingPosition = true;
+                GameManager.game.sData.Level = "SolarSystem3";
                 SceneManager.LoadScene("SolarSystem3");
             }
-                //Store current fleet position
-                print("exit");
         }
     }
 

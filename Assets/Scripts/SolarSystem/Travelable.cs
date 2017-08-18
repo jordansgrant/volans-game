@@ -72,23 +72,21 @@ public class Travelable : MonoBehaviour {
         this.gameObject.GetComponent<SpriteRenderer>().color = tmp;
     }
 
-    private void LoadHostileEncounter(string planet)
+    private void LoadHostileEncounter()
     {
         GameManager.game.sData.isFleetEncounter = false;
-        print(planet);
-        SceneManager.LoadScene("HostileEncounter");
+        //SceneManager.LoadScene("HostileEncounter");
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Player" && this.WasVisited == false ||
-            GameManager.game.sData.PlanetsData[this.Name].wasVisited == false)
+        print(other.gameObject.tag);
+        print(this.Name);
+        if(other.gameObject.tag == "Player" && this.WasVisited == false)
         {
             WasVisited = true;
-            print(this.Name);
             GameManager.game.sData.PlanetsData[this.Name].wasVisited = true;
-            //this.tag = "Visited";
-            //LoadHostileEncounter(this.name);
+            LoadHostileEncounter();
         }
 
         if (this.WasVisited == true)

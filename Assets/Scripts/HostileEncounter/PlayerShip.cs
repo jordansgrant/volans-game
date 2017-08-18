@@ -27,7 +27,7 @@ public class PlayerShip : MonoBehaviour
         power = pData.maxPower;
 
         projectile = Resources.Load(pData.weapon.projectile) as GameObject;
-
+        print(projectile);
         turret = GameObject.Find("turret");
 
         playerRef = this.gameObject;

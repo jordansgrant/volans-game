@@ -105,13 +105,7 @@ public class SolarSystemManager : MonoBehaviour
        
             //Initialize Travelable Object's Traits
             Script.Initialize(SolarSystem.UsedNames[i], difficulty);
-            
-
-            if (i == NumberOfTravelables - 1)
-            {
-                TravelableObject.tag = "Exit";
-            }
-
+           
             if (collisionDetected(currCollider))
             {
                 SolarSystem.UsedNames.Remove(currentName);//Remove currentName from used names

@@ -328,6 +328,12 @@ public class FittingManager : MonoBehaviour
         GameObject.Find(current).GetComponentInChildren<Button>().GetComponentInChildren<Image>().enabled = false;
         string module = GameObject.Find(current).GetComponentInChildren<Text>().text;
 
+        if (checkIfWeapon(module) && isWeaponEquiped == true)
+        {
+            print("Removing weapon");
+            isWeaponEquiped = false;
+        }
+
         GameObject.Find(current).GetComponentInChildren<Text>().text = "";
 
         print(module);

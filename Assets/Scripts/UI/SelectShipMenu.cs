@@ -90,7 +90,9 @@ public class SelectShipMenu : MonoBehaviour
     {
         if (isSelectionMade == true)
         {
+            //test
             GameManager.game.pData.moduleAttached.Add("BulletMod");
+            GameManager.game.sData.Level = "SolarSystem1";
             SceneManager.LoadScene("SolarSystem1");
         }
         else
