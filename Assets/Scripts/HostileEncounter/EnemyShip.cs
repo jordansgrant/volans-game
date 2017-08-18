@@ -29,7 +29,14 @@ public class EnemyShip : MonoBehaviour
         turret = GameObject.Find("enemy_turret");
         thruster = GameObject.Find("enemy_thruster").GetComponent<SpriteRenderer>();
 
-        weapon = GetEnemyWeapon(1);
+        string solarSystem = GameManager.game.sData.Level;
+        Debug.Log(solarSystem);
+
+        int difficulty;
+        if (!int.TryParse(solarSystem.Remove(solarSystem.Length - 1), out difficulty))
+            difficulty = 1;
+
+        weapon = SetEnemyDifficulty(difficulty);
         projectile = Resources.Load(weapon.projectile) as GameObject;
         projectile.GetComponent<CollideType>().damage = weapon.damage;
     }
@@ -61,8 +68,6 @@ public class EnemyShip : MonoBehaviour
             CollideType type = ((CollideType)hit.collider.gameObject.GetComponent("CollideType"));
             if (type.type == "ship" && Time.time > lastFire + weapon.fireRate)
             {
-                //Quaternion rotation = Quaternion.FromToRotation(projectile.transform.up, turret.transform.up);
-                //GameObject proj = Instantiate(projectile, turret.transform.position, rotation);
                 Fire(weapon.fireCount);
                 lastFire = Time.time;
             }
@@ -139,7 +144,7 @@ public class EnemyShip : MonoBehaviour
         }
     }
 
-    public WeaponInfo GetEnemyWeapon(int solarSystem)
+    public WeaponInfo SetEnemyDifficulty(int solarSystem)
     {
         System.Random rnd = new System.Random(System.DateTime.Now.Millisecond);
         int weaponIndex = rnd.Next(0,2) ; //between 0 and 1

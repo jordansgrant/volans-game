@@ -52,7 +52,7 @@ public class TitleMenu : MonoBehaviour {
         manager.AddComponent<GameManager>();
         GameManager.game.Load();
 
-        LoadScene("SolarSystem");
+        LoadScene(GameManager.game.sData.Level);
     }
 
     void DoExitGame()
