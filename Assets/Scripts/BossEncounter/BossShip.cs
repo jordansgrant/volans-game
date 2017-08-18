@@ -1,38 +1,41 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyShip : MonoBehaviour
+[System.Serializable]
+public class BossShip : MonoBehaviour
 {
+
     public static int armor;
 
-    public WeaponInfo weapon;
-    private float lastFire = 0.0f;
+    public WeaponInfo laser;
+    public WeaponInfo bullet;
 
     private Transform player;
 
-    public GameObject projectile;
-    private GameObject turret;
-    private SpriteRenderer thruster;
+    public GameObject laser_obj;
+    public GameObject bullet_obj;
+
+    private float main_lastFire = 0.0f;
+    private float left_lastFire = 0.0f;
+    private float right_lastFire = 0.0f;
+
+    private GameObject main_turret;
+    private GameObject left_turret;
+    private GameObject right_turret;
 
     private bool isGameOver = false;
-    
+
     void Awake()
     {
-        armor = 300;
-        
-        turret = GameObject.Find("enemy_turret");
-        thruster = GameObject.Find("enemy_thruster").GetComponent<SpriteRenderer>();
+        armor = 1000;
 
-        string solarSystem = GameManager.game.sData.Level;
-        Debug.Log(solarSystem);
+        main_turret = GameObject.Find("enemy_turret_main");
+        left_turret = GameObject.Find("enemy_turret_left");
+        right_turret = GameObject.Find("enemy_turret_right");
 
-        int difficulty;
-        if (!int.TryParse(solarSystem.Remove(solarSystem.Length - 1), out difficulty))
-            difficulty = 1;
-
-        weapon = SetEnemyDifficulty(difficulty);
-        projectile = Resources.Load(weapon.projectile) as GameObject;
-        projectile.GetComponent<CollideType>().damage = weapon.damage;
+        laser_obj.GetComponent<CollideType>().damage = laser.damage;
+        bullet_obj.GetComponent<CollideType>().damage = bullet.damage;
     }
 
     // Update is called once per frame
@@ -42,7 +45,7 @@ public class EnemyShip : MonoBehaviour
         {
             GameObject oPlayer = GameObject.FindGameObjectWithTag("Player");
 
-            if (oPlayer == null )
+            if (oPlayer == null)
             {
                 if (!isGameOver)
                 {
@@ -56,14 +59,36 @@ public class EnemyShip : MonoBehaviour
             player = oPlayer.transform;
         }
 
-        RaycastHit2D hit = Physics2D.Raycast(turret.transform.position, turret.transform.up, Mathf.Infinity, 1 << LayerMask.NameToLayer("Foreground"));
+        RaycastHit2D hit = Physics2D.Raycast(main_turret.transform.position, main_turret.transform.up, Mathf.Infinity, 1 << LayerMask.NameToLayer("Foreground"));
         if (hit)
         {
             CollideType type = ((CollideType)hit.collider.gameObject.GetComponent("CollideType"));
-            if (type.type == "ship" && Time.time > lastFire + weapon.fireRate)
+            if (type.type == "ship" && Time.time > main_lastFire + laser.fireRate)
             {
-                Fire(weapon.fireCount);
-                lastFire = Time.time;
+                Fire(laser_obj, main_turret, laser.fireCount);
+                main_lastFire = Time.time;
+            }
+        }
+
+        hit = Physics2D.Raycast(left_turret.transform.position, left_turret.transform.up, Mathf.Infinity, 1 << LayerMask.NameToLayer("Foreground"));
+        if (hit)
+        {
+            CollideType type = ((CollideType)hit.collider.gameObject.GetComponent("CollideType"));
+            if (type.type == "ship" && Time.time > left_lastFire + bullet.fireRate)
+            {
+                Fire(bullet_obj, left_turret, bullet.fireCount);
+                left_lastFire = Time.time;
+            }
+        }
+
+        hit = Physics2D.Raycast(right_turret.transform.position, right_turret.transform.up, Mathf.Infinity, 1 << LayerMask.NameToLayer("Foreground"));
+        if (hit)
+        {
+            CollideType type = ((CollideType)hit.collider.gameObject.GetComponent("CollideType"));
+            if (type.type == "ship" && Time.time > right_lastFire + bullet.fireRate)
+            {
+                Fire(bullet_obj, right_turret, bullet.fireCount);
+                left_lastFire = Time.time;
             }
         }
 
@@ -71,21 +96,21 @@ public class EnemyShip : MonoBehaviour
 
     }
 
-    void Fire(int count)
+    void Fire(GameObject projectile, GameObject turret, int count)
     {
         Quaternion rotation = Quaternion.FromToRotation(projectile.transform.up, turret.transform.up);
         Instantiate(projectile, turret.transform.position, rotation);
 
         if (count - 1 > 0)
-            StartCoroutine(FireDelayed(count - 1));
+            StartCoroutine(FireDelayed(projectile, turret, count - 1));
     }
 
-    IEnumerator FireDelayed(int count)
+    IEnumerator FireDelayed(GameObject projectile, GameObject turret, int count)
     {
         Quaternion rotation = Quaternion.FromToRotation(projectile.transform.up, turret.transform.up);
         for (int i = 0; i < count - 1; i++)
         {
-            yield return new WaitForSeconds(weapon.fireDelay);
+            yield return new WaitForSeconds(bullet.fireDelay);
             Instantiate(projectile, turret.transform.position, rotation);
         }
     }
@@ -111,20 +136,20 @@ public class EnemyShip : MonoBehaviour
                 armor -= type.damage;
                 break;
         }
-        
+
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
         CollideType type = collision.gameObject.GetComponent("CollideType") as CollideType;
-        
+
         switch (type.type)
         {
             case "projectile":
                 armor -= type.damage;
                 break;
         }
-        
+
     }
 
     private void checkForDead()
@@ -137,50 +162,4 @@ public class EnemyShip : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-    public WeaponInfo SetEnemyDifficulty(int solarSystem)
-    {
-        System.Random rnd = new System.Random(System.DateTime.Now.Millisecond);
-        int weaponIndex = rnd.Next(0,2) ; //between 0 and 1
-
-        Debug.Log(weaponIndex);
-
-        WeaponInfo weapon = null;
-
-        switch(weaponIndex)
-        {
-            case 0:
-                weapon = GameManager.game.weaponTypes["laser_bolt"];
-                weapon.damage = GetEnemyStats(solarSystem, false);
-                break;
-            case 1:
-                weapon = GameManager.game.weaponTypes["bullet"];
-                weapon.damage = GetEnemyStats(solarSystem, false) / 2;
-                break;
-        }
-
-        return weapon;
-    }
-
-    public int GetEnemyStats(int difficulty, bool isEmpire)
-    {
-        if (isEmpire)
-            return 40;
-
-        switch (difficulty)
-        {
-            case 1:
-                armor = (isEmpire) ? 400 : 300;
-                return (isEmpire) ? 30 : 20;
-            case 2:
-                armor = (isEmpire) ? 600 : 450;
-                return (isEmpire) ? 35 : 25;
-            case 3:
-                armor = (isEmpire) ? 800 : 600;
-                return (isEmpire) ? 40 : 30;
-        }
-
-        return 40;
-    }
-
 }

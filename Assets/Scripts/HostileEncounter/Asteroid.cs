@@ -17,8 +17,17 @@ public class Asteroid : MonoBehaviour
     {
         Random.InitState(System.DateTime.Now.Millisecond);
         HostileEncounter h = (HostileEncounter)GameObject.Find("Main Camera").GetComponent("HostileEncounter");
-        asteroids = h.asteroids;
-        asteroid_type = h.asteroid_type;
+        if (h != null)
+        {
+            asteroids = h.asteroids;
+            asteroid_type = h.asteroid_type;
+        }
+        else
+        {
+            BossEncounter b = (BossEncounter)GameObject.Find("Main Camera").GetComponent("BossEncounter");
+            asteroids = b.asteroids;
+            asteroid_type = b.asteroid_type;
+        }
 
         asteroid = GetComponent<Rigidbody2D>();
     }
@@ -33,7 +42,7 @@ public class Asteroid : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collision)
     {
         CollideType type = collision.gameObject.GetComponent("CollideType") as CollideType;
-
+        Debug.Log(type.type);
         switch (type.type)
         {
             case "projectile":
@@ -41,25 +50,7 @@ public class Asteroid : MonoBehaviour
                 break;
         }
     }
-
-    // currently no additional logic for these specific collisions
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        CollideType type = collision.gameObject.GetComponent("CollideType") as CollideType;
-
-        switch (type.type)
-        {
-            case "asteroid_large":
-                break;
-            case "asteroid_med":
-                break;
-            case "asteroid_small":
-                break;
-            case "ship":
-                break;
-        }
-    }
-
+    
 
     private void breakup(Collider2D col)
     {

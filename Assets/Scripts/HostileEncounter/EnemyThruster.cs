@@ -9,9 +9,4 @@ public class EnemyThruster : MonoBehaviour {
         thrust = GetComponent<SpriteRenderer>();
         thrust.enabled = true;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-        
-    }
 }
