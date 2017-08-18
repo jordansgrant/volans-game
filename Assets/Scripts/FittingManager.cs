@@ -117,7 +117,9 @@ public class FittingManager : MonoBehaviour
             GameObject.Find(path).GetComponent<Image>().sprite = module.GetComponentInChildren<Image>().sprite;
             GameObject.Find(path).GetComponent<Image>().enabled = true;
 
-            //Activate fitted modules
+            //Clear fitted module
+            RemoveModuleEffect(mod);
+            //Activate fitted module
             AddModuleEffect(mod);
 
             i++;
