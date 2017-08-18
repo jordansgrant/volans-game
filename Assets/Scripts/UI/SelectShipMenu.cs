@@ -44,12 +44,6 @@ public class SelectShipMenu : MonoBehaviour
         notificationPanel.SetActive(true);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     void DoSelectFrigate()
     {
         string ship_type = "fighter";
@@ -95,7 +89,18 @@ public class SelectShipMenu : MonoBehaviour
             GameManager.game.pData.moduleInventory.Clear();
             GameManager.game.pData.reward = "";
 
-            GameManager.game.pData.moduleAttached.Add("BulletMod");
+            // Clear potential leftover solar system data
+            GameManager.game.sData.UsedNames.Clear();
+            GameManager.game.sData.isStartingPosition = true;
+            GameManager.game.sData.PlanetsData.Clear();
+            GameManager.game.sData.isSpawned = false;
+            GameManager.game.sData.Turn = 0;
+
+            GameManager.game.pData.moduleAttached.Add("BulletMod"); //Default weapon
+
+            GameManager.game.sData.IsGameStarted = true;
+            GameManager.game.pData.IsGameStarted = true;
+
             GameManager.game.sData.Level = "SolarSystem1";
             SceneManager.LoadScene("SolarSystem1");
         }

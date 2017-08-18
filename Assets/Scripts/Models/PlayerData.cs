@@ -25,14 +25,13 @@ public class PlayerData
     public string reward;
 
     public bool isTestDataLoaded = false;
-
     public bool AllowOtherActions = false;
+    public bool IsGameStarted = false;
 
     public PlayerData()
     {
         moduleInventory = new List<string>();
         moduleAttached = new List<string>();
-
     }
 
     //I was not sure whether to implement a wrapper class

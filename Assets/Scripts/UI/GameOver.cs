@@ -17,11 +17,20 @@ public class GameOver : MonoBehaviour {
 	
 	void DoMainMenu()
     {
+        ResetGameManager();
         SceneManager.LoadScene(0);
     }
 
     void DoExitGame()
     {
+        ResetGameManager();
         Application.Quit();
+    }
+
+    void ResetGameManager()
+    {
+        GameManager.game.sData.IsGameStarted = false;
+        GameManager.game.pData.IsGameStarted = false;
+
     }
 }

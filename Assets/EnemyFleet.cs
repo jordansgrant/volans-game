@@ -24,7 +24,7 @@ public class EnemyFleet : MonoBehaviour {
 
     void OnTriggerStay2D(Collider2D other)
     {
-        print(GameManager.game.pData.AllowOtherActions);
+        //print(GameManager.game.pData.AllowOtherActions);
         if (other.gameObject.tag == "Player" && GameManager.game.pData.AllowOtherActions == true)
         {
             LoadFleetEncounter(other);

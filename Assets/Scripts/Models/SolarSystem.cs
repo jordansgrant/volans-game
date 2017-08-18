@@ -31,6 +31,8 @@ public class SolarSystem
     public string Level;
     public Vector2 gatePosition;
 
+    public bool IsGameStarted = false;
+
     public SolarSystem()
     {
         playerPosition = new Vector2();

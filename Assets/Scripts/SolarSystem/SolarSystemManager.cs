@@ -225,10 +225,4 @@ public class SolarSystemManager : MonoBehaviour
         }  
     }
 
-    void Update()
-    {
-
-
-    }
-
 }
