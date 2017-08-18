@@ -117,6 +117,9 @@ public class FittingManager : MonoBehaviour
             GameObject.Find(path).GetComponent<Image>().sprite = module.GetComponentInChildren<Image>().sprite;
             GameObject.Find(path).GetComponent<Image>().enabled = true;
 
+            //Activate fitted modules
+            AddModuleEffect(mod);
+
             i++;
             currFittedMods++;
         }
@@ -340,6 +343,9 @@ public class FittingManager : MonoBehaviour
         print(module);
         GameManager.game.pData.moduleInventory.Add(module);
         GameManager.game.pData.moduleAttached.Remove(module);
+
+        //Remove actual module effect
+        RemoveModuleEffect(module);
 
         LoadShipFit();
         LoadInventory();
