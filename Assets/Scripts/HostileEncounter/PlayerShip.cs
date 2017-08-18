@@ -30,6 +30,8 @@ public class PlayerShip : MonoBehaviour
         print(projectile);
         turret = GameObject.Find("turret");
 
+        projectile.GetComponent<CollideType>().damage = pData.weapon.damage;
+
         playerRef = this.gameObject;
 
         shield = gameObject.GetComponentInChildren<Shield>();

@@ -59,7 +59,7 @@ public class HostileEncounter : MonoBehaviour {
         colliders.Add(player.GetComponent<PolygonCollider2D>());
 
         // Get the enemy ship type
-        GameObject enemy = GetEnemyShip(false);
+        GameObject enemy = GetEnemyShip(GameManager.game.sData.isFleetEncounter);
         // Get the location to spawn the enemy ship
         GameObject enemySpawn = GameObject.Find("EnemySpawn");
         Quaternion rotation = Quaternion.Inverse(enemy.transform.rotation);
