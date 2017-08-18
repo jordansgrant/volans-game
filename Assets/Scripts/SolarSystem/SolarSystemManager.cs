@@ -176,7 +176,6 @@ public class SolarSystemManager : MonoBehaviour
     {
         var Planets = GameManager.game.sData.PlanetsData;
         //colliders = new List<BoxCollider2D>();
-        print(GameManager.game.sData.isSpawned);
 
         print("planet count: " + Planets.Count);
 

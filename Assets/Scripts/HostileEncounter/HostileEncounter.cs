@@ -68,6 +68,10 @@ public class HostileEncounter : MonoBehaviour {
         // Add enemy to collider list
         colliders.Add(enemy.GetComponent<PolygonCollider2D>());
 
+        //Disallow fleet encounter next turn
+        GameManager.game.pData.AllowOtherActions = false;
+        print(GameManager.game.pData.AllowOtherActions);
+
         // Spawn asteroids
         asteroid_type = "Brown";
         System.Random rand = new System.Random(System.DateTime.Now.Millisecond);

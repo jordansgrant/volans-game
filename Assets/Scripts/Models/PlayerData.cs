@@ -26,7 +26,7 @@ public class PlayerData
 
     public bool isTestDataLoaded = false;
 
-    public bool JustHadFleetEncounter = false;
+    public bool AllowOtherActions = false;
 
     public PlayerData()
     {

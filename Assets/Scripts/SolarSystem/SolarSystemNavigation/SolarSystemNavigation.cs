@@ -37,22 +37,14 @@ public class SolarSystemNavigation : MonoBehaviour {
         isAtPlanet = false;
     }
 
-
-    public void toggleJustHadFleetEncounter()
-    {
-        //GameManJustHadFleetEncounter = JustHadFleetEncounter == true ? false : true;
-        bool fleetEncounter = GameManager.game.pData.JustHadFleetEncounter;
-
-        fleetEncounter = (fleetEncounter == true) ? false : true;
-
-        GameManager.game.pData.JustHadFleetEncounter = fleetEncounter;
-    }
     // Update is called once per frame
     void Update ()
     {
         //if the mouse button has been pressed and ship is not moving, set the target position
         if (Input.GetKeyDown(KeyCode.Mouse0) && isMoving == false)
+        {
             SetTargetPosition();
+        }
 
         //if the player is moving, keep moving
         if (isMoving)
@@ -124,7 +116,6 @@ public class SolarSystemNavigation : MonoBehaviour {
         print(GameManager.game.sData.Turn);
 
         ExpandHostileArea();
-      
     }
 
     private void ExpandHostileArea()
@@ -189,6 +180,8 @@ public class SolarSystemNavigation : MonoBehaviour {
                 SolarSystemGUI.instance.DisplayNotification("You have already visited this planet.");
                 isMoving = false;
             }
+            //Allow actions after arriving at destination
+            GameManager.game.pData.AllowOtherActions = true;
 
         }
     }

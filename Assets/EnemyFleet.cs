@@ -6,27 +6,26 @@ using UnityEngine.SceneManagement;
 
 public class EnemyFleet : MonoBehaviour {
 
-    public void toggleJustHadFleetEncounter()
-    {
-        bool fleetEncounter = GameManager.game.pData.JustHadFleetEncounter;
-
-        fleetEncounter = (fleetEncounter == true) ? false : true;
-
-        GameManager.game.pData.JustHadFleetEncounter = fleetEncounter;
-    }
-
     private void LoadFleetEncounter(Collider2D ship)
     {
         GameManager.game.sData.playerPosition = ship.transform.position;
         SceneManager.LoadScene("HostileEncounter");
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        print(GameManager.game.pData.JustHadFleetEncounter);
-        //toggleJustHadFleetEncounter();
+    //private void OnTriggerEnter2D(Collider2D other)
+    //{
+    //    print(GameManager.game.pData.AllowOtherActions);
+    //    print(gameObject.GetComponent<BoxCollider2D>().bounds.Intersects(other.bounds));
+    //    if (other.gameObject.tag == "Player" && GameManager.game.pData.AllowOtherActions == true)
+    //    {
+    //        LoadFleetEncounter(other);
+    //    }
+    //}
 
-        if (other.gameObject.tag == "Player" && GameManager.game.pData.JustHadFleetEncounter == false)
+    void OnTriggerStay2D(Collider2D other)
+    {
+        print(GameManager.game.pData.AllowOtherActions);
+        if (other.gameObject.tag == "Player" && GameManager.game.pData.AllowOtherActions == true)
         {
             LoadFleetEncounter(other);
         }
