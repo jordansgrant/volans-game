@@ -102,13 +102,20 @@ public class FittingManager : MonoBehaviour
         foreach (var mod in GameManager.game.pData.moduleAttached)
         {
             path = "ModSlot" + i + "/Button";
+            GameObject.Find(path).GetComponentInChildren<Text>().text = mod;
+
+            //Check if mod is a weapon
+            if(checkIfWeapon(mod) && isWeaponEquiped == false)
+            {
+                isWeaponEquiped = true;
+            }
+
             module = Resources.Load<GameObject>(@"Modules\" + mod) as GameObject;
             //print(module);
             //modules.Add(module);
 
             GameObject.Find(path).GetComponent<Image>().sprite = module.GetComponentInChildren<Image>().sprite;
             GameObject.Find(path).GetComponent<Image>().enabled = true;
-            GameObject.Find(path).GetComponentInChildren<Text>().text = mod;
 
             i++;
             currFittedMods++;
@@ -206,7 +213,7 @@ public class FittingManager : MonoBehaviour
             GameManager.game.pData.moduleInventory.Add("PowerMod");
             GameManager.game.pData.moduleAttached.Add("PowerMod");
             GameManager.game.pData.moduleAttached.Add("LaserBoltMod");
-            GameManager.game.pData.reward = "LaserBoltMod";
+            GameManager.game.pData.reward = "LaserBoltMod++";
             GameManager.game.pData.isTestDataLoaded = true;
         }
 
@@ -300,6 +307,15 @@ public class FittingManager : MonoBehaviour
         trash = true;
     }
 
+    private bool checkIfWeapon(string mod)
+    {
+        if(mod.Contains("Laser") || mod.Contains("Bullet"))
+        {
+            return true;
+        }
+        return false;
+    }
+
     void AddToInventory(string current)
     {
         print("inv: " + currInvMods);
@@ -345,7 +361,13 @@ public class FittingManager : MonoBehaviour
         }
         //GameObject.Find(current).GetComponent<Image>().enabled = false;
         string module = GameObject.Find(current).GetComponentInChildren<Text>().text;
-        //GameObject.Find(current).GetComponentInChildren<Text>().text = "";
+
+        if(checkIfWeapon(module) && isWeaponEquiped == true)
+        {
+            print("Cannot fit two weapons");
+            return;
+        }
+
         GameManager.game.pData.moduleAttached.Add(module);
         GameManager.game.pData.moduleInventory.Remove(module);
 

@@ -91,7 +91,7 @@ public class SelectShipMenu : MonoBehaviour
         if (isSelectionMade == true)
         {
             GameManager.game.pData.moduleAttached.Add("BulletMod");
-            SceneManager.LoadScene("SolarSystem");
+            SceneManager.LoadScene("SolarSystem1");
         }
         else
         {
