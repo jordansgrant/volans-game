@@ -90,7 +90,11 @@ public class SelectShipMenu : MonoBehaviour
     {
         if (isSelectionMade == true)
         {
-            //test
+            // Clear potential modules left over from previous games
+            GameManager.game.pData.moduleAttached.Clear();
+            GameManager.game.pData.moduleInventory.Clear();
+            GameManager.game.pData.reward = "";
+
             GameManager.game.pData.moduleAttached.Add("BulletMod");
             GameManager.game.sData.Level = "SolarSystem1";
             SceneManager.LoadScene("SolarSystem1");
