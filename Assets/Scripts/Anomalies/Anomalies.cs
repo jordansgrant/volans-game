@@ -52,8 +52,6 @@ public class Anomalies : MonoBehaviour {
         button1 = GameObject.Find("Choice1");
         button2 = GameObject.Find("Choice2");
 
-        Debug.Log(anomalyEvent);
-
         //fill in text objects
         switch(anomalyEvent)
         {

@@ -42,7 +42,6 @@ public class Asteroid : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collision)
     {
         CollideType type = collision.gameObject.GetComponent("CollideType") as CollideType;
-        Debug.Log(type.type);
         switch (type.type)
         {
             case "projectile":

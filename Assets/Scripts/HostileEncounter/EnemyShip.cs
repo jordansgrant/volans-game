@@ -24,10 +24,9 @@ public class EnemyShip : MonoBehaviour
         thruster = GameObject.Find("enemy_thruster").GetComponent<SpriteRenderer>();
 
         string solarSystem = GameManager.game.sData.Level;
-        Debug.Log(solarSystem);
 
         int difficulty;
-        if (!int.TryParse(solarSystem.Remove(solarSystem.Length - 1), out difficulty))
+        if (!int.TryParse(solarSystem.Remove(0,solarSystem.Length - 2), out difficulty))
             difficulty = 1;
 
         weapon = SetEnemyDifficulty(difficulty);
@@ -142,8 +141,7 @@ public class EnemyShip : MonoBehaviour
     {
         System.Random rnd = new System.Random(System.DateTime.Now.Millisecond);
         int weaponIndex = rnd.Next(0,2) ; //between 0 and 1
-
-        Debug.Log(weaponIndex);
+        
 
         WeaponInfo weapon = null;
 

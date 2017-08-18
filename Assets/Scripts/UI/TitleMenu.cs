@@ -54,8 +54,6 @@ public class TitleMenu : MonoBehaviour {
 
     void DoContinueGame()
     {
-        Debug.Log("Continue Game!");
-        
         GameObject manager = new GameObject("GameManager");
         manager.AddComponent<GameManager>();
         GameManager.game.Load();

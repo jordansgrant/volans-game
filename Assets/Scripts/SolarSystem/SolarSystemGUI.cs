@@ -35,7 +35,6 @@ public class SolarSystemGUI : MonoBehaviour {
 
     void DoSelectMainMenu()
     {
-        Debug.Log("Main menu!");
         GameManager.game.Save();
         SceneManager.LoadScene("MainMenu");
     }

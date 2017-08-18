@@ -6,6 +6,8 @@
 /volans_Data/
 /Escape_From_Volans_Data/
 /Esccape_From_Volans.exe
+/test_Data/
+/test.exe
 *.exe
 *.csproj
 *.sln

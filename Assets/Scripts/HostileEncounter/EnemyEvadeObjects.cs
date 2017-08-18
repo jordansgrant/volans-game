@@ -12,7 +12,6 @@ public class EnemyEvadeObjects : MonoBehaviour
         Collider2D hit = Physics2D.OverlapCircle(transform.position, 3.0f, 1 << LayerMask.NameToLayer("Foreground"));
         if (hit != null && !hit.name.Contains("enemy"))
         {
-            Debug.Log("Here hit: " + hit.name);
             MoveAway(hit.transform.position);
         }
     }
