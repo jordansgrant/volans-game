@@ -51,7 +51,9 @@ public class PlayerShip : MonoBehaviour
             player.AddForce(transform.up * Time.deltaTime * pData.acceleration * accelCoefficient);
         }
         
-        if (Input.GetKeyDown(KeyCode.Space) && Time.time > lastFired + pData.weapon.fireRate)
+        if (Input.GetKeyDown(KeyCode.Space) &&
+            pData.weapon != null &&
+            Time.time > lastFired + pData.weapon.fireRate)
         {
             lastFired = Time.time;
             Fire(pData.weapon.fireCount);

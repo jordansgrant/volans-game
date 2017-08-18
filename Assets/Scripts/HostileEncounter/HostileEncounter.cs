@@ -40,19 +40,32 @@ public class HostileEncounter : MonoBehaviour {
     }
     // Use this for initialization
     void Start () {
+        string solarSystem = GameManager.game.sData.Level;
+        Debug.Log(solarSystem);
+
+        int difficulty;
+        if (!int.TryParse(solarSystem.Remove(solarSystem.Length - 1), out difficulty))
+            difficulty = 1;
+        GameManager.game.pData.reward = GetRandomReward(difficulty);
+
+        // Get Player Ship Prefab
         ship_type = GameManager.game.pData.shipType;
         player = (GameObject)Resources.Load(@"Ships/" + ship_type);
 
         // Spawn Player
         playerSpawn = GameObject.Find("PlayerSpawn");
         player = Instantiate(player, playerSpawn.transform.position, playerSpawn.transform.rotation);
-
+        // Add Player Collider to list to ensure no collisions at the start
         colliders.Add(player.GetComponent<PolygonCollider2D>());
 
+        // Get the enemy ship type
         GameObject enemy = GetEnemyShip(false);
+        // Get the location to spawn the enemy ship
         GameObject enemySpawn = GameObject.Find("EnemySpawn");
         Quaternion rotation = Quaternion.Inverse(enemy.transform.rotation);
+        // Instantiate the enemy ship
         enemy = Instantiate(enemy, enemySpawn.transform.position, rotation) as GameObject;
+        // Add enemy to collider list
         colliders.Add(enemy.GetComponent<PolygonCollider2D>());
 
         // Spawn asteroids
@@ -134,5 +147,34 @@ public class HostileEncounter : MonoBehaviour {
 
         return null;
 
+    }
+
+    private string GetRandomReward(int solarSystem)
+    {
+        System.Random rnd = new System.Random(System.DateTime.Now.Millisecond);
+        int chance = rnd.Next(1, 101);
+        int rewardType;
+        string reward = "";
+
+        if (chance < 10)
+            return reward;
+
+        rewardType = rnd.Next(1, 101);
+
+        if (rewardType < 35)
+            reward = "ArmorMod";
+        else if (rewardType < 50)
+            reward = "LaserBoltMod";
+        else if (rewardType < 85)
+            reward = "PowerMod";
+        else
+            reward = "BulletMod";
+
+        if (chance < 95 || solarSystem == 3)
+            reward += new string('+', solarSystem - 1);
+        else
+            reward += new string('+', solarSystem);
+
+        return reward;
     }
 }
