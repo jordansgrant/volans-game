@@ -178,7 +178,7 @@ public class EnemyShip : MonoBehaviour
                 return (isEmpire) ? 35 : 25;
             case 3:
                 armor = (isEmpire) ? 800 : 600;
-                return (isEmpire) ? 45 : 30;
+                return (isEmpire) ? 40 : 30;
         }
 
         return 40;
