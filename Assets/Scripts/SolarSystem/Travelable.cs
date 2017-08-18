@@ -80,8 +80,8 @@ public class Travelable : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        print(other.gameObject.tag);
-        print(this.Name);
+        //print(other.gameObject.tag);
+        //print(this.Name);
         if(other.gameObject.tag == "Player" && this.WasVisited == false)
         {
             WasVisited = true;

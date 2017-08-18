@@ -37,6 +37,16 @@ public class SolarSystemNavigation : MonoBehaviour {
         isAtPlanet = false;
     }
 
+
+    public void toggleJustHadFleetEncounter()
+    {
+        //GameManJustHadFleetEncounter = JustHadFleetEncounter == true ? false : true;
+        bool fleetEncounter = GameManager.game.pData.JustHadFleetEncounter;
+
+        fleetEncounter = (fleetEncounter == true) ? false : true;
+
+        GameManager.game.pData.JustHadFleetEncounter = fleetEncounter;
+    }
     // Update is called once per frame
     void Update ()
     {
@@ -47,15 +57,6 @@ public class SolarSystemNavigation : MonoBehaviour {
         //if the player is moving, keep moving
         if (isMoving)
             MovePlayer();
-
-        if(!isMoving && CheckIfInEnemy())
-        {
-            //LoadFleetEncounter();
-        }
-        else
-        {
-            GameManager.game.sData.isFleetEncounter = false;
-        }
     }
 
     private void LoadFleetEncounter()
@@ -119,6 +120,7 @@ public class SolarSystemNavigation : MonoBehaviour {
 
         //Increment Turn
         GameManager.game.sData.Turn++;
+
         print(GameManager.game.sData.Turn);
 
         ExpandHostileArea();
@@ -129,10 +131,11 @@ public class SolarSystemNavigation : MonoBehaviour {
     {
         scaleFactor = new Vector3(2.75f, 0.0f);
 
-        if (GameManager.game.sData.Turn < 1)
+        if (GameManager.game.sData.Turn == 1)
             scaleFactor = new Vector3(4.5f, 0.0f);
 
-        EnemyFleet.transform.localScale += scaleFactor;       
+        if(GameManager.game.sData.Turn > 1)
+            EnemyFleet.transform.localScale += scaleFactor;       
     }
 
     private void OnTriggerEnter2D(Collider2D other)

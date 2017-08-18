@@ -26,6 +26,8 @@ public class PlayerData
 
     public bool isTestDataLoaded = false;
 
+    public bool JustHadFleetEncounter = false;
+
     public PlayerData()
     {
         moduleInventory = new List<string>();
