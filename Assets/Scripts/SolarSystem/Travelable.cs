@@ -86,6 +86,8 @@ public class Travelable : MonoBehaviour {
         {
             WasVisited = true;
             GameManager.game.sData.PlanetsData[this.Name].wasVisited = true;
+
+            GameManager.game.sData.playerPosition = other.transform.position;
             LoadHostileEncounter();
         }
 

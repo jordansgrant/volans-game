@@ -208,14 +208,12 @@ public class SolarSystemManager : MonoBehaviour
         GameManager.game.sData.Level = scene.name;
         if (!GameManager.game.sData.isSpawned)
         {
-            print("new spawn");
             SpawnTravelables();
             GameManager.game.sData.isSpawned = true;
         }
         else
         {
             LoadSolarSystem();
-            print("reload");
         }  
     }
 

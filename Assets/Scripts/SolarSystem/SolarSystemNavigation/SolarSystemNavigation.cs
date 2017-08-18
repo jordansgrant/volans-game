@@ -62,12 +62,19 @@ public class SolarSystemNavigation : MonoBehaviour {
     {
         GameManager.game.sData.isFleetEncounter = true;
         print(this.name);
+
+        GameManager.game.sData.playerPosition = transform.position;
+
         SceneManager.LoadScene("HostileEncounter");
     }
 
     private void LoadHostileEncounter()
     {
         GameManager.game.sData.isFleetEncounter = false;
+
+        //Save player position before loading hostile encounter
+        GameManager.game.sData.playerPosition = transform.position;
+
         print(this.name);
         SceneManager.LoadScene("HostileEncounter");
     }
