@@ -20,8 +20,6 @@ public class EnemyShip : MonoBehaviour
     void Start()
     {
         thruster.enabled = true;
-
-        weapon = GameManager.game.weaponTypes["laser_bolt"];
     }
 
     void Awake()
@@ -30,6 +28,10 @@ public class EnemyShip : MonoBehaviour
         
         turret = GameObject.Find("enemy_turret");
         thruster = GameObject.Find("enemy_thruster").GetComponent<SpriteRenderer>();
+
+        weapon = GetEnemyWeapon(1);
+        projectile = Resources.Load(weapon.projectile) as GameObject;
+        projectile.GetComponent<CollideType>().damage = weapon.damage;
     }
 
     // Update is called once per frame
@@ -135,6 +137,51 @@ public class EnemyShip : MonoBehaviour
             isGameOver = true;
             Destroy(gameObject);
         }
+    }
+
+    public WeaponInfo GetEnemyWeapon(int solarSystem)
+    {
+        System.Random rnd = new System.Random(System.DateTime.Now.Millisecond);
+        int weaponIndex = rnd.Next(0,2) ; //between 0 and 1
+
+        Debug.Log(weaponIndex);
+
+        WeaponInfo weapon = null;
+
+        switch(weaponIndex)
+        {
+            case 0:
+                weapon = GameManager.game.weaponTypes["laser_bolt"];
+                weapon.damage = GetEnemyStats(solarSystem, false);
+                break;
+            case 1:
+                weapon = GameManager.game.weaponTypes["bullet"];
+                weapon.damage = GetEnemyStats(solarSystem, false) / 2;
+                break;
+        }
+
+        return weapon;
+    }
+
+    public int GetEnemyStats(int difficulty, bool isEmpire)
+    {
+        if (isEmpire)
+            return 40;
+
+        switch (difficulty)
+        {
+            case 1:
+                armor = (isEmpire) ? 400 : 300;
+                return (isEmpire) ? 30 : 20;
+            case 2:
+                armor = (isEmpire) ? 600 : 450;
+                return (isEmpire) ? 35 : 25;
+            case 3:
+                armor = (isEmpire) ? 800 : 600;
+                return (isEmpire) ? 45 : 30;
+        }
+
+        return 40;
     }
 
 }

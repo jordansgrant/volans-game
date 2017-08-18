@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour {
 
     // Solar System Information
     public SolarSystem sData;
-
+   
     public Dictionary<string, WeaponInfo> weaponTypes;
     
     // Use this for initialization

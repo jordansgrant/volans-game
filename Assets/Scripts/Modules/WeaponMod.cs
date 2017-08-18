@@ -10,6 +10,7 @@ public class WeaponMod : MonoBehaviour, IModule
     public float fireRate;
     public float fireDelay;
     public string projectile;
+    public int damage;
     
     private bool active = false;
 
@@ -27,7 +28,7 @@ public class WeaponMod : MonoBehaviour, IModule
 
     public void addEffect()
     {
-        GameManager.game.pData.weapon = new WeaponInfo(projectile, fireCount, fireDelay, fireRate);
+        GameManager.game.pData.weapon = new WeaponInfo(projectile, fireCount, fireDelay, fireRate, damage);
         active = true;
     }
 
