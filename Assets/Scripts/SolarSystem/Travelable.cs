@@ -81,7 +81,11 @@ public class Travelable : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D other)
     {
         //print(other.gameObject.tag);
-        //print(this.Name);
+        foreach (var planet in GameManager.game.sData.PlanetsData.Keys)
+        {
+            print(planet);
+        }
+        print(this.Name);
         if(other.gameObject.tag == "Player" && this.WasVisited == false)
         {
             WasVisited = true;

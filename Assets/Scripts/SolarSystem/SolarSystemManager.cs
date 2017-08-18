@@ -127,14 +127,13 @@ public class SolarSystemManager : MonoBehaviour
                 //Save current planet in game manager
                 newPlanet.Name = currentName;
                 //print("newPlanet.Name " + newPlanet.Name);
-                //print(newPlanet.Name);
+                print(newPlanet.Name);
                 newPlanet.PreFabNum = prefabNum;
                 newPlanet.Difficulty = difficulty;
                 newPlanet.Position = position;
                 newPlanet.Tag = (string)TravelableObject.tag;
                 newPlanet.wasVisited = false;
-                SolarSystem.PlanetsData[newPlanet.Name] = newPlanet;
-                
+                SolarSystem.PlanetsData[newPlanet.Name] = newPlanet;                
             }
         }
 
@@ -153,6 +152,7 @@ public class SolarSystemManager : MonoBehaviour
     //Load an already existing solar system.
     void LoadSolarSystem()
     {
+        print("in load solar system");
         LoadPlanets();
         LoadEnemyFleet();
         //deactivate box colliders
@@ -214,12 +214,15 @@ public class SolarSystemManager : MonoBehaviour
         GameManager.game.sData.Level = scene.name;
         if (!GameManager.game.sData.isSpawned)
         {
+            print("generate new solar system");
             ActivateFittedModules();
             SpawnTravelables();
             GameManager.game.sData.isSpawned = true;
+            LoadSolarSystem();
         }
         else
         {
+            print("load old solar system");
             ActivateFittedModules();
             LoadSolarSystem();
         }  
