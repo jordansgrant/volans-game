@@ -75,7 +75,7 @@ public class Travelable : MonoBehaviour {
     private void LoadHostileEncounter()
     {
         GameManager.game.sData.isFleetEncounter = false;
-        //SceneManager.LoadScene("HostileEncounter");
+        SceneManager.LoadScene("HostileEncounter");
     }
 
     private void OnTriggerEnter2D(Collider2D other)

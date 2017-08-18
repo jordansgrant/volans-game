@@ -241,7 +241,8 @@ public class FittingManager : MonoBehaviour
         print("Before back to solar");
 
         ClearInventory();
-        SceneManager.LoadScene("SolarSystem1");
+        string level = GameManager.game.sData.Level;
+        SceneManager.LoadScene(level);
     }
 
 
