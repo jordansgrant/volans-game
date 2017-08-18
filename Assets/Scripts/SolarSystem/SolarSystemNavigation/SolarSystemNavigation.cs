@@ -51,16 +51,6 @@ public class SolarSystemNavigation : MonoBehaviour {
             MovePlayer();
     }
 
-    private void LoadFleetEncounter()
-    {
-        GameManager.game.sData.isFleetEncounter = true;
-        print(this.name);
-
-        GameManager.game.sData.playerPosition = transform.position;
-
-        SceneManager.LoadScene("HostileEncounter");
-    }
-
     private void LoadHostileEncounter()
     {
         GameManager.game.sData.isFleetEncounter = false;
