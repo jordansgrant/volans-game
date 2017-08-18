@@ -90,7 +90,7 @@ public class SolarSystemManager : MonoBehaviour
         {
             GameObject TravelableObject;
             GameObject currentPlanet;
-            SolarSystem.PlanetData newPlanet = new SolarSystem.PlanetData();
+            PlanetData newPlanet = new PlanetData();
 
             string currentName = GetUniqueRandomName();
 

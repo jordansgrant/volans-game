@@ -36,5 +36,5 @@ public class PlayerData
 
     //I was not sure whether to implement a wrapper class
     //for player inventory.
-    public Dictionary<string, GameObject> playerInventory;
+    //public Dictionary<string, GameObject> playerInventory;
 }

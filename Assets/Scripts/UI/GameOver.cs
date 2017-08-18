@@ -1,6 +1,8 @@
 ﻿using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
+using System;
 
 public class GameOver : MonoBehaviour {
     public Button mainMenu,
@@ -31,6 +33,15 @@ public class GameOver : MonoBehaviour {
     {
         GameManager.game.sData.IsGameStarted = false;
         GameManager.game.pData.IsGameStarted = false;
+
+        try
+        {
+            FileStream file = File.Open(Application.persistentDataPath + "/player.dat", FileMode.Open);
+            file.Close();
+            File.Delete(Application.persistentDataPath + "/player.dat");
+            File.Delete(Application.persistentDataPath + "/solar_system.dat");
+        }
+        catch  { }
 
     }
 }
