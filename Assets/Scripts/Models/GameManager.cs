@@ -2,6 +2,7 @@
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 public class GameManager : MonoBehaviour {
 
@@ -55,6 +56,12 @@ public class GameManager : MonoBehaviour {
         bf.Serialize(file, pData);
         file.Close();
 
+        SurrogateSelector surrogateSelector = new SurrogateSelector();
+        Vector2SerializationSurrogate vector2SS = new Vector2SerializationSurrogate();
+
+        surrogateSelector.AddSurrogate(typeof(Vector2), new StreamingContext(StreamingContextStates.All), vector2SS);
+        bf.SurrogateSelector = surrogateSelector;
+
         file = File.Create(Application.persistentDataPath + "/solar_system.dat");
         bf.Serialize(file, sData);
         file.Close();
@@ -68,6 +75,12 @@ public class GameManager : MonoBehaviour {
         FileStream file = File.Open(Application.persistentDataPath + "/player.dat", FileMode.Open);
         pData = bf.Deserialize(file) as PlayerData;
         file.Close();
+
+        SurrogateSelector surrogateSelector = new SurrogateSelector();
+        Vector2SerializationSurrogate vector2SS = new Vector2SerializationSurrogate();
+
+        surrogateSelector.AddSurrogate(typeof(Vector2), new StreamingContext(StreamingContextStates.All), vector2SS);
+        bf.SurrogateSelector = surrogateSelector;
 
         file = File.Open(Application.persistentDataPath + "/solar_system.dat", FileMode.Open);
         sData = bf.Deserialize(file) as SolarSystem;

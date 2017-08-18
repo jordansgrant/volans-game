@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using System;
 
 public class TitleMenu : MonoBehaviour {
 
@@ -14,14 +15,16 @@ public class TitleMenu : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
+        print("here");
         try
         {
             FileStream file = File.Open(Application.persistentDataPath + "/player.dat", FileMode.Open);
             file.Close();
             continueGame.interactable = true;
         }
-        catch
+        catch (Exception ex)
         {
+            print(ex);
             continueGame.interactable = false;
         }
     }
@@ -41,6 +44,11 @@ public class TitleMenu : MonoBehaviour {
 
     void DoNewGame()
     {
+        if (continueGame.interactable)
+        {
+            File.Delete(Application.persistentDataPath + "/player.dat");
+            File.Delete(Application.persistentDataPath + "/solar_system.dat");
+        }
         LoadScene("ShipSelection");
     }
 

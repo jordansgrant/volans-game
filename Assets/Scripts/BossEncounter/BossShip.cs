@@ -88,7 +88,7 @@ public class BossShip : MonoBehaviour
             if (type.type == "ship" && Time.time > right_lastFire + bullet.fireRate)
             {
                 Fire(bullet_obj, right_turret, bullet.fireCount);
-                left_lastFire = Time.time;
+                right_lastFire = Time.time;
             }
         }
 
@@ -156,7 +156,7 @@ public class BossShip : MonoBehaviour
     {
         if (armor < 0)
         {
-            GameObject playerVictory = Resources.Load("UI/Victory Achieved") as GameObject;
+            GameObject playerVictory = Resources.Load("UI/Game Over Win") as GameObject;
             Instantiate(playerVictory, new Vector2(0, 2.5f), Quaternion.identity);
             isGameOver = true;
             Destroy(gameObject);
