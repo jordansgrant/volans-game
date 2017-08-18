@@ -197,6 +197,9 @@ public class FittingManager : MonoBehaviour
 
     void Awake()
     {
+        //Deactivate mods so they aren't loaded twice.
+        DeactivateAllFittedMods();
+
         //Solar system button
         Button btn = SolarSys.GetComponent<Button>();
         btn.onClick.AddListener(BackToSolar);
@@ -267,6 +270,14 @@ public class FittingManager : MonoBehaviour
             btn.onClick.AddListener(AddRewardToInventory);
         }
 
+    }
+
+    void DeactivateAllFittedMods()
+    {
+        foreach (var mod in GameManager.game.pData.moduleAttached)
+        {
+            RemoveModuleEffect(mod);
+        }
     }
 
     void AddRewardToInventory()

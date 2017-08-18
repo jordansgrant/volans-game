@@ -59,6 +59,15 @@ public class SolarSystemManager : MonoBehaviour
         return name;
     }
 
+    void ActivateFittedModules()
+    {
+        foreach (var mod in GameManager.game.pData.moduleAttached)
+        {
+            GameObject module = Resources.Load("Modules/" + mod) as GameObject;
+            module.GetComponent<IModule>().addEffect();
+        }
+    }
+
     void DeactivateBoxColliders()
     {
         foreach (var collider in colliders)
@@ -208,11 +217,13 @@ public class SolarSystemManager : MonoBehaviour
         GameManager.game.sData.Level = scene.name;
         if (!GameManager.game.sData.isSpawned)
         {
+            ActivateFittedModules();
             SpawnTravelables();
             GameManager.game.sData.isSpawned = true;
         }
         else
         {
+            ActivateFittedModules();
             LoadSolarSystem();
         }  
     }
