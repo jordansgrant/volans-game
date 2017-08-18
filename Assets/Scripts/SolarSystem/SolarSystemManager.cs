@@ -42,7 +42,7 @@ public class SolarSystemManager : MonoBehaviour
          "Rancer", "Ami", "Fensi", "Amodonen", "Dodixie", "Egghelande", "Vylade", "Ney", "Goinard",
          "Jel", "Angur", "Antem", "Kino", "Nani", "Ruvas"};
 
-    private List<string> UsedNames;
+    //private List<string> UsedNames;
 
     private List<string> Prefabs = new List<string> { "gaia", "island",
     "jungle", "lava", "ocean", "rock", "toxic", "volcano"};
@@ -85,8 +85,6 @@ public class SolarSystemManager : MonoBehaviour
 
         var SolarSystem = GameManager.game.sData;
         colliders = new List<BoxCollider2D>();
-
-        UsedNames = new List<string> { };
 
         for (int i = 0; i < NumberOfTravelables; i++)
         {

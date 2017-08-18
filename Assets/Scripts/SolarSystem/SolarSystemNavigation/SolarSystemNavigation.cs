@@ -154,6 +154,14 @@ public class SolarSystemNavigation : MonoBehaviour {
                 GameManager.game.sData.Level = "SolarSystem3";
                 SceneManager.LoadScene("SolarSystem3");
             }
+            else if (GameManager.game.sData.Level == "SolarSystem3")
+            {
+                GameManager.game.sData.PlanetsData.Clear();
+                GameManager.game.sData.Turn = 0;
+                GameManager.game.sData.isSpawned = false;
+                GameManager.game.sData.isStartingPosition = true;
+                SceneManager.LoadScene("BossEncounter");
+            }
         }
     }
 
