@@ -219,8 +219,13 @@ public class FittingManager : MonoBehaviour
             GameManager.game.pData.isTestDataLoaded = true;
         }
 
-        //Deactivate mods so they aren't loaded twice.
-        DeactivateAllFittedMods();
+        if (GameManager.game.pData.modulesFitted)
+        {
+            //Deactivate mods so they aren't loaded twice.
+            DeactivateAllFittedMods();
+            GameManager.game.pData.modulesFitted = false;
+        }
+        
 
         //Load Last Rewarded
         LoadReward();

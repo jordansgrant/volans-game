@@ -212,10 +212,16 @@ public class SolarSystemManager : MonoBehaviour
         //Select solar system scene
         Scene scene = SceneManager.GetActiveScene();
         GameManager.game.sData.Level = scene.name;
+
+        if (!GameManager.game.pData.modulesFitted)
+        {
+            ActivateFittedModules();
+            GameManager.game.pData.modulesFitted = true;
+        }
+
         if (!GameManager.game.sData.isSpawned)
         {
             print("generate new solar system");
-            ActivateFittedModules();
             SpawnTravelables();
             GameManager.game.sData.isSpawned = true;
             LoadSolarSystem();
@@ -223,7 +229,6 @@ public class SolarSystemManager : MonoBehaviour
         else
         {
             print("load old solar system");
-            ActivateFittedModules();
             LoadSolarSystem();
         }  
     }

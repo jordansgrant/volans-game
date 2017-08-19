@@ -21,6 +21,7 @@ public class PlayerData
 
     public List<string> moduleInventory;
     public List<string> moduleAttached;
+    public bool modulesFitted = false;
 
     public string reward;
 
