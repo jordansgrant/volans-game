@@ -116,11 +116,7 @@ public class FittingManager : MonoBehaviour
 
             GameObject.Find(path).GetComponent<Image>().sprite = module.GetComponentInChildren<Image>().sprite;
             GameObject.Find(path).GetComponent<Image>().enabled = true;
-
-            //Clear fitted module
-            RemoveModuleEffect(mod);
-            //Activate fitted module
-            AddModuleEffect(mod);
+            
 
             i++;
             currFittedMods++;
@@ -199,9 +195,7 @@ public class FittingManager : MonoBehaviour
 
     void Awake()
     {
-        //Deactivate mods so they aren't loaded twice.
-        DeactivateAllFittedMods();
-
+        
         //Solar system button
         Button btn = SolarSys.GetComponent<Button>();
         btn.onClick.AddListener(BackToSolar);
@@ -225,6 +219,9 @@ public class FittingManager : MonoBehaviour
             GameManager.game.pData.isTestDataLoaded = true;
         }
 
+        //Deactivate mods so they aren't loaded twice.
+        DeactivateAllFittedMods();
+
         //Load Last Rewarded
         LoadReward();
 
@@ -247,7 +244,7 @@ public class FittingManager : MonoBehaviour
     {
         //ClearFit();
         print("Before back to solar");
-
+        //ActivateAllFittedMods();
         ClearInventory();
         string level = GameManager.game.sData.Level;
         SceneManager.LoadScene(level);
@@ -281,7 +278,7 @@ public class FittingManager : MonoBehaviour
             RemoveModuleEffect(mod);
         }
     }
-
+    
     void AddRewardToInventory()
     {
         string mod = GameObject.Find("RewardButton").GetComponentInChildren<Text>().text;
@@ -357,9 +354,6 @@ public class FittingManager : MonoBehaviour
         GameManager.game.pData.moduleInventory.Add(module);
         GameManager.game.pData.moduleAttached.Remove(module);
 
-        //Remove actual module effect
-        RemoveModuleEffect(module);
-
         LoadShipFit();
         LoadInventory();
     }
@@ -402,9 +396,7 @@ public class FittingManager : MonoBehaviour
 
         LoadShipFit();
         LoadInventory();
-        //DrawAddedToFitting(module);
 
-        //print(GameObject.Find(current).GetComponent<Image>());
     }
 
     void AddModuleEffect(string mod)
