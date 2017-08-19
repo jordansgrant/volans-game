@@ -50,6 +50,11 @@ public class PlanetData
     public bool wasVisited { get; set; }
 }
 
+/// <summary>
+/// Note: Vector2SerializationSurrogate class was taken, almost exactly from the following Unity forum post:
+/// https://forum.unity3d.com/threads/vector3-is-not-marked-serializable.435303/
+/// </summary>
+
 public class Vector2SerializationSurrogate : ISerializationSurrogate
 {
 
