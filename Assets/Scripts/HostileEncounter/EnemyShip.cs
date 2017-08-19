@@ -3,8 +3,10 @@ using UnityEngine;
 
 public class EnemyShip : MonoBehaviour
 {
+    // Enemy Armor
     public static int armor;
 
+    // Store weapon info about enemy
     public WeaponInfo weapon;
     private float lastFire = 0.0f;
 
@@ -26,8 +28,11 @@ public class EnemyShip : MonoBehaviour
         string solarSystem = GameManager.game.sData.Level;
 
         int difficulty;
-        if (!int.TryParse(solarSystem.Remove(0,solarSystem.Length - 2), out difficulty))
+        if (!int.TryParse(solarSystem.Remove(0, solarSystem.Length - 1), out difficulty))
+        {
+            Debug.Log(solarSystem.Remove(0, solarSystem.Length - 1));
             difficulty = 1;
+        }
 
         weapon = SetEnemyDifficulty(difficulty);
         projectile = Resources.Load(weapon.projectile) as GameObject;
