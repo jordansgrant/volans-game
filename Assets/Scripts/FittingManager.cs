@@ -46,12 +46,12 @@ public class FittingManager : MonoBehaviour
                 InventorySlots = 3;
                 break;
             case "cruiser":
-                ShipSlots = 3;
-                InventorySlots = 4;
-                break;
-            case "battleship":
                 ShipSlots = 4;
                 InventorySlots = 5;
+                break;
+            case "battleship":
+                ShipSlots = 3;
+                InventorySlots = 4;
                 break;
             default:
                 ShipSlots = 2;
